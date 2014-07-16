@@ -12,34 +12,15 @@ class ExportService extends BaseApplicationComponent
         // Get max power
         craft()->config->maxPowerCaptain();
         
-        // Get fields
-        $map = $settings['map'];
-        
-        // Gather all data
+        // Create the export template
         $export = "";
         
-        // Find data
-        eval("\$elementType = Craft\\ElementType::".$settings['type'].";");
-        $criteria = craft()->elements->getCriteria($elementType);
-        $criteria->limit = null;
-        $criteria->status = isset($map['status']) ? $map['status'] : null;
+        // Get data
+        $data = $this->getData($settings);
         
-        // Entry specific data
-        if($settings['type'] == ElementType::Entry) {
-            $criteria->sectionId = $settings['section'];
-            $criteria->type = $settings['entrytype'];
-        }
+        // If there is data, process
+        if(count($data)) {
         
-        // User specific data
-        if($settings['type'] == ElementType::User) {
-            $criteria->groupId = $settings['groups'];
-        }
-        
-        if($criteria->total()) {
-        
-            // Gather data
-            $data = $criteria->find();
-            
             // Count rows
             $rows = 0;
             
@@ -49,7 +30,7 @@ class ExportService extends BaseApplicationComponent
                 $row = "";
                 
                 // Get fields
-                $fields = $this->parseFields($map, $element);
+                $fields = $this->parseFields($settings['map'], $element);
                 
                 // Put down columns
                 if(!$rows) {
@@ -98,6 +79,52 @@ class ExportService extends BaseApplicationComponent
     
     }
     
+    protected function getData($settings) 
+    {
+    
+        // Get other sources
+        $sources = craft()->plugins->call('registerExportSource', array($settings));
+                        
+        // If no sources, get data by ourselves
+        if(!count($sources) || in_array(false, $sources)) {
+        
+            // Find data
+            eval("\$elementType = Craft\\ElementType::".$settings['type'].";");
+            $criteria = craft()->elements->getCriteria($elementType);
+            $criteria->limit = null;
+            $criteria->status = isset($settings['map']['status']) ? $settings['map']['status'] : null;
+            
+            // Entry specific data
+            if($settings['type'] == ElementType::Entry) {
+                $criteria->sectionId = $settings['section'];
+                $criteria->type = $settings['entrytype'];
+            }
+            
+            // User specific data
+            if($settings['type'] == ElementType::User) {
+                $criteria->groupId = $settings['groups'];
+            }
+            
+            // Gather data
+            $data = $criteria->find();
+        
+        // Else proces the plugin's datasource
+        } else {
+        
+            // Re-order hook output for use
+            $data = array();
+            foreach($sources as $plugin) {
+                foreach($plugin as $source) {
+                    $data[] = $source;
+                }
+            } 
+        
+        }
+        
+        return $data;
+    
+    }
+    
     // Parse fields
     protected function parseFields($map, $element) 
     {
@@ -105,7 +132,11 @@ class ExportService extends BaseApplicationComponent
         $fields = array();
     
         // Only get element attributes and content attributes
-        $attributes = array_merge($element->getAttributes(), $element->getContent()->getAttributes());
+        if($element instanceof BaseElementModel) {
+            $attributes = array_merge($element->getAttributes(), $element->getContent()->getAttributes());
+        } else {
+            $attributes = $element;
+        }
         
         // Loop through the map
         foreach($map as $handle => $checked) {

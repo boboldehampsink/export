@@ -14,5 +14,8 @@ Todo:
 
 Changelog
 =================
+###0.2###
+ - Added a "registerExportSource" hook, so you can replace/add/delete export data from your own plugin
+
 ###0.1###
  - Initial push to GitHub
