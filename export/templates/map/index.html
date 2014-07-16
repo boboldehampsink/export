@@ -1,0 +1,22 @@
+{% extends "_layouts/cp" %}
+
+{% set title = "Export"|t %}
+
+{% set tabs = {
+    overview: { label: "Export data"|t, url: url('export') },
+    map:    { label: "Map fields"|t, url: '' }
+} %}
+
+{% set selectedTab = 'map' %}
+
+{% import "_includes/forms" as forms %}
+
+{% set exportType = craft.request.getParam('exportType') %}
+
+{% if not exportType %}
+    {% exit 404 %}
+{% endif %}
+
+{% set content %}
+    {% include 'export/map/' ~ exportType|lower %}
+{% endset %}
