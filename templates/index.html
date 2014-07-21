@@ -127,10 +127,10 @@
                     <td>
                     {% for group in groups %}
                         {{ forms.checkboxField({
-                        	label: group.name,
-                        	name: "groups[]",
-                        	checked: true,
-                        	value: group.id
+                            label: group.name,
+                            name: "groups[]",
+                            checked: true,
+                            value: group.id
                         }) }}
                     {% endfor %}
                     </td>

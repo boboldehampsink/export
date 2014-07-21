@@ -3,8 +3,8 @@
 {% set exportEntryType = craft.request.getParam('exportEntryType') %}
 
 <form method="post" action="" class="centered" accept-charset="UTF-8">
-	<input type="hidden" name="action" value="export/download">
-	<input type="hidden" name="type" value="{{ exportType }}">
+    <input type="hidden" name="action" value="export/download">
+    <input type="hidden" name="type" value="{{ exportType }}">
     <input type="hidden" name="section" value="{{ exportSection }}">
     <input type="hidden" name="entrytype" value="{{ exportEntryType }}">
     
@@ -34,10 +34,10 @@
             </td>
             <td>
                 {{ forms.checkboxField({
-                	label: 'Include in export'|t,
-                	instructions: "This value will be included in the export file."|t,
-                	name: "fields[" ~ handle ~ "]",
-                	checked: loop.first
+                    label: 'Include in export'|t,
+                    instructions: "This value will be included in the export file."|t,
+                    name: "fields[" ~ handle ~ "]",
+                    checked: loop.first
                 }) }}
             </td>
         </tr>
@@ -55,10 +55,10 @@
             </td>
             <td>
                 {{ forms.checkboxField({
-                	label: 'Include in export'|t,
-                	instructions: "This value will be included in the export file."|t,
-                	name: "fields[" ~ f.handle ~ "]",
-                	checked: true
+                    label: 'Include in export'|t,
+                    instructions: "This value will be included in the export file."|t,
+                    name: "fields[" ~ f.handle ~ "]",
+                    checked: true
                 }) }}
             </td>
         </tr>
