@@ -11,6 +11,9 @@ Todo:
  - Export all ElementTypes (currently only Entries and Users)
  - Support JSON and XML output
  - Permissions, who can export what
+ 
+Important:
+The plugin's folder should be named "export"
 
 Changelog
 =================
