@@ -3,6 +3,7 @@ namespace Craft;
 
 class ExportPlugin extends BasePlugin
 {
+
     function getName()
     {
         return Craft::t('Export');
@@ -26,6 +27,17 @@ class ExportPlugin extends BasePlugin
     function hasCpSection()
     {
         return true;
+    }
+    
+    function registerUnitTest() 
+    {
+    
+        // Import the test
+        Craft::import('plugins.export.tests.ExportTest');
+        
+        // Return the test
+        return new ExportTest();
+    
     }
     
 }

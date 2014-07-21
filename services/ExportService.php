@@ -69,7 +69,7 @@ class ExportService extends BaseApplicationComponent
             }
                         
             // Download the csv
-            craft()->request->sendFile('export.csv', $export, array('forceDownload' => true));
+            craft()->request->sendFile('export.csv', $export, array('forceDownload' => true, 'mimeType' => 'text/csv'));
             //echo $export;
                 
         }
