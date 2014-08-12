@@ -89,8 +89,7 @@ class ExportService extends BaseApplicationComponent
         if(!count($sources) || in_array(false, $sources)) {
         
             // Find data
-            eval("\$elementType = Craft\\ElementType::".$settings['type'].";");
-            $criteria = craft()->elements->getCriteria($elementType);
+            $criteria = craft()->elements->getCriteria($settings['type']);
             $criteria->limit = null;
             $criteria->status = isset($settings['map']['status']) ? $settings['map']['status'] : null;
             
