@@ -84,9 +84,19 @@ class ExportService extends BaseApplicationComponent
     
         // Get other sources
         $sources = craft()->plugins->call('registerExportSource', array($settings));
+        
+        // Loop through sources, see if we can get any data
+        $data = array();
+        foreach($sources as $plugin) {
+            if(is_array($plugin)) {
+                foreach($plugin as $source) {
+                    $data[] = $source;
+                }
+            }
+        }
                         
-        // If no sources, get data by ourselves
-        if(!count($sources) || in_array(false, $sources)) {
+        // If no data from source, get data by ourselves
+        if(!count($data)) {
         
             // Find data
             $criteria = craft()->elements->getCriteria($settings['type']);
@@ -106,17 +116,6 @@ class ExportService extends BaseApplicationComponent
             
             // Gather data
             $data = $criteria->find();
-        
-        // Else proces the plugin's datasource
-        } else {
-        
-            // Re-order hook output for use
-            $data = array();
-            foreach($sources as $plugin) {
-                foreach($plugin as $source) {
-                    $data[] = $source;
-                }
-            } 
         
         }
         
