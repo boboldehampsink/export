@@ -33,10 +33,10 @@ class ExportPlugin extends BasePlugin
     {
     
         // Import the test
-        Craft::import('plugins.export.tests.ExportTest');
+        //Craft::import('plugins.export.tests.ExportTest');
         
         // Return the test
-        return new ExportTest();
+        //return new ExportTest();
     
     }
     
