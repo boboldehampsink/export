@@ -58,7 +58,7 @@ class ExportTest extends \WebTestCase
         
         // Post fields and download csv
         $result = $this->post(
-            str_replace('/admin/', '/', UrlHelper::getUrlWithToken(UrlHelper::getActionUrl('export/download'), $token)),
+            str_replace('https', 'ssl', str_replace('/admin/', '/', UrlHelper::getUrlWithToken(UrlHelper::getActionUrl('export/download'), $token))),
             array(
                 'type' => $type,
                 'section' => $section,
@@ -80,7 +80,7 @@ class ExportTest extends \WebTestCase
         $type = ElementType::User;
         
         // Users / get group
-        $groups = 1;
+        $groups = array(1);
         
         // The fields
         $fields = array(
@@ -115,7 +115,7 @@ class ExportTest extends \WebTestCase
         
         // Post fields and download csv
         $result = $this->post(
-            str_replace('/admin/', '/', UrlHelper::getUrlWithToken(UrlHelper::getActionUrl('export/download'), $token)),
+            str_replace('https', 'ssl', str_replace('/admin/', '/', UrlHelper::getUrlWithToken(UrlHelper::getActionUrl('export/download'), $token))),
             array(
                 'type' => $type,
                 'section' => null,
