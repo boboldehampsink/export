@@ -47,7 +47,7 @@ class ExportController extends BaseController
     {
     
         // We need a token for this
-        //$this->requireToken();
+        $this->requireToken();
         
         // Only post requests
         $this->requirePostRequest();
