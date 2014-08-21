@@ -58,7 +58,7 @@ class ExportTest extends \WebTestCase
         
         // Post fields and download csv
         $result = $this->post(
-            str_replace('https', 'ssl', str_replace('admin/', '', UrlHelper::getUrlWithToken(UrlHelper::getActionUrl('export/download'), $token))),
+            str_replace('https', 'ssl', str_replace('admin/', '', UrlHelper::getActionUrl('export/download', array('token' => $token)))),
             array(
                 'type' => $type,
                 'section' => $section,
@@ -115,7 +115,7 @@ class ExportTest extends \WebTestCase
         
         // Post fields and download csv
         $result = $this->post(
-            str_replace('https', 'ssl', str_replace('admin/', '', UrlHelper::getUrlWithToken(UrlHelper::getActionUrl('export/download'), $token))),
+            str_replace('https', 'ssl', str_replace('admin/', '', UrlHelper::getActionUrl('export/download', array('token' => $token)))),
             array(
                 'type' => $type,
                 'section' => null,
