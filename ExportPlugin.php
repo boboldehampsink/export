@@ -11,7 +11,7 @@ class ExportPlugin extends BasePlugin
 
     function getVersion()
     {
-        return '0.2.1';
+        return '0.2.2';
     }
 
     function getDeveloper()
@@ -29,7 +29,7 @@ class ExportPlugin extends BasePlugin
         return true;
     }
     
-    /*function registerUnitTest() 
+    function registerUnitTest() 
     {
     
         // Import the test
@@ -38,6 +38,6 @@ class ExportPlugin extends BasePlugin
         // Return the test
         return new ExportTest();
     
-    }*/
+    }
     
 }
