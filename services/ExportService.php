@@ -4,7 +4,7 @@ namespace Craft;
 class ExportService extends BaseApplicationComponent 
 {
 
-    protected $delimiter = ExportModel::DelimiterComma;
+    public $delimiter = ExportModel::DelimiterComma;
 
     public function download($settings) 
     {
@@ -67,15 +67,11 @@ class ExportService extends BaseApplicationComponent
                 $rows++;
             
             }
-                        
-            // Download the csv
-            craft()->request->sendFile('export.csv', $export, array('forceDownload' => true, 'mimeType' => 'text/csv'));
-            //echo $export;
                 
         }
         
-        // There's nothing beyond the export
-        craft()->end();
+        // Return the data to controller
+        return $data;
     
     }
     

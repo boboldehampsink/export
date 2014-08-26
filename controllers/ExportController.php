@@ -65,14 +65,20 @@ class ExportController extends BaseController
         // Get mapping fields
         $map = craft()->request->getParam('fields');
         
-        // Download
-        craft()->export->download(array(
+        // Get data
+        $data = craft()->export->download(array(
             'type' => $type,
             'section' => $section,
             'entrytype' => $entrytype,
             'groups' => $groups,
             'map' => $map
         ));
+        
+        // Download the csv
+        craft()->request->sendFile('export.csv', $data, array('forceDownload' => true, 'mimeType' => 'text/csv'));
+        
+        // There's nothing beyond the export
+        craft()->end();
     
     }
     
