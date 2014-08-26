@@ -1,8 +1,34 @@
 <?php
 namespace Craft;
 
-class ExportTest extends \WebTestCase 
+class ExportTest extends BaseTest 
 {
+
+    protected $exportService;
+    
+    public function setUp()
+    {
+    
+        // Get dependencies
+        $dir = __DIR__;
+		$map = array(
+		    '\\Craft\\ExportModel'           => '/../models/ExportModel.php',
+			'\\Craft\\ExportService'	     => '/../services/ExportService.php'
+		);
+
+        // Inject them
+		foreach ($map as $classPath => $filePath)
+		{
+			if (!class_exists($classPath, false))
+			{
+				require_once $dir.$filePath;
+			}
+		}
+    
+        // Construct
+        $this->exportService = new ExportService;
+    
+    } 
     
     function testActionDownloadEntries() 
     {
@@ -15,7 +41,7 @@ class ExportTest extends \WebTestCase
         $entrytype = 16;
         
         // The fields
-        $fields = array(
+        $map = array(
             'title' => '1',
             'slug' => '',
             'authorId' => '',
@@ -53,23 +79,17 @@ class ExportTest extends \WebTestCase
             'selfServiceJet' => '1'
         );
         
-        // Get token
-        $token = craft()->tokens->createToken(array('action' => 'export/download'));
-        
-        // Post fields and download csv
-        $result = $this->post(
-            str_replace('admin/', '', UrlHelper::getActionUrl('export/download', array('token' => $token))),
-            array(
-                'type' => $type,
-                'section' => $section,
-                'entrytype' => $entrytype,
-                'groups' => null,
-                'fields' => $fields
-            )
-        );
+        // Download
+        $data = $this->exportService->download(array(
+            'type' => $type,
+            'section' => $section,
+            'entrytype' => $entrytype,
+            'groups' => null,
+            'map' => $map
+        ));
         
         // check if we got a csv
-        $this->assertMime(array('text/csv; charset=utf-8'));
+        $this->assertInternalType('string', $data);
         
     }
     
@@ -83,7 +103,7 @@ class ExportTest extends \WebTestCase
         $groups = array(1);
         
         // The fields
-        $fields = array(
+        $map = array(
             'username' => '1',
             'firstName' => '',
             'lastName' => '',
@@ -110,23 +130,17 @@ class ExportTest extends \WebTestCase
             'consentmarketing' => '1'
         );
         
-        // Get token
-        $token = craft()->tokens->createToken(array('action' => 'export/download'));
-        
-        // Post fields and download csv
-        $result = $this->post(
-            str_replace('admin/', '', UrlHelper::getActionUrl('export/download', array('token' => $token))),
-            array(
-                'type' => $type,
-                'section' => null,
-                'entrytype' => null,
-                'groups' => $groups,
-                'fields' => $fields
-            )
-        );
+        // Download
+        $data = $this->exportService->download(array(
+            'type' => $type,
+            'section' => null,
+            'entrytype' => null,
+            'groups' => $groups,
+            'map' => $map
+        ));
         
         // check if we got a csv
-        $this->assertMime(array('text/csv; charset=utf-8'));
+        $this->assertInternalType('string', $data);
     
     }
     
