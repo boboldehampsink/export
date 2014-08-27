@@ -4,8 +4,6 @@ namespace Craft;
 class ExportController extends BaseController
 {
 
-    public $allowAnonymous = array('actionDownload');
-
     public function actionGetEntryTypes() 
     {
     
@@ -31,23 +29,15 @@ class ExportController extends BaseController
     
         // Only post requests
         $this->requirePostRequest();
-        
-        // Create token
-        $token = craft()->tokens->createToken(array('action' => 'export/download'));
             
         // Send variables to template and display
-        $this->renderTemplate('export/map', array(
-            'exportToken' => $token
-        ));
+        $this->renderTemplate('export/map');
     
     }
     
     // Start import task
     public function actionDownload() 
     {
-    
-        // We need a token for this
-        $this->requireToken();
         
         // Only post requests
         $this->requirePostRequest();
@@ -76,9 +66,6 @@ class ExportController extends BaseController
         
         // Download the csv
         craft()->request->sendFile('export.csv', $data, array('forceDownload' => true, 'mimeType' => 'text/csv'));
-        
-        // There's nothing beyond the export
-        craft()->end();
     
     }
     

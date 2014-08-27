@@ -2,7 +2,8 @@
 {% set exportSection = craft.request.getParam('exportSection') %}
 {% set exportEntryType = craft.request.getParam('exportEntryType') %}
 
-<form method="post" action="{{ actionUrl('export/download', {'token': exportToken}) }}" class="centered" accept-charset="UTF-8">
+<form method="post" class="centered" accept-charset="utf-8">
+    <input type="hidden" name="action" value="export/download">
     <input type="hidden" name="type" value="{{ exportType }}">
     <input type="hidden" name="section" value="{{ exportSection }}">
     <input type="hidden" name="entrytype" value="{{ exportEntryType }}">

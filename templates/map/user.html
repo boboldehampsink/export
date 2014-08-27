@@ -1,7 +1,8 @@
 {# Users #}
 {% set exportGroups = craft.request.getParam('groups') %}
 
-<form method="post" action="{{ actionUrl('export/download', {'token': exportToken}) }}" class="centered" accept-charset="UTF-8">
+<form method="post" class="centered" accept-charset="utf-8">
+    <input type="hidden" name="action" value="export/download">
     <input type="hidden" name="type" value="{{ exportType }}">
     {% for group in exportGroups %}
     <input type="hidden" name="groups[]" value="{{ group }}">
