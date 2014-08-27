@@ -11,19 +11,17 @@ class ExportTest extends BaseTest
     
         // Get dependencies
         $dir = __DIR__;
-		$map = array(
-		    '\\Craft\\ExportModel'           => '/../models/ExportModel.php',
-			'\\Craft\\ExportService'	     => '/../services/ExportService.php'
-		);
+        $map = array(
+            '\\Craft\\ExportModel'   => '/../models/ExportModel.php',
+            '\\Craft\\ExportService' => '/../services/ExportService.php'
+        );
 
         // Inject them
-		foreach ($map as $classPath => $filePath)
-		{
-			if (!class_exists($classPath, false))
-			{
-				require_once $dir.$filePath;
-			}
-		}
+        foreach($map as $classPath => $filePath) {
+            if(!class_exists($classPath, false)) {
+                require_once($dir . $filePath);
+            }
+        }
     
         // Construct
         $this->exportService = new ExportService;
