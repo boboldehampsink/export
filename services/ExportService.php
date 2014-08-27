@@ -55,7 +55,7 @@ class ExportService extends BaseApplicationComponent
                 $row = substr($row, 0, -1);
                 
                 // Encode row
-                $row = mb_convert_encoding(utf8_decode($row), "Windows-1252", "UTF-8");
+                $row = StringHelper::convertToUTF8($row);
                 
                 // And start a new line
                 $row = $row . "\r\n";
@@ -225,8 +225,8 @@ class ExportService extends BaseApplicationComponent
         // Remove last comma
         $columns = substr($columns, 0, -1);
         
-        // Encode row
-        $columns = mb_convert_encoding(utf8_decode($columns), "Windows-1252", "UTF-8");
+        // Encode columns
+        $columns = StringHelper::convertToUTF8($columns);
         
         // And start a new line
         $columns = $columns . "\r\n";
@@ -272,7 +272,7 @@ class ExportService extends BaseApplicationComponent
     }
     
     // Parse field values
-    public function parseFieldData($handle, $data) 
+    protected function parseFieldData($handle, $data) 
     {
     
         // Do we have any data at all
