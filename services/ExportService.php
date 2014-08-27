@@ -71,7 +71,7 @@ class ExportService extends BaseApplicationComponent
         }
         
         // Return the data to controller
-        return $data;
+        return $export;
     
     }
     
