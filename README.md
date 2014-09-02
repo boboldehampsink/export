@@ -18,6 +18,10 @@ The plugin's folder should be named "export"
 
 Changelog
 =================
+###0.2.3###
+- Fixed wrong parsing of Lightswitch values
+- Fixed skipping of existing columns with NULL values
+
 ###0.2.2###
 - Mostly common bugfixes and improvements
 
