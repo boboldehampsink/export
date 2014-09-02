@@ -253,14 +253,14 @@ class ExportService extends BaseApplicationComponent
                 // Make data human readable
                 switch($data) {
                 
+                    case "0":
+                        $data = Craft::t("No");
+                        break;
+                
                     case "1":
                         $data = Craft::t("Yes");
                         break;
                         
-                    case "2":
-                        $data = Craft::t("No");
-                        break;
-                
                 }
             
                 break;
@@ -314,12 +314,12 @@ class ExportService extends BaseApplicationComponent
                         // Make data human readable
                         switch($data) {
                         
+                            case "0":
+                                $data = Craft::t("No");
+                                break;
+                        
                             case "1":
                                 $data = Craft::t("Yes");
-                                break;
-                                
-                            case "2":
-                                $data = Craft::t("No");
                                 break;
                         
                         }
