@@ -6,6 +6,7 @@ class ExportModel extends BaseModel
      
     // Handles
     const HandleStatus       = 'status';
+    const HandleId           = 'elementId';
     # Entries
     const HandleTitle        = 'title';
     const HandleAuthor       = 'authorId';

@@ -166,6 +166,10 @@ class ExportService extends BaseApplicationComponent
             
                 switch($handle) {
                 
+                    case ExportModel::HandleId:
+                        $columns .= '"'.Craft::t("ID").'"'.$this->delimiter;
+                        break;
+                
                     case ExportModel::HandleStatus:
                         $columns .= '"'.Craft::t("Status").'"'.$this->delimiter;
                         break;

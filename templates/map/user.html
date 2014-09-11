@@ -14,6 +14,7 @@
            
     <table class="data">
     {% set staticfields = {
+        "elementId": "ID"|t,
         "username": "Username"|t,
         "firstName": "First Name"|t,
         "lastName": "Last Name"|t,
@@ -34,7 +35,7 @@
                     label: 'Include in export'|t,
                     instructions: "This value will be included in the export file."|t,
                     name: "fields[" ~ handle ~ "]",
-                    checked: loop.first
+                    checked: loop.index == 2
                 }) }}
             </td>
         </tr>

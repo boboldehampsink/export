@@ -15,6 +15,7 @@
     <table class="data">
 {% for entrytype in entrytypes if entrytype.id == exportEntryType %}
     {% set staticfields = {
+        "elementId": "ID"|t,
         "title": entrytype.hasTitleField ? entrytype.titleLabel : false,
         "slug": "Slug"|t,
         "authorId": "Author"|t,
@@ -37,7 +38,7 @@
                     label: 'Include in export'|t,
                     instructions: "This value will be included in the export file."|t,
                     name: "fields[" ~ handle ~ "]",
-                    checked: loop.first
+                    checked: loop.index == 2
                 }) }}
             </td>
         </tr>
