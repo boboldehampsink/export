@@ -11,7 +11,7 @@ class ExportPlugin extends BasePlugin
 
     function getVersion()
     {
-        return '0.2.3';
+        return '0.2.4';
     }
 
     function getDeveloper()
