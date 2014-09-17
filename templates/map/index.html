@@ -9,6 +9,9 @@
 
 {% set selectedTab = 'map' %}
 
+{% includeJsResource 'export/lib/jquery-ui.min.js' %}
+{% includeJsResource 'export/js/export.js' %}
+
 {% import "_includes/forms" as forms %}
 
 {% set exportType = craft.request.getParam('exportType') %}
