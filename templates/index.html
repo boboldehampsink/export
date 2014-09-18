@@ -2,13 +2,6 @@
 
 {% set title = "Export"|t %}
 
-{% set tabs = {
-    overview: { label: "Export data"|t, url: url('export') },
-    map:    { label: "Map fields"|t, url: '', class: 'disabled' }
-} %}
-
-{% set selectedTab = 'overview' %}
-
 {% includeJsResource 'export/js/export.js' %}
 
 {% import "_includes/forms" as forms %}
@@ -18,22 +11,12 @@
         <input type="hidden" name="action" value="export/map">
         
         {% set elementTypes = {} %}
-        {% for elementType, properties in craft.elements.getAllElementTypes if elementType == 'User' or elementType == 'Entry' %}
+        {% for elementType, properties in craft.elements.getAllElementTypes if craft.export.getGroups(elementType) %}
             {% set elementTypes = elementTypes|merge([elementType]) %}
         {% endfor %}
         
-        {% set sections = {} %}
-        {% for section in craft.sections.getEditableSections() if section.type != 'single' %}
-            {% set sections = sections|merge([section]) %}
-        {% endfor %}
-        
-        {% set groups = {} %}
-        {% for group in craft.userGroups.getAllGroups() %}
-            {% set groups = groups|merge([group]) %}
-        {% endfor %}
-        
         <table class="data">
-            <thead>
+            <thead class="exportType">
                 <tr>
                     <td>
                         <div class="field">
@@ -49,7 +32,7 @@
                         <div class="field">
                             <div class="input">
                                 <div class="select">
-                                    <select name="exportType" id="types">
+                                    <select name="export[type]" id="types">
                                     {% for elementType in elementTypes %}
                                         <option value="{{ elementType }}">{{ elementType }}</option>
                                     {% endfor %}
@@ -60,82 +43,11 @@
                     </td>
                 </tr>
             </thead>
-            <tbody class="type entry">
-                <tr>
-                    <td>
-                        <div class="field">
-                            <div class="heading">
-                                <label>{{ "Section"|t }}</label>
-                                <div class="instructions">
-                                    <p>{{ "Choose the section you want to export from."|t }}</p>                
-                                </div>
-                            </div>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="field">
-                            <div class="input">
-                                <div class="select">
-                                    <select name="exportSection" id="sections">
-                                    {% for section in sections %}
-                                        <option value="{{ section.id }}">{{ section.name }}</option>
-                                    {% endfor %}
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <div class="field">
-                            <div class="heading">
-                                <label>{{ "Entrytype"|t }}</label>
-                                <div class="instructions">
-                                    <p>{{ "Choose the entrytype you want to export from."|t }}</p>                
-                                </div>
-                            </div>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="field">
-                            <div class="input">
-                                <div class="select">
-                                    <select name="exportEntryType" id="entrytypes">
-                                    {% for entrytype in sections[0].getEntryTypes() %}
-                                        <option value="{{ entrytype.handle }}">{{ entrytype.name }}</option>
-                                    {% endfor %}
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-            </tbody>
-            <tbody class="type user" style="display: none">
-                <tr>
-                    <td>
-                        <div class="field">
-                            <div class="heading">
-                                <label>{{ "Group"|t }}</label>
-                                <div class="instructions">
-                                    <p>{{ "Choose the groups you want to export from."|t }}</p>                
-                                </div>
-                            </div>
-                        </div>
-                    </td>
-                    <td>
-                    {% for group in groups %}
-                        {{ forms.checkboxField({
-                            label: group.name,
-                            name: "groups[]",
-                            checked: true,
-                            value: group.id
-                        }) }}
-                    {% endfor %}
-                    </td>
-                </tr>
-            </tbody>
+            
+            {% for elementType in elementTypes %}
+                {% include 'export/types/' ~ elementType|lower ~ '/_source' %}
+            {% endfor %}
+            
             <tfoot>
                 <tr>
                     <td colspan="2" style="border-bottom: none"><input type="submit" class="btn submit" value="{{ 'Next'|t }}"></td>

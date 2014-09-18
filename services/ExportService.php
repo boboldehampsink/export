@@ -4,6 +4,7 @@ namespace Craft;
 class ExportService extends BaseApplicationComponent 
 {
 
+    public $_service;
     public $delimiter = ExportModel::DelimiterComma;
 
     public function download($settings) 
@@ -11,6 +12,9 @@ class ExportService extends BaseApplicationComponent
     
         // Get max power
         craft()->config->maxPowerCaptain();
+        
+        // Check what service we're gonna need
+        $this->_service = 'export_' . strtolower($settings['type']);
         
         // Create the export template
         $export = "";
@@ -34,7 +38,7 @@ class ExportService extends BaseApplicationComponent
                 
                 // Put down columns
                 if(!$rows) {
-                    $row .= $this->parseColumns($settings['entrytype'], $fields);
+                    $row .= $this->parseColumns($settings, $fields);
                 }
             
                 // Loop trough the fields
@@ -94,21 +98,11 @@ class ExportService extends BaseApplicationComponent
         // If no data from source, get data by ourselves
         if(!count($data)) {
         
+            // Get service
+            $service = $this->_service;
+        
             // Find data
-            $criteria = craft()->elements->getCriteria($settings['type']);
-            $criteria->limit = null;
-            $criteria->status = isset($settings['map']['status']) ? $settings['map']['status'] : null;
-            
-            // Entry specific data
-            if($settings['type'] == ElementType::Entry) {
-                $criteria->sectionId = $settings['section'];
-                $criteria->type = $settings['entrytype'];
-            }
-            
-            // User specific data
-            if($settings['type'] == ElementType::User) {
-                $criteria->groupId = $settings['groups'];
-            }
+            $criteria = craft()->$service->setCriteria($settings);
             
             // Gather data
             $data = $criteria->find();
@@ -150,10 +144,13 @@ class ExportService extends BaseApplicationComponent
     }
     
     // Parse column names
-    protected function parseColumns($entrytype, $fields) 
+    protected function parseColumns($settings, $fields) 
     {
     
         $columns = "";
+        
+        // Get service
+        $service = $this->_service;
         
         // Loop trough fields
         foreach($fields as $handle => $data) {
@@ -173,47 +170,9 @@ class ExportService extends BaseApplicationComponent
                     case ExportModel::HandleStatus:
                         $columns .= '"'.Craft::t("Status").'"'.$this->delimiter;
                         break;
-                
-                    # Entries
-                    case ExportModel::HandleTitle:
-                        $columns .= '"'.addslashes(craft()->sections->getEntryTypeById($entrytype)->titleLabel).'"'.$this->delimiter;
-                        break;
                         
-                    case ExportModel::HandleAuthor:
-                        $columns .= '"'.Craft::t("Author").'"'.$this->delimiter;
-                        break;
-                        
-                    case ExportModel::HandlePostDate:
-                        $columns .= '"'.Craft::t("Post Date").'"'.$this->delimiter;
-                        break;
-                        
-                    case ExportModel::HandleExpiryDate:
-                        $columns .= '"'.Craft::t("Expiry Date").'"'.$this->delimiter;
-                        break;
-                        
-                    case ExportModel::HandleEnabled:
-                        $columns .= '"'.Craft::t("Enabled").'"'.$this->delimiter;
-                        break;
-                        
-                    case ExportModel::HandleSlug:
-                        $columns .= '"'.Craft::t("Slug").'"'.$this->delimiter;
-                        break;
-                        
-                    # Users
-                    case ExportModel::HandleUsername:
-                        $columns .= '"'.Craft::t("Username").'"'.$this->delimiter;
-                        break;
-                        
-                    case ExportModel::HandleFirstName:
-                        $columns .= '"'.Craft::t("First Name").'"'.$this->delimiter;
-                        break;
-                        
-                    case ExportModel::HandleLastName:
-                        $columns .= '"'.Craft::t("Last Name").'"'.$this->delimiter;
-                        break;
-                        
-                    case ExportModel::HandleEmail:
-                        $columns .= '"'.Craft::t("Email").'"'.$this->delimiter;
+                    default:
+                        $columns .= craft()->$service->parseColumn($handle, $settings, $this->delimiter);
                         break;
                 
                 }

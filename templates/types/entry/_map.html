@@ -1,24 +1,18 @@
-{# Users #}
-{% set exportGroups = craft.request.getParam('groups') %}
+{% set entrytypes = craft.sections.getSectionById(export.elementvars.section).getEntryTypes() %}
+        
+<p>{{ "Choose which fields you want to export."|t }}</p>
 
-<form method="post" class="centered" accept-charset="utf-8">
-    <input type="hidden" name="action" value="export/download">
-    <input type="hidden" name="type" value="{{ exportType }}">
-    {% for group in exportGroups %}
-    <input type="hidden" name="groups[]" value="{{ group }}">
-    {% endfor %}
-                   
-    <p>{{ "Choose which fields you want to export."|t }}</p>
-    
-    {% set fieldLayout = craft.fields.getLayoutByType(exportType) %}
-           
-    <table class="data">
+<table class="data fullwidth sortable">
+    <tbody>
+{% for entrytype in entrytypes %}
     {% set staticfields = {
         "elementId": "ID"|t,
-        "username": "Username"|t,
-        "firstName": "First Name"|t,
-        "lastName": "Last Name"|t,
-        "email": "Email"|t,
+        "title": entrytype.hasTitleField ? entrytype.titleLabel : false,
+        "slug": "Slug"|t,
+        "authorId": "Author"|t,
+        "postDate": "Post Date"|t,
+        "expiryDate": "Expiry Date"|t,
+        "enabled": "Enabled"|t,
         "status": "Status"|t
     } %}
     {% for handle, name in staticfields if name %}
@@ -40,7 +34,8 @@
             </td>
         </tr>
     {% endfor %}
-    {% for field in fieldLayout.getFields() %}
+    {% for tab in craft.fields.getLayoutById(entrytype.fieldLayoutId).getTabs() %}
+        {% for field in tab.getFields() %}
         {% set f = field.getField() %}
         <tr>
             <td>
@@ -59,9 +54,13 @@
                 }) }}
             </td>
         </tr>
+        {% endfor %}
     {% endfor %}
+{% endfor %}
+    </tbody>
+    <tfoot>
         <tr>
             <td colspan="2" style="border-bottom: none"><input type="submit" class="btn submit" value="{{ 'Export'|t }}"></td>
         </tr>
-    </table>
-</form>
+    </tfoot>
+</table>

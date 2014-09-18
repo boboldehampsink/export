@@ -1,0 +1,31 @@
+{% extends "_layouts/cp" %}
+
+{% set title = "Export"|t %}
+
+{% includeJsResource 'export/lib/jquery-ui.min.js' %}
+{% includeJsResource 'export/js/export.js' %}
+
+{% import "_includes/forms" as forms %}
+
+{% set content %}
+    <form method="post" action="" class="centered" accept-charset="utf-8">
+        <input type="hidden" name="action" value="export/download">
+        
+        {% for key, value in export if key != 'elementvars' %}
+            <input type="hidden" name="export[{{ key }}]" value="{{ value }}">
+        {% endfor %}
+        
+        {% for key, value in export.elementvars %}
+            {% if value is iterable %}
+                {% for subvalue in value %}
+                    <input type="hidden" name="export[elementvars][{{ key }}][]" value="{{ subvalue }}">
+                {% endfor %}
+            {% else %}
+                <input type="hidden" name="export[elementvars][{{ key }}]" value="{{ value }}">
+            {% endif %}
+        {% endfor %}
+        
+        {% include 'export/types/' ~ export.type|lower ~ '/_map' %}
+        
+    </form>
+{% endset %}
