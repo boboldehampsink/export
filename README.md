@@ -20,6 +20,9 @@ The plugin's folder should be named "export"
 
 Changelog
 =================
+###0.3.1###
+- Added the ability to export all entrytypes in a section at once
+
 ###0.3.0###
 - Added the ability to export Categories
 - Added the ability to sort the export field order
