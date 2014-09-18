@@ -9,6 +9,7 @@ class ExportModel extends BaseModel
     const HandleId           = 'elementId';
     # Entries
     const HandleTitle        = 'title';
+    const HandleParent       = 'parent';
     const HandleAuthor       = 'authorId';
     const HandlePostDate     = 'postDate';
     const HandleExpiryDate   = 'expiryDate';
