@@ -17,7 +17,7 @@
                     <div class="select">
                         <select name="export[elementvars][section]" id="sections" disabled>
                         {% for section in sections %}
-                            <option value="{{ section.id }}">{{ section.name }}</option>
+                            <option value="{{ section.id }}" data-type="{{ section.type }}">{{ section.name }}</option>
                         {% endfor %}
                         </select>
                     </div>
@@ -49,6 +49,28 @@
                     </div>
                 </div>
             </div>
+        </td>
+    </tr>
+    <tr class="exportStructure" style="display: none">
+        <td>
+            <div class="field">
+                <div class="heading">
+                    <label>{{ "Structure options"|t }}</label>
+                    <div class="instructions">
+                        <p>{{ "How do you want to export this structure?"|t }}</p>                
+                    </div>
+                </div>
+            </div>
+        </td>
+        <td>
+        {{ forms.checkboxField({
+            label: 'Collapsed'|t,
+            instructions: 'This will display all data on every row, with parents and children collapsed.'|t,
+            name: "export[elementvars][structure]",
+            checked: true,
+            value: 1,
+            disabled: true
+        }) }}
         </td>
     </tr>
 </tbody>
