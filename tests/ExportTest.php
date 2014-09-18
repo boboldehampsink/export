@@ -132,7 +132,7 @@ class ExportTest extends BaseTest
         // Download
         $data = $this->exportService->download(array(
             'type' => $type,
-            'elementvars' = > array('groups' => $groups),
+            'elementvars' => array('groups' => $groups),
             'map' => $map
         ));
         
