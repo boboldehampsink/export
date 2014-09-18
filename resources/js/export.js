@@ -16,7 +16,7 @@ $(function() {
         // Find entry types by chosen section
         $(document).on('change', '#sections', function() {
         
-            $('#entrytypes').html('');
+            $('#entrytypes').html('<option value="">' + Craft.t('All') + '</option>');
             Craft.postActionRequest('export/getEntryTypes', { 'section': $(this).val() }, function(entrytypes) {
                     
                 $.each(entrytypes, function(index, value) {

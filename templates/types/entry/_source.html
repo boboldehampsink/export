@@ -41,6 +41,7 @@
                 <div class="input">
                     <div class="select">
                         <select name="export[elementvars][entrytype]" id="entrytypes" disabled>
+                            <option value="">{{ "All"|t }}</option>
                         {% for entrytype in sections[0].getEntryTypes() %}
                             <option value="{{ entrytype.id }}">{{ entrytype.name }}</option>
                         {% endfor %}

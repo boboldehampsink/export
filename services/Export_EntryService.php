@@ -47,7 +47,8 @@ class Export_EntryService extends BaseApplicationComponent
         switch($handle) {
     
             case ExportModel::HandleTitle:
-                $column = '"'.addslashes(craft()->sections->getEntryTypeById($settings['elementvars']['entrytype'])->titleLabel).'"'.$delimiter;
+                $entrytype = craft()->sections->getEntryTypeById($settings['elementvars']['entrytype']);
+                $column = '"'.($entrytype ? addslashes($entrytype->titleLabel) : Craft::t("Title")).'"'.$delimiter;
                 break;
                 
             case ExportModel::HandleAuthor:
