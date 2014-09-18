@@ -6,10 +6,12 @@ Plugin that allows you to export data to CSV files.
 Features:
 - Export Entries and Entry Types
 - Export Users and User Groups
+- Export Categories
+- Sortable export field order
 - Has a hook "registerExportSource" to add/replace exports with your own source.
 
 Todo:
-- Export all ElementTypes (currently only Entries and Users)
+- Export all ElementTypes (currently only Entries, Users and Categories)
 - Support JSON and XML output
 - Permissions, who can export what
 
@@ -18,6 +20,10 @@ The plugin's folder should be named "export"
 
 Changelog
 =================
+###0.3.0###
+- Added the ability to export Categories
+- Added the ability to sort the export field order
+
 ###0.2.4###
 - Added the ability to export id's
 
