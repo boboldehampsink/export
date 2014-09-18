@@ -4,7 +4,7 @@ namespace Craft;
 class ExportService extends BaseApplicationComponent 
 {
 
-    public $_service;
+    private $_service;
     public $delimiter = ExportModel::DelimiterComma;
 
     public function download($settings) 
@@ -99,10 +99,15 @@ class ExportService extends BaseApplicationComponent
         if(!count($data)) {
         
             // Get service
-            $service = $this->_service;
+            if(!isset($settings['service'])) {
+                $service = $this->_service;
+                $class = craft()->$service;
+            } else {
+                $class = $settings['service'];
+            }
         
             // Find data
-            $criteria = craft()->$service->setCriteria($settings);
+            $criteria = $class->setCriteria($settings);
             
             // Gather data
             $data = $criteria->find();
@@ -150,7 +155,12 @@ class ExportService extends BaseApplicationComponent
         $columns = "";
         
         // Get service
-        $service = $this->_service;
+        if(!isset($settings['service'])) {
+            $service = $this->_service;
+            $class = craft()->$service;
+        } else {
+            $class = $settings['service'];
+        }
         
         // Loop trough fields
         foreach($fields as $handle => $data) {
@@ -172,7 +182,7 @@ class ExportService extends BaseApplicationComponent
                         break;
                         
                     default:
-                        $columns .= craft()->$service->parseColumn($handle, $settings, $this->delimiter);
+                        $columns .= $class->parseColumn($handle, $settings, $this->delimiter);
                         break;
                 
                 }

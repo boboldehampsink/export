@@ -12,8 +12,10 @@ class ExportTest extends BaseTest
         // Get dependencies
         $dir = __DIR__;
         $map = array(
-            '\\Craft\\ExportModel'   => '/../models/ExportModel.php',
-            '\\Craft\\ExportService' => '/../services/ExportService.php'
+            '\\Craft\\ExportModel'         => '/../models/ExportModel.php',
+            '\\Craft\\ExportService'       => '/../services/ExportService.php',
+            '\\Craft\\Export_EntryService' => '/../services/Export_EntryService.php',
+            '\\Craft\\Export_UserService'  => '/../services/Export_UserService.php'
         );
 
         // Inject them
@@ -24,7 +26,9 @@ class ExportTest extends BaseTest
         }
     
         // Construct
-        $this->exportService = new ExportService;
+        $this->exportService      = new ExportService;
+        $this->exportEntryService = new Export_EntryService;
+        $this->exportUserService  = new Export_UserService;
     
     } 
     
@@ -84,7 +88,8 @@ class ExportTest extends BaseTest
                 'section' => $section,
                 'entrytype' => $entrytype
             ),
-            'map' => $map
+            'map' => $map,
+            'service' => $this->exportEntryService
         ));
         
         // check if we got a csv
@@ -133,7 +138,8 @@ class ExportTest extends BaseTest
         $data = $this->exportService->download(array(
             'type' => $type,
             'elementvars' => array('groups' => $groups),
-            'map' => $map
+            'map' => $map,
+            'service' => $this->exportUserService
         ));
         
         // check if we got a csv
