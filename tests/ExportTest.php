@@ -80,9 +80,10 @@ class ExportTest extends BaseTest
         // Download
         $data = $this->exportService->download(array(
             'type' => $type,
-            'section' => $section,
-            'entrytype' => $entrytype,
-            'groups' => null,
+            'elementvars' => array(
+                'section' => $section,
+                'entrytype' => $entrytype
+            ),
             'map' => $map
         ));
         
@@ -131,9 +132,7 @@ class ExportTest extends BaseTest
         // Download
         $data = $this->exportService->download(array(
             'type' => $type,
-            'section' => null,
-            'entrytype' => null,
-            'groups' => $groups,
+            'elementvars' = > array('groups' => $groups),
             'map' => $map
         ));
         
