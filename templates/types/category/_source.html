@@ -1,5 +1,5 @@
 <tbody class="type category">
-    <tr class="importCategoryGroup">
+    <tr class="exportCategoryGroup">
         <td>
             <div class="field">
                 <div class="heading">
@@ -14,7 +14,7 @@
             <div class="field">
                 <div class="input">
                     <div class="select">
-                        <select name="import[elementvars][group]" id="importCategoryGroup" disabled>
+                        <select name="export[elementvars][group]" id="exportCategoryGroup" disabled>
                         {% for group in craft.import.getGroups('Category') %}
                             <option value="{{ group.id }}">{{ group.name }}</option>
                         {% endfor %}
