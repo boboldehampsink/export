@@ -45,7 +45,7 @@
             </thead>
             
             {% for elementType in elementTypes %}
-                {% include 'export/types/' ~ elementType|lower ~ '/_source' %}
+                {% include 'export/sources/_' ~ elementType|lower %}
             {% endfor %}
             
             <tfoot>
