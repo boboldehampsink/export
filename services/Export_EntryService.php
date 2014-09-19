@@ -24,59 +24,79 @@ class Export_EntryService extends BaseApplicationComponent
     
     public function getFields($settings)
     {
+    
+        // Set criteria
+        $criteria = new \CDbCriteria;
+        $criteria->condition = 'settings = :settings';
+        $criteria->params = array(
+            ':settings' => JsonHelper::encode($settings)
+        );
         
-        // Get section id
-        $section = $settings['elementvars']['section'];
-        
-        // Get entrytype id(s)
-        $entrytype = $settings['elementvars']['entrytype'];
-        
-        if(empty($entrytype)) {
-        
-            // Get entrytype models
-            $entrytypes = craft()->sections->getEntryTypesBySectionId($section);
+        // Check if we have a map already
+        $stored = Export_MapRecord::model()->find($criteria);
+                
+        if(!count($stored)) {
+                   
+            // Get section id
+            $section = $settings['elementvars']['section'];
+            
+            // Get entrytype id(s)
+            $entrytype = $settings['elementvars']['entrytype'];
+            
+            // If "All"
+            if(empty($entrytype)) {
+            
+                // Get entrytype models
+                $entrytypes = craft()->sections->getEntryTypesBySectionId($section);
+            
+            } else {
+            
+                // Get entrytype model
+                $entrytypes = array(craft()->sections->getEntryTypeById($entrytype));
+                
+            }
+            
+            // Create a nice field map
+            $fields = array();
+            
+            // With multiple or one entry type
+            foreach($entrytypes as $entrytype) {
+                
+                // Set the static fields for this type
+                $layout = array(
+                    ExportModel::HandleId         => array('name' => Craft::t("ID"), 'checked' => 0),
+                    ExportModel::HandleTitle . "_" . $entrytype->id => array('name' => $entrytype->hasTitleField ? $entrytype->titleLabel : Craft::t("Title"), 'checked' => 1, 'entrytype' => $entrytype->id),
+                    ExportModel::HandleSlug       => array('name' => Craft::t("Slug"), 'checked' => 0),
+                    ExportModel::HandleAuthor     => array('name' => Craft::t("Author"), 'checked' => 0),
+                    ExportModel::HandlePostDate   => array('name' => Craft::t("Post Date"), 'checked' => 0),
+                    ExportModel::HandleExpiryDate => array('name' => Craft::t("Expiry Date"), 'checked' => 0),
+                    ExportModel::HandleEnabled    => array('name' => Craft::t("Enabled"), 'checked' => 0),
+                    ExportModel::HandleStatus     => array('name' => Craft::t("Status"), 'checked' => 0)
+                );
+                
+                // Set the dynamic fields for this type
+                $tabs = craft()->fields->getLayoutById($entrytype->fieldLayoutId)->getTabs();
+                foreach($tabs as $tab) {
+                    $fieldData = array();
+                    foreach($tab->getFields() as $field) {
+                        $data = $field->getField();
+                        $fieldData[$data->handle] = array('name' => $data->name, 'checked' => 1);
+                    }
+                    $layout += $fieldData;
+                }
+                        
+                // Set the static fields also
+                $fields += $layout;
+                        
+            }
         
         } else {
         
-            // Get entrytype model
-            $entrytypes = array(craft()->sections->getEntryTypeById($entrytype));
-            
-        }
-        
-        // Create a nice field map
-        $fields = array();
-        
-        // With multiple or one entry type
-        foreach($entrytypes as $entrytype) {
-            
-            // Set the static fields for this type
-            $static = array(
-                ExportModel::HandleId         => Craft::t("ID"),
-                ExportModel::HandleTitle      => $entrytype->hasTitleField ? $entrytype->titleLabel : false,
-                ExportModel::HandleSlug       => Craft::t("Slug"),
-                ExportModel::HandleAuthor     => Craft::t("Author"),
-                ExportModel::HandlePostDate   => Craft::t("Post Date"),
-                ExportModel::HandleExpiryDate => Craft::t("Expiry Date"),
-                ExportModel::HandleEnabled    => Craft::t("Enabled"),
-                ExportModel::HandleStatus     => Craft::t("Status")
-            );
-            
-            // Set the dynamic fields for this type
-            $layout = array();
-            $tabs = craft()->fields->getLayoutById($entrytype->fieldLayoutId)->getTabs();
-            foreach($tabs as $tab) {
-                $layout += $tab->getFields();
-            }
-        
-            // Set the static fields also
-            $fields[] = array(
-                'static'    => $static,
-                'layout'    => $layout,
-                'entrytype' => $entrytype->id
-            );
+            // Get the stored map        
+            $fields = $stored->map;
         
         }
-        
+                
         // Return fields
         return $fields;
     

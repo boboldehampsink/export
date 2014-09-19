@@ -47,10 +47,11 @@ class ExportController extends BaseController
         // Get mapping fields
         $map = craft()->request->getParam('fields');
         
+        // Save map
+        craft()->export->saveMap($settings, $map);
+        
         // Set more settings
-        $settings = array_merge(array(
-            'map' => $map
-        ), $settings);
+        $settings['map'] = $map;
         
         // Get data
         $data = craft()->export->download($settings);

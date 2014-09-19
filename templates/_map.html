@@ -29,46 +29,27 @@
         
         <table class="data fullwidth sortable">
             <tbody>
-        {% for fields in craft.export.getFields(export.type) %}
-            {% for handle, name in fields.static if name %}
-                <tr>
-                    <td>
-                        <div class="field">
-                            <div class="heading">
-                                <label>{{ name }}</label>
-                            </div>
+        {% set fields = craft.export.getFields(export.type) %}
+        {% for handle, data in fields %}
+            <tr>
+                <td>
+                    <div class="field">
+                        <div class="heading">
+                            <label>{{ data.name }}</label>
+                            <input type="hidden" name="fields[{{ handle }}][name]" value="{{ data.name }}">
+                            {% if handle == 'title' %}<input type="hidden" name="fields[title][entrytype]" value="{{ data.entrytype }}">{% endif %}
                         </div>
-                    </td>
-                    <td>
-                        {{ forms.checkboxField({
-                            label: 'Include in export'|t,
-                            instructions: "This value will be included in the export file."|t,
-                            name: handle == 'title' ? "fields[title_" ~ fields.entrytype ~ "]" : "fields[" ~ handle ~ "]",
-                            checked: loop.index == 2
-                        }) }}
-                    </td>
-                </tr>
-            {% endfor %}
-            {% for field in fields.layout %}
-                {% set f = field.getField() %}
-                <tr>
-                    <td>
-                        <div class="field">
-                            <div class="heading">
-                                <label>{{ f.name }}</label>
-                            </div>
-                        </div>
-                    </td>
-                    <td>
-                        {{ forms.checkboxField({
-                            label: 'Include in export'|t,
-                            instructions: "This value will be included in the export file."|t,
-                            name: "fields[" ~ f.handle ~ "]",
-                            checked: true
-                        }) }}
-                    </td>
-                </tr>
-            {% endfor %}
+                    </div>
+                </td>
+                <td>
+                    {{ forms.checkboxField({
+                        label: 'Include in export'|t,
+                        instructions: "This value will be included in the export file."|t,
+                        name: "fields[" ~ handle ~ "][checked]",
+                        checked: data.checked
+                    }) }}
+                </td>
+            </tr>
         {% endfor %}
             </tbody>
             <tfoot>
