@@ -71,8 +71,9 @@ class Export_EntryService extends BaseApplicationComponent
         
             // Set the static fields also
             $fields[] = array(
-                'static' => $static,
-                'layout' => $layout
+                'static'    => $static,
+                'layout'    => $layout,
+                'entrytype' => $entrytype->id
             );
         
         }
@@ -104,10 +105,17 @@ class Export_EntryService extends BaseApplicationComponent
         // If not found, use handle
         $column = $handle;
         
+        // Parse title
+        if(substr($handle, 0, 5) == ExportModel::HandleTitle) {
+            $id     = substr($handle, 6);
+            $handle = ExportModel::HandleTitle;
+        }
+        
         switch($handle) {
     
             case ExportModel::HandleTitle:
-                $column = '"'.($element instanceof EntryModel ? addslashes($element->getType()->titleLabel) : Craft::t("Title")).'"'.$delimiter;
+                $entrytype = craft()->sections->getEntryTypeById($id);
+                $column = '"'.($entrytype ? addslashes($entrytype->titleLabel) : Craft::t("Title")).'"'.$delimiter;
                 break;
                 
             case ExportModel::HandleParent:

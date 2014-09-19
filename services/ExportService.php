@@ -135,10 +135,10 @@ class ExportService extends BaseApplicationComponent
         foreach($map as $handle => $checked) {
         
             // Only get checked fields
-            if($checked == '1' && array_key_exists($handle, $attributes)) {
+            if($checked == '1' && (array_key_exists($handle, $attributes) || array_key_exists(substr($handle, 0, 5), $attributes))) {
             
                 // Fill them with data
-                $fields[$handle] = $attributes[$handle];
+                $fields[$handle] = isset($attributes[$handle]) ? $attributes[$handle] : $attributes[substr($handle, 0, 5)];
             
             }
         

@@ -43,7 +43,7 @@
                         {{ forms.checkboxField({
                             label: 'Include in export'|t,
                             instructions: "This value will be included in the export file."|t,
-                            name: "fields[" ~ handle ~ "]",
+                            name: handle == 'title' ? "fields[title_" ~ fields.entrytype ~ "]" : "fields[" ~ handle ~ "]",
                             checked: loop.index == 2
                         }) }}
                     </td>
