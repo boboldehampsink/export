@@ -16,14 +16,6 @@ $(function() {
         // Find entry types by chosen section
         $(document).on('change', '#sections', function() {
         
-            // Show structure options
-            if($(this).children('option:selected').data('type') == 'structure') {
-                $('.exportStructure').show();
-            } else {
-                $('.exportStructure').hide();
-            }
-        
-            // Get entrytypes
             $('#entrytypes').html('<option value="">' + Craft.t('All') + '</option>');
             Craft.postActionRequest('export/getEntryTypes', { 'section': $(this).val() }, function(entrytypes) {
                     
