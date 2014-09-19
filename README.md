@@ -20,6 +20,9 @@ The plugin's folder should be named "export"
 
 Changelog
 =================
+###0.3.2###
+- Allow multiple title columns when exporting multiple entry types
+
 ###0.3.1###
 - Added the ability to export all entrytypes in a section at once
 
