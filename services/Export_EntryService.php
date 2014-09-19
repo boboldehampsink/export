@@ -22,6 +22,66 @@ class Export_EntryService extends BaseApplicationComponent
     
     }
     
+    public function getFields($settings)
+    {
+        
+        // Get section id
+        $section = $settings['elementvars']['section'];
+        
+        // Get entrytype id(s)
+        $entrytype = $settings['elementvars']['entrytype'];
+        
+        if(empty($entrytype)) {
+        
+            // Get entrytype models
+            $entrytypes = craft()->sections->getEntryTypesBySectionId($section);
+        
+        } else {
+        
+            // Get entrytype model
+            $entrytypes = array(craft()->sections->getEntryTypeById($entrytype));
+            
+        }
+        
+        // Create a nice field map
+        $fields = array();
+        
+        // With multiple or one entry type
+        foreach($entrytypes as $entrytype) {
+            
+            // Set the static fields for this type
+            $static = array(
+                ExportModel::HandleId         => Craft::t("ID"),
+                ExportModel::HandleTitle      => $entrytype->hasTitleField ? $entrytype->titleLabel : false,
+                ExportModel::HandleSlug       => Craft::t("Slug"),
+                ExportModel::HandleParent     => Craft::t("Parent"),
+                ExportModel::HandleAuthor     => Craft::t("Author"),
+                ExportModel::HandlePostDate   => Craft::t("Post Date"),
+                ExportModel::HandleExpiryDate => Craft::t("Expiry Date"),
+                ExportModel::HandleEnabled    => Craft::t("Enabled"),
+                ExportModel::HandleStatus     => Craft::t("Status")
+            );
+            
+            // Set the dynamic fields for this type
+            $layout = array();
+            $tabs = craft()->fields->getLayoutById($entrytype->fieldLayoutId)->getTabs();
+            foreach($tabs as $tab) {
+                $layout += $tab->getFields();
+            }
+        
+            // Set the static fields also
+            $fields[] = array(
+                'static' => $static,
+                'layout' => $layout
+            );
+        
+        }
+        
+        // Return fields
+        return $fields;
+    
+    }
+    
     public function setCriteria($settings)
     {
     
@@ -32,7 +92,7 @@ class Export_EntryService extends BaseApplicationComponent
     
         // Get by section and entrytype
         $criteria->sectionId = $settings['elementvars']['section'];
-        $criteria->type    = $settings['elementvars']['entrytype'];
+        $criteria->type      = $settings['elementvars']['entrytype'];
     
         return $criteria;
     

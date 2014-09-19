@@ -12,6 +12,29 @@ class Export_CategoryService extends BaseApplicationComponent
     
     }
     
+    public function getFields($settings)
+    {
+       
+        // Set the static fields for this type
+        $static = array(
+            ExportModel::HandleId    => Craft::t("ID"),
+            ExportModel::HandleTitle => Craft::t("Title")
+        );
+        
+        // Set the dynamic fields for this type
+        $layout = craft()->fields->getLayoutByType(ElementType::Category)->getFields();
+        
+        // Set the static fields also
+        $fields = array(
+            'static' => $static,
+            'layout' => $layout
+        );
+        
+        // Return fields
+        return array($fields);
+    
+    }
+    
     public function setCriteria($settings)
     {
     

@@ -31,6 +31,33 @@ class Export_UserService extends BaseApplicationComponent
     
     }
     
+    public function getFields($settings)
+    {
+       
+        // Set the static fields for this type
+        $static = array(
+            ExportModel::HandleId        => Craft::t("ID"),
+            ExportModel::HandleUsername  => Craft::t("Username"),
+            ExportModel::HandleFirstName => Craft::t("First Name"),
+            ExportModel::HandleLastName  => Craft::t("Last Name"),
+            ExportModel::HandleEmail     => Craft::t("Email"),
+            ExportModel::HandleStatus    => Craft::t("Status")
+        );
+        
+        // Set the dynamic fields for this type
+        $layout = craft()->fields->getLayoutByType(ElementType::User)->getFields();
+        
+        // Set the static fields also
+        $fields = array(
+            'static' => $static,
+            'layout' => $layout
+        );
+        
+        // Return fields
+        return array($fields);
+    
+    }
+    
     public function setCriteria($settings)
     {
     

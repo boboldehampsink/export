@@ -21,5 +21,19 @@ class ExportVariable
         return false;
     
     }
+    
+    public function getFields($elementType)
+    {
+    
+        // Get from right elementType
+        $service = 'export_' . strtolower($elementType);
+        
+        // Get export vars
+        $export = craft()->request->getParam('export');
+        
+        // Return fields of elementType
+        return craft()->$service->getFields($export);
+    
+    }
 
 }
