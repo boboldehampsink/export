@@ -38,7 +38,7 @@ class ExportService extends BaseApplicationComponent
                 
                 // Put down columns
                 if(!$rows) {
-                    $row .= $this->parseColumns($settings, $fields);
+                    $row .= $this->parseColumns($settings, $element, $fields);
                 }
             
                 // Loop trough the fields
@@ -149,7 +149,7 @@ class ExportService extends BaseApplicationComponent
     }
     
     // Parse column names
-    protected function parseColumns($settings, $fields) 
+    protected function parseColumns($settings, $element, $fields) 
     {
     
         $columns = "";
@@ -182,7 +182,7 @@ class ExportService extends BaseApplicationComponent
                         break;
                         
                     default:
-                        $columns .= $class->parseColumn($handle, $settings, $this->delimiter);
+                        $columns .= $class->parseColumn($handle, $element, $settings, $this->delimiter);
                         break;
                 
                 }

@@ -98,7 +98,7 @@ class Export_EntryService extends BaseApplicationComponent
     
     }
     
-    public function parseColumn($handle, $settings, $delimiter)
+    public function parseColumn($handle, $element, $settings, $delimiter)
     {
     
         // If not found, use handle
@@ -107,8 +107,7 @@ class Export_EntryService extends BaseApplicationComponent
         switch($handle) {
     
             case ExportModel::HandleTitle:
-                $entrytype = craft()->sections->getEntryTypeById($settings['elementvars']['entrytype']);
-                $column = '"'.($entrytype ? addslashes($entrytype->titleLabel) : Craft::t("Title")).'"'.$delimiter;
+                $column = '"'.($element instanceof EntryModel ? addslashes($element->getType()->titleLabel) : Craft::t("Title")).'"'.$delimiter;
                 break;
                 
             case ExportModel::HandleParent:
