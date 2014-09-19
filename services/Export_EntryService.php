@@ -51,6 +51,10 @@ class Export_EntryService extends BaseApplicationComponent
                 $column = '"'.($entrytype ? addslashes($entrytype->titleLabel) : Craft::t("Title")).'"'.$delimiter;
                 break;
                 
+            case ExportModel::HandleParent:
+                $column = '"'.Craft::t("Parent").'"'.$delimiter;
+                break;
+                
             case ExportModel::HandleAuthor:
                 $column = '"'.Craft::t("Author").'"'.$delimiter;
                 break;
