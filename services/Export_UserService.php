@@ -73,7 +73,7 @@ class Export_UserService extends BaseApplicationComponent
     
     }
     
-    public function parseColumn($handle, $settings, $delimiter)
+    public function parseColumn($handle, $element, $settings, $delimiter)
     {
     
         // If not found, use handle
