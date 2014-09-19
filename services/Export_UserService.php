@@ -33,28 +33,44 @@ class Export_UserService extends BaseApplicationComponent
     
     public function getFields($settings)
     {
+    
+        // Set criteria
+        $criteria = new \CDbCriteria;
+        $criteria->condition = 'settings = :settings';
+        $criteria->params = array(
+            ':settings' => JsonHelper::encode($settings)
+        );
+        
+        // Check if we have a map already
+        $stored = Export_MapRecord::model()->find($criteria);
+                
+        if(!count($stored)) {
        
-        // Set the static fields for this type
-        $static = array(
-            ExportModel::HandleId        => Craft::t("ID"),
-            ExportModel::HandleUsername  => Craft::t("Username"),
-            ExportModel::HandleFirstName => Craft::t("First Name"),
-            ExportModel::HandleLastName  => Craft::t("Last Name"),
-            ExportModel::HandleEmail     => Craft::t("Email"),
-            ExportModel::HandleStatus    => Craft::t("Status")
-        );
+            // Set the static fields for this type
+            $fields = array(
+                ExportModel::HandleId        => array('name' => Craft::t("ID"), 'checked' => 0),
+                ExportModel::HandleUsername  => array('name' => Craft::t("Username"), 'checked' => 1),
+                ExportModel::HandleFirstName => array('name' => Craft::t("First Name"), 'checked' => 1),
+                ExportModel::HandleLastName  => array('name' => Craft::t("Last Name"), 'checked' => 1),
+                ExportModel::HandleEmail     => array('name' => Craft::t("Email"), 'checked' => 1),
+                ExportModel::HandleStatus    => array('name' => Craft::t("Status"), 'checked' => 0)
+            );
+            
+            // Set the dynamic fields for this type
+            foreach(craft()->fields->getLayoutByType(ElementType::User)->getFields() as $field) {
+                $data = $field->getField();
+                $fields[$data->handle] = array('name' => $data->name, 'checked' => 1);
+            }
+            
+        } else {
         
-        // Set the dynamic fields for this type
-        $layout = craft()->fields->getLayoutByType(ElementType::User)->getFields();
+            // Get the stored map        
+            $fields = $stored->map;
         
-        // Set the static fields also
-        $fields = array(
-            'static' => $static,
-            'layout' => $layout
-        );
+        }
         
         // Return fields
-        return array($fields);
+        return $fields;
     
     }
     
