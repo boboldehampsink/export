@@ -54,7 +54,6 @@ class Export_EntryService extends BaseApplicationComponent
                 ExportModel::HandleId         => Craft::t("ID"),
                 ExportModel::HandleTitle      => $entrytype->hasTitleField ? $entrytype->titleLabel : false,
                 ExportModel::HandleSlug       => Craft::t("Slug"),
-                ExportModel::HandleParent     => Craft::t("Parent"),
                 ExportModel::HandleAuthor     => Craft::t("Author"),
                 ExportModel::HandlePostDate   => Craft::t("Post Date"),
                 ExportModel::HandleExpiryDate => Craft::t("Expiry Date"),
@@ -116,10 +115,6 @@ class Export_EntryService extends BaseApplicationComponent
             case ExportModel::HandleTitle:
                 $entrytype = craft()->sections->getEntryTypeById($id);
                 $column = '"'.($entrytype ? addslashes($entrytype->titleLabel) : Craft::t("Title")).'"'.$delimiter;
-                break;
-                
-            case ExportModel::HandleParent:
-                $column = '"'.Craft::t("Parent").'"'.$delimiter;
                 break;
                 
             case ExportModel::HandleAuthor:
