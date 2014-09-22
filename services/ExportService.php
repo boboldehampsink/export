@@ -165,7 +165,7 @@ class ExportService extends BaseApplicationComponent
             if($data['checked'] == '1' && (array_key_exists($handle, $attributes) || array_key_exists(substr($handle, 0, 5), $attributes))) {
             
                 // Fill them with data
-                $fields[$handle] = substr($handle, 0, 5) == ExportModel::HandleTitle ? $attributes['title'] : $attributes[$handle];
+                $fields[$handle] = $attributes[$handle];
             
             }
         
