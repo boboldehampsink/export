@@ -78,7 +78,7 @@ class ExportService extends BaseApplicationComponent
                     $data = $this->parseFieldData($handle, $data);
                 
                     // Put in quotes and escape
-                    $row .= '"'.addslashes($data).'"'.$this->delimiter;
+                    $row .= '"'.addcslashes($data, '"').'"'.$this->delimiter;
                 
                 }
                 
@@ -238,7 +238,7 @@ class ExportService extends BaseApplicationComponent
             
             } else {
             
-                $columns .= '"'.addslashes($field->name).'"'.$this->delimiter;
+                $columns .= '"'.addcslashes($field->name, '"').'"'.$this->delimiter;
             
             }
                     
