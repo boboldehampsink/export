@@ -325,6 +325,12 @@ class ExportService extends BaseApplicationComponent
                         }
                         
                         break;
+                        
+                    case ExportModel::FieldTypeTable:
+                    
+                        $data = StringHelper::arrayToString($data);
+                    
+                        break;
                
                 }
            
