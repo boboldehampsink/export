@@ -29,8 +29,10 @@ class Export_CategoryService extends BaseApplicationComponent
        
             // Set the static fields for this type
             $fields = array(
-                ExportModel::HandleId    => array('name' => Craft::t("ID"), 'checked' => 0),
-                ExportModel::HandleTitle => array('name' => Craft::t("Title"), 'checked' => 1)
+                ExportModel::HandleId     => array('name' => Craft::t("ID"), 'checked' => 0),
+                ExportModel::HandleTitle  => array('name' => Craft::t("Title"), 'checked' => 1),
+                ExportModel::HandleSlug   => array('name' => Craft::t("Slug"), 'checked' => 0),
+                ExportModel::HandleParent => array('name' => Craft::t("Parent"), 'checked' => 0)
             );
             
             // Set the dynamic fields for this type

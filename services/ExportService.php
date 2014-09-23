@@ -158,6 +158,13 @@ class ExportService extends BaseApplicationComponent
             $attributes = $element;
         }
         
+        // Special structure view for categories/structures
+        if(array_key_exists(ExportModel::HandleParent, $map)) {
+            if($element->getAncestors()) {
+                $attributes[ExportModel::HandleParent] = implode('/', $element->getAncestors()->find());
+            }
+        }
+        
         // Loop through the map
         foreach($map as $handle => $data) {
         
@@ -202,6 +209,10 @@ class ExportService extends BaseApplicationComponent
                 
                     case ExportModel::HandleId:
                         $columns .= '"'.Craft::t("ID").'"'.$this->delimiter;
+                        break;
+                        
+                    case ExportModel::HandleParent:
+                        $columns .= '"'.Craft::t("Parent").'"'.$this->delimiter;
                         break;
                 
                     case ExportModel::HandleStatus:
