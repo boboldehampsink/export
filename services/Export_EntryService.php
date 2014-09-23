@@ -68,6 +68,7 @@ class Export_EntryService extends BaseApplicationComponent
                     ExportModel::HandleTitle . "_" . $entrytype->id => array('name' => $entrytype->hasTitleField ? $entrytype->titleLabel : Craft::t("Title"), 'checked' => 1, 'entrytype' => $entrytype->id),
                     ExportModel::HandleSlug       => array('name' => Craft::t("Slug"), 'checked' => 0),
                     ExportModel::HandleParent     => array('name' => Craft::t("Parent"), 'checked' => 0),
+                    ExportModel::HandleAncestors  => array('name' => Craft::t("Ancestors"), 'checked' => 0),
                     ExportModel::HandleAuthor     => array('name' => Craft::t("Author"), 'checked' => 0),
                     ExportModel::HandlePostDate   => array('name' => Craft::t("Post Date"), 'checked' => 0),
                     ExportModel::HandleExpiryDate => array('name' => Craft::t("Expiry Date"), 'checked' => 0),

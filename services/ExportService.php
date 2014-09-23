@@ -158,10 +158,17 @@ class ExportService extends BaseApplicationComponent
             $attributes = $element;
         }
         
-        // Special structure view for categories/structures
+        // Get parent for categories/structures
         if(array_key_exists(ExportModel::HandleParent, $map)) {
             if($element->getAncestors()) {
-                $attributes[ExportModel::HandleParent] = implode('/', $element->getAncestors()->find());
+                $attributes[ExportModel::HandleParent] = $element->getAncestors(1)->first();
+            }
+        }
+        
+        // Get ancestors for categories/structures
+        if(array_key_exists(ExportModel::HandleAncestors, $map)) {
+            if($element->getAncestors()) {
+                $attributes[ExportModel::HandleAncestors] = implode('/', $element->getAncestors()->find());
             }
         }
         
@@ -213,6 +220,10 @@ class ExportService extends BaseApplicationComponent
                         
                     case ExportModel::HandleParent:
                         $columns .= '"'.Craft::t("Parent").'"'.$this->delimiter;
+                        break;
+                        
+                    case ExportModel::HandleAncestors:
+                        $columns .= '"'.Craft::t("Ancestors").'"'.$this->delimiter;
                         break;
                 
                     case ExportModel::HandleStatus:

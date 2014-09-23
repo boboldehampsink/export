@@ -7,14 +7,15 @@ class ExportModel extends BaseModel
     // Handles
     const HandleStatus       = 'status';
     const HandleId           = 'elementId';
-    # Entries
-    const HandleTitle        = 'title';
     const HandleParent       = 'parent';
+    const HandleAncestors    = 'ancestors';
+    const HandleTitle        = 'title';
+    const HandleSlug         = 'slug';
+    # Entries
     const HandleAuthor       = 'authorId';
     const HandlePostDate     = 'postDate';
     const HandleExpiryDate   = 'expiryDate';
     const HandleEnabled      = 'enabled';
-    const HandleSlug         = 'slug';
     # Users
     const HandleUsername     = 'username';
     const HandleFirstName    = 'firstName';
