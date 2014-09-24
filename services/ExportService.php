@@ -194,51 +194,15 @@ class ExportService extends BaseApplicationComponent
     
         $columns = "";
         
-        // Get service
-        if(!isset($settings['service'])) {
-            $service = $this->_service;
-            $class = craft()->$service;
-        } else {
-            $class = $settings['service'];
-        }
-        
-        // Loop trough fields
-        foreach($fields as $handle => $data) {
-        
-            // Get field info
-            $field = craft()->fields->getFieldByHandle($handle);
+        // Loop trough map
+        foreach($settings['map'] as $handle => $data) {
             
-            // If not a field...
-            if(is_null($field)) {
+            // If checked
+            if($data['checked'] == 1) {
             
-                switch($handle) {
+                // Add column
+                $columns .= '"'.addcslashes($data['label'], '"').'"'.$this->delimiter;
                 
-                    case ExportModel::HandleId:
-                        $columns .= '"'.Craft::t("ID").'"'.$this->delimiter;
-                        break;
-                        
-                    case ExportModel::HandleParent:
-                        $columns .= '"'.Craft::t("Parent").'"'.$this->delimiter;
-                        break;
-                        
-                    case ExportModel::HandleAncestors:
-                        $columns .= '"'.Craft::t("Ancestors").'"'.$this->delimiter;
-                        break;
-                
-                    case ExportModel::HandleStatus:
-                        $columns .= '"'.Craft::t("Status").'"'.$this->delimiter;
-                        break;
-                        
-                    default:
-                        $columns .= $class->parseColumn($handle, $element, $settings, $this->delimiter);
-                        break;
-                
-                }
-            
-            } else {
-            
-                $columns .= '"'.addcslashes($field->name, '"').'"'.$this->delimiter;
-            
             }
                     
         }

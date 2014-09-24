@@ -27,7 +27,7 @@
         
         <p>{{ "Choose which fields you want to export."|t }}</p>
         
-        <table class="data fullwidth sortable">
+        <table class="data sortable">
             <tbody>
         {% set fields = craft.export.getFields(export.type) %}
         {% for handle, data in fields %}
@@ -42,6 +42,14 @@
                     </div>
                 </td>
                 <td>
+                    <div class="field">
+                        <div class="heading">
+                            <label>{{ "as"|t }}</label>
+                            <input type="text" class="text" name="fields[{{ handle }}][label]" value="{{ data.label is defined ? data.label : data.name }}">
+                        </div>
+                    </div>
+                </td>            
+                <td>
                     {{ forms.checkboxField({
                         label: 'Include in export'|t,
                         instructions: "This value will be included in the export file."|t,
@@ -54,7 +62,7 @@
             </tbody>
             <tfoot>
                 <tr>
-                    <td colspan="2" style="border-bottom: none"><input type="submit" class="btn submit" value="{{ 'Export'|t }}"></td>
+                    <td colspan="3" style="border-bottom: none"><input type="submit" class="btn submit" value="{{ 'Export'|t }}"></td>
                 </tr>
             </tfoot>
         </table>

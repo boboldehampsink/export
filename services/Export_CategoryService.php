@@ -69,28 +69,6 @@ class Export_CategoryService extends BaseApplicationComponent
     
     }
     
-    public function parseColumn($handle, $element, $settings, $delimiter)
-    {
-    
-        // If not found, use handle
-        $column = $handle;
-        
-        switch($handle) {
-    
-            case ExportModel::HandleTitle:
-                $column = '"'.Craft::t("Title").'"'.$delimiter;
-                break;
-                
-            case ExportModel::HandleSlug:
-                $column = '"'.Craft::t("Slug").'"'.$delimiter;
-                break;
-                
-        }
-        
-        return $column;
-    
-    }
-    
     public function getAttributes($map, $element)
     {
     

@@ -89,36 +89,6 @@ class Export_UserService extends BaseApplicationComponent
     
     }
     
-    public function parseColumn($handle, $element, $settings, $delimiter)
-    {
-    
-        // If not found, use handle
-        $column = $handle;
-    
-        switch($handle) {
-    
-            case ExportModel::HandleUsername:
-                $column = '"'.Craft::t("Username").'"'.$delimiter;
-                break;
-                
-            case ExportModel::HandleFirstName:
-                $column = '"'.Craft::t("First Name").'"'.$delimiter;
-                break;
-                
-            case ExportModel::HandleLastName:
-                $column = '"'.Craft::t("Last Name").'"'.$delimiter;
-                break;
-                
-            case ExportModel::HandleEmail:
-                $column = '"'.Craft::t("Email").'"'.$delimiter;
-                break;
-            
-        }
-        
-        return $column;
-    
-    }
-    
     public function getAttributes($map, $element)
     {
     
