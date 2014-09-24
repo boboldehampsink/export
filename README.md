@@ -20,6 +20,15 @@ The plugin's folder should be named "export"
 
 Changelog
 =================
+###0.4.0###
+- Added the ability to export parents and ancestors
+- Added the ability to pick your own column names
+- Added the ability to save column names and order
+- You can also clear this (with permission to "reset")
+- Fixed a lot of bugs with multiple title columns
+- Only escape double quotes in CSV
+- Ability to export fields that return an array
+
 ###0.3.2###
 - Allow multiple title columns when exporting multiple entry types
 
