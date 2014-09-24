@@ -153,23 +153,27 @@ class ExportService extends BaseApplicationComponent
     
         // Only get element attributes and content attributes
         if($element instanceof BaseElementModel) {
+        
             $attributes = array_merge($element->getAttributes(), $element->getContent()->getAttributes());
+            
+            // Get parent for categories/structures
+            if(array_key_exists(ExportModel::HandleParent, $map)) {
+                if($element->getAncestors()) {
+                    $attributes[ExportModel::HandleParent] = $element->getAncestors(1)->first();
+                }
+            }
+            
+            // Get ancestors for categories/structures
+            if(array_key_exists(ExportModel::HandleAncestors, $map)) {
+                if($element->getAncestors()) {
+                    $attributes[ExportModel::HandleAncestors] = implode('/', $element->getAncestors()->find());
+                }
+            }
+            
         } else {
+        
             $attributes = $element;
-        }
-        
-        // Get parent for categories/structures
-        if(array_key_exists(ExportModel::HandleParent, $map)) {
-            if($element->getAncestors()) {
-                $attributes[ExportModel::HandleParent] = $element->getAncestors(1)->first();
-            }
-        }
-        
-        // Get ancestors for categories/structures
-        if(array_key_exists(ExportModel::HandleAncestors, $map)) {
-            if($element->getAncestors()) {
-                $attributes[ExportModel::HandleAncestors] = implode('/', $element->getAncestors()->find());
-            }
+            
         }
         
         // Loop through the map
