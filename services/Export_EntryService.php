@@ -165,4 +165,36 @@ class Export_EntryService extends BaseApplicationComponent
     
     }
     
+    public function getAttributes($map, $element)
+    {
+    
+        // Get element as array
+        $attributes = array_merge($element->getAttributes(), $element->getContent()->getAttributes());
+          
+        // Title placeholder for all element types      
+        foreach(craft()->sections->getEntryTypesBySectionId($element->sectionId) as $entrytype) {
+        
+            // Set title
+            $attributes[ExportModel::HandleTitle . '_' . $entrytype->id] = $entrytype->id == $element->typeId ? $attributes[ExportModel::HandleTitle] : "";
+                
+        }
+        
+        // Get parent for structures
+        if(array_key_exists(ExportModel::HandleParent, $map)) {
+            if($element->getAncestors()) {
+                $attributes[ExportModel::HandleParent] = $element->getAncestors(1)->first();
+            }
+        }
+        
+        // Get ancestors for structures
+        if(array_key_exists(ExportModel::HandleAncestors, $map)) {
+            if($element->getAncestors()) {
+                $attributes[ExportModel::HandleAncestors] = implode('/', $element->getAncestors()->find());
+            }
+        }
+        
+        return $attributes;
+    
+    }
+    
 }

@@ -37,7 +37,7 @@
                         <div class="heading">
                             <label>{{ data.name }}</label>
                             <input type="hidden" name="fields[{{ handle }}][name]" value="{{ data.name }}">
-                            {% if data.entrytype is defined %}<input type="hidden" name="fields[title][entrytype]" value="{{ data.entrytype }}">{% endif %}
+                            {% if data.entrytype is defined %}<input type="hidden" name="fields[{{ handle }}][entrytype]" value="{{ data.entrytype }}">{% endif %}
                         </div>
                     </div>
                 </td>

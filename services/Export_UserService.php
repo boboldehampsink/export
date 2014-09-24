@@ -119,4 +119,14 @@ class Export_UserService extends BaseApplicationComponent
     
     }
     
+    public function getAttributes($map, $element)
+    {
+    
+        // Get element as array
+        $attributes = array_merge($element->getAttributes(), $element->getContent()->getAttributes());
+        
+        return $attributes;
+    
+    }    
+    
 }

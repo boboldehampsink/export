@@ -61,7 +61,7 @@ class ExportService extends BaseApplicationComponent
                 $row = "";
                 
                 // Get fields
-                $fields = $this->parseFields($settings['map'], $element);
+                $fields = $this->parseFields($settings, $element);
                 
                 // Put down columns
                 if(!$rows) {
@@ -146,7 +146,7 @@ class ExportService extends BaseApplicationComponent
     }
     
     // Parse fields
-    protected function parseFields($map, $element) 
+    protected function parseFields($settings, $element) 
     {
     
         $fields = array();
@@ -154,30 +154,25 @@ class ExportService extends BaseApplicationComponent
         // Only get element attributes and content attributes
         if($element instanceof BaseElementModel) {
         
-            $attributes = array_merge($element->getAttributes(), $element->getContent()->getAttributes());
-            
-            // Get parent for categories/structures
-            if(array_key_exists(ExportModel::HandleParent, $map)) {
-                if($element->getAncestors()) {
-                    $attributes[ExportModel::HandleParent] = $element->getAncestors(1)->first();
-                }
+            // Get service
+            if(!isset($settings['service'])) {
+                $service = $this->_service;
+                $class = craft()->$service;
+            } else {
+                $class = $settings['service'];
             }
-            
-            // Get ancestors for categories/structures
-            if(array_key_exists(ExportModel::HandleAncestors, $map)) {
-                if($element->getAncestors()) {
-                    $attributes[ExportModel::HandleAncestors] = implode('/', $element->getAncestors()->find());
-                }
-            }
+        
+            $attributes = $class->getAttributes($settings['map'], $element);
             
         } else {
         
+            // No element, i.e. from export source
             $attributes = $element;
             
         }
         
         // Loop through the map
-        foreach($map as $handle => $data) {
+        foreach($settings['map'] as $handle => $data) {
         
             // Only get checked fields
             if($data['checked'] == '1' && (array_key_exists($handle, $attributes) || array_key_exists(substr($handle, 0, 5), $attributes))) {

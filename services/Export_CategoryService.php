@@ -90,5 +90,29 @@ class Export_CategoryService extends BaseApplicationComponent
         return $column;
     
     }
+    
+    public function getAttributes($map, $element)
+    {
+    
+        // Get element as array
+        $attributes = array_merge($element->getAttributes(), $element->getContent()->getAttributes());
+        
+        // Get parent for categories
+        if(array_key_exists(ExportModel::HandleParent, $map)) {
+            if($element->getAncestors()) {
+                $attributes[ExportModel::HandleParent] = $element->getAncestors(1)->first();
+            }
+        }
+        
+        // Get ancestors for categories
+        if(array_key_exists(ExportModel::HandleAncestors, $map)) {
+            if($element->getAncestors()) {
+                $attributes[ExportModel::HandleAncestors] = implode('/', $element->getAncestors()->find());
+            }
+        }
+        
+        return $attributes;
+    
+    }
 
 }
