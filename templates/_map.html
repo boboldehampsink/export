@@ -29,7 +29,7 @@
         
         <table class="data sortable">
             <tbody>
-        {% set fields = craft.export.getFields(export.type) %}
+        {% set fields = craft.export.getFields(export.type, reset) %}
         {% for handle, data in fields %}
             <tr>
                 <td>

@@ -48,11 +48,31 @@
                 {% include 'export/sources/_' ~ elementType|lower %}
             {% endfor %}
             
-            <tfoot>
+            <tbody>
+                {% if currentUser.can('reset') %}
+                <tr>
+                    <td>
+                        <div class="field">
+                            <div class="heading">
+                                <label>{{ "Reset export map"|t }}</label>
+                                <div class="instructions">
+                                    <p>{{ "Check this if you want to reset your fields and column labels."|t }}</p>                
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="field checkbox">
+                            <input type="hidden" name="reset" value="">
+                            <input type="checkbox" value="1" class="checkbox" name="reset">
+                        </div>
+                    </td>
+                </tr>
+                {% endif %}
                 <tr>
                     <td colspan="2" style="border-bottom: none"><input type="submit" class="btn submit" value="{{ 'Next'|t }}"></td>
                 </tr>
-            </tfoot>
+            </tbody>
         </table>
         
     </form>

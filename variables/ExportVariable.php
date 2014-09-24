@@ -22,7 +22,7 @@ class ExportVariable
     
     }
     
-    public function getFields($elementType)
+    public function getFields($elementType, $reset)
     {
     
         // Get from right elementType
@@ -32,7 +32,7 @@ class ExportVariable
         $export = craft()->request->getParam('export');
         
         // Return fields of elementType
-        return craft()->$service->getFields($export);
+        return craft()->$service->getFields($export, $reset);
     
     }
 

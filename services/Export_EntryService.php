@@ -22,7 +22,7 @@ class Export_EntryService extends BaseApplicationComponent
     
     }
     
-    public function getFields($settings)
+    public function getFields($settings, $reset)
     {
     
         // Set criteria
@@ -35,7 +35,7 @@ class Export_EntryService extends BaseApplicationComponent
         // Check if we have a map already
         $stored = Export_MapRecord::model()->find($criteria);
                 
-        if(!count($stored)) {
+        if(!count($stored) || $reset) {
                    
             // Get section id
             $section = $settings['elementvars']['section'];

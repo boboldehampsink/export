@@ -31,7 +31,7 @@ class Export_UserService extends BaseApplicationComponent
     
     }
     
-    public function getFields($settings)
+    public function getFields($settings, $reset)
     {
     
         // Set criteria
@@ -44,7 +44,7 @@ class Export_UserService extends BaseApplicationComponent
         // Check if we have a map already
         $stored = Export_MapRecord::model()->find($criteria);
                 
-        if(!count($stored)) {
+        if(!count($stored) || $reset) {
        
             // Set the static fields for this type
             $fields = array(

@@ -29,4 +29,11 @@ class ExportPlugin extends BasePlugin
         return true;
     }
     
+    function registerUserPermissions()
+    {
+        return array(
+            'reset' => array('label' => Craft::t('Reset export map'))
+        );
+    }
+    
 }

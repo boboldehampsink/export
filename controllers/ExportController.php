@@ -27,12 +27,14 @@ class ExportController extends BaseController
     public function actionMap() 
     {
     
-        /// Get import post
+        // Get export posts
         $export = craft()->request->getRequiredPost('export');
+        $reset = craft()->request->getPost('reset');
             
         // Send variables to template and display
         $this->renderTemplate('export/_map', array(
-            'export' => $export
+            'export' => $export,
+            'reset' => $reset
         ));
     
     }
