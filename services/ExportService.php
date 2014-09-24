@@ -310,12 +310,6 @@ class ExportService extends BaseApplicationComponent
                         }
                         
                         break;
-                        
-                    case ExportModel::FieldTypeTable:
-                    
-                        $data = StringHelper::arrayToString($data);
-                    
-                        break;
                
                 }
            
@@ -326,6 +320,11 @@ class ExportService extends BaseApplicationComponent
             // Don't return null, return empty
             $data = "";
         
+        }
+        
+        // If it's an array, make it a string
+        if(is_array($data)) {
+            $data = StringHelper::arrayToString($data);
         }
                                
         return $data;
