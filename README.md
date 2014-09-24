@@ -4,11 +4,14 @@ Export plugin for Craft CMS
 Plugin that allows you to export data to CSV files.
 
 Features:
-- Export Entries and Entry Types
+- Export Entries and Entry Types (All types or per type)
 - Export Users and User Groups
 - Export Categories
 - Sortable export field order
+- Renameable column labels
+- Ability to save your sort and column settings
 - Has a hook "registerExportSource" to add/replace exports with your own source.
+- Has a hook "registerExportOperation" to parse special export fields
 
 Todo:
 - Export all ElementTypes (currently only Entries, Users and Categories)
@@ -20,6 +23,9 @@ The plugin's folder should be named "export"
 
 Changelog
 =================
+###0.4.1###
+- Added a hook "registerExportOperation" to parse special export fields
+
 ###0.4.0###
 - Added the ability to export parents and ancestors
 - Added the ability to pick your own column names
