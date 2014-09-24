@@ -315,6 +315,9 @@ class ExportService extends BaseApplicationComponent
            
             }
             
+            // Get other operations
+            craft()->plugins->call('registerExportOperation', array(&$data, $handle));
+            
         } else {
         
             // Don't return null, return empty
