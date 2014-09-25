@@ -11,7 +11,7 @@
             </div>
         </td>
         <td>
-        {% for group in craft.import.getGroups('User') %}
+        {% for group in craft.export.getGroups('User') %}
             {{ forms.checkboxField({
                 label: group.name,
                 name: "export[elementvars][groups][]",

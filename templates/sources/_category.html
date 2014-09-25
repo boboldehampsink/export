@@ -15,7 +15,7 @@
                 <div class="input">
                     <div class="select">
                         <select name="export[elementvars][group]" id="exportCategoryGroup" disabled>
-                        {% for group in craft.import.getGroups('Category') %}
+                        {% for group in craft.export.getGroups('Category') %}
                             <option value="{{ group.id }}">{{ group.name }}</option>
                         {% endfor %}
                         </select>
