@@ -23,6 +23,9 @@ The plugin's folder should be named "export"
 
 Changelog
 =================
+###0.4.2###
+- Fixed a serious issue that led to not being able to run Export independently from Import
+
 ###0.4.1###
 - Added a hook "registerExportOperation" to parse special export fields
 
