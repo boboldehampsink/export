@@ -274,23 +274,11 @@ class ExportService extends BaseApplicationComponent
                
                     case ExportModel::FieldTypeEntries:
                     case ExportModel::FieldTypeCategories:
-                   
-                        // Show title
-                        $data = $data->first()->title;
-                                           
-                        break;
-                        
                     case ExportModel::FieldTypeAssets:
-                    
-                        // Show filename
-                        $data = $data->first()->filename;
-                        
-                        break;
-                   
                     case ExportModel::FieldTypeUsers:
                    
-                        // Show username
-                        $data = $data->first()->username;
+                        // Show names
+                        $data = implode(', ', $data->find());
                                            
                         break;
                         
@@ -323,11 +311,6 @@ class ExportService extends BaseApplicationComponent
             // Don't return null, return empty
             $data = "";
         
-        }
-        
-        // If it's an array, make it a string
-        if(is_array($data)) {
-            $data = StringHelper::arrayToString($data);
         }
                                
         return $data;
