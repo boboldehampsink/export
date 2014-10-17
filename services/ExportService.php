@@ -312,6 +312,11 @@ class ExportService extends BaseApplicationComponent
             $data = "";
         
         }
+        
+        // If it's an array, make it a string
+        if(is_array($data)) {
+            $data = StringHelper::arrayToString($data);
+        }
                                
         return $data;
    
