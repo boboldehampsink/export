@@ -286,7 +286,7 @@ class ExportService extends BaseApplicationComponent
                     case ExportModel::FieldTypeUsers:
                    
                         // Show names
-                        $data = implode(', ', $data->find());
+                        $data = $data instanceof ElementCriteriaModel ? implode(', ', $data->find()) : $data;
                                            
                         break;
                         
