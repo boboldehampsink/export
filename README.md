@@ -23,6 +23,9 @@ The plugin's folder should be named "export"
 
 Changelog
 =================
+###0.4.3###
+- Better field data parsing
+
 ###0.4.2###
 - Fixed a serious issue that led to not being able to run Export independently from Import
 
