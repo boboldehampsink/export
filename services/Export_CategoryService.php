@@ -59,8 +59,7 @@ class Export_CategoryService extends BaseApplicationComponent
     
         // Match with current data
         $criteria = craft()->elements->getCriteria(ElementType::Category);
-        $criteria->offset = $settings['offset'];
-        $criteria->limit = $settings['limit'];
+        $criteria->limit = null;
         $criteria->status = isset($settings['map']['status']) ? $settings['map']['status'] : null;
     
         // Look in same group when replacing

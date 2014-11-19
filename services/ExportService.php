@@ -10,9 +10,6 @@ class ExportService extends BaseApplicationComponent
     public function saveMap($settings, $map)
     {
     
-        // Unset non-map settings
-        unset($settings['offset'], $settings['limit']);
-    
         // Set criteria
         $criteria = new \CDbCriteria;
         $criteria->condition = 'settings = :settings';
@@ -123,11 +120,6 @@ class ExportService extends BaseApplicationComponent
                     $data[] = $source;
                 }
             }
-        }
-        
-        // Cut up data from source
-        if($settings['offset']) {
-            $data = array_slice($data, $settings['offset'], $settings['limit']);
         }
                         
         // If no data from source, get data by ourselves

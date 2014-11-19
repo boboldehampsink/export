@@ -109,8 +109,7 @@ class Export_EntryService extends BaseApplicationComponent
     
         // Get entries by criteria
         $criteria = craft()->elements->getCriteria(ElementType::Entry);
-        $criteria->offset = $settings['offset'];
-        $criteria->limit = $settings['limit'];
+        $criteria->limit = null;
         $criteria->status = isset($settings['map']['status']) ? $settings['map']['status'] : null;
     
         // Get by section and entrytype

@@ -79,8 +79,7 @@ class Export_UserService extends BaseApplicationComponent
     
         // Get users by criteria
         $criteria = craft()->elements->getCriteria(ElementType::User);
-        $criteria->offset = $settings['offset'];
-        $criteria->limit = $settings['limit'];
+        $criteria->limit = null;
         $criteria->status = isset($settings['map']['status']) ? $settings['map']['status'] : null;
         
         // Get by group
