@@ -3,11 +3,12 @@ namespace Craft;
 
 class ExportTest extends BaseTest 
 {
-
-    protected $exportService;
     
     public function setUp()
     {
+    
+        // PHPUnit complains about not settings this
+        date_default_timezone_set('UTC');
     
         // Get dependencies
         $dir = __DIR__;
@@ -26,9 +27,9 @@ class ExportTest extends BaseTest
         }
     
         // Construct
-        $this->exportService      = new ExportService;
-        $this->exportEntryService = new Export_EntryService;
-        $this->exportUserService  = new Export_UserService;
+        $this->setComponent(craft(), 'export', new ExportService);
+        $this->setComponent(craft(), 'export_entry', new Export_EntryService);
+        $this->setComponent(craft(), 'export_user', new Export_UserService);
     
     } 
     
@@ -36,7 +37,6 @@ class ExportTest extends BaseTest
     {
     
         $settings = array (
-          'service' => $this->exportEntryService,
           'type' => 'Entry',
           'elementvars' => 
           array (
@@ -91,7 +91,7 @@ class ExportTest extends BaseTest
         );
             
         // Download
-        $data = $this->exportService->download($settings);
+        $data = craft()->export->download($settings);
         
         // check if we got a csv
         $this->assertInternalType('string', $data);
@@ -102,7 +102,6 @@ class ExportTest extends BaseTest
     {
     
         $settings = array (
-          'service' => $this->exportUserService,
           'type' => 'User',
           'elementvars' => 
           array (
@@ -151,7 +150,7 @@ class ExportTest extends BaseTest
         );
         
         // Download
-        $data = $this->exportService->download($settings);
+        $data = craft()->export->download($settings);
         
         // check if we got a csv
         $this->assertInternalType('string', $data);

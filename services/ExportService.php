@@ -125,16 +125,9 @@ class ExportService extends BaseApplicationComponent
         // If no data from source, get data by ourselves
         if(!count($data)) {
         
-            // Get service
-            if(!isset($settings['service'])) {
-                $service = $this->_service;
-                $class = craft()->$service;
-            } else {
-                $class = $settings['service'];
-            }
-        
             // Find data
-            $criteria = $class->setCriteria($settings);
+            $service = $this->_service;
+            $criteria = craft()->$service->setCriteria($settings);
             
             // Gather data
             $data = $criteria->find();
@@ -155,14 +148,8 @@ class ExportService extends BaseApplicationComponent
         if($element instanceof BaseElementModel) {
         
             // Get service
-            if(!isset($settings['service'])) {
-                $service = $this->_service;
-                $class = craft()->$service;
-            } else {
-                $class = $settings['service'];
-            }
-        
-            $attributes = $class->getAttributes($settings['map'], $element);
+            $service = $this->_service;        
+            $attributes = craft()->$service->getAttributes($settings['map'], $element);
             
         } else {
         
