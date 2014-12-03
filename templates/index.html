@@ -8,6 +8,7 @@
 
 {% set content %}
     <form method="post" action="" class="centered" accept-charset="UTF-8" enctype="multipart/form-data">
+        {{ getCsrfInput() }}
         <input type="hidden" name="action" value="export/map">
         
         {% set elementTypes = {} %}
