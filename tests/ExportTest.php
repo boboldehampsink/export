@@ -7,29 +7,9 @@ class ExportTest extends BaseTest
     public function setUp()
     {
     
-        // PHPUnit complains about not settings this
-        date_default_timezone_set('UTC');
-    
-        // Get dependencies
-        $dir = __DIR__;
-        $map = array(
-            '\\Craft\\ExportModel'         => '/../models/ExportModel.php',
-            '\\Craft\\ExportService'       => '/../services/ExportService.php',
-            '\\Craft\\Export_EntryService' => '/../services/Export_EntryService.php',
-            '\\Craft\\Export_UserService'  => '/../services/Export_UserService.php'
-        );
-
-        // Inject them
-        foreach($map as $classPath => $filePath) {
-            if(!class_exists($classPath, false)) {
-                require_once($dir . $filePath);
-            }
-        }
-    
-        // Construct
-        $this->setComponent(craft(), 'export', new ExportService);
-        $this->setComponent(craft(), 'export_entry', new Export_EntryService);
-        $this->setComponent(craft(), 'export_user', new Export_UserService);
+        // Load plugins
+        $pluginsService = craft()->getComponent('plugins');
+        $pluginsService->loadPlugins();
     
     } 
     
