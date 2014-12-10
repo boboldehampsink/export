@@ -23,6 +23,9 @@ The plugin's folder should be named "export"
 
 Changelog
 =================
+###0.4.5###
+- Added getCsrfInput function to forms
+
 ###0.4.4###
 - Even better field data parsing
 
