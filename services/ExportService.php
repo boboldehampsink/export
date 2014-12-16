@@ -302,7 +302,7 @@ class ExportService extends BaseApplicationComponent
         
         // If it's an array, make it a string
         if(is_array($data)) {
-            $data = StringHelper::arrayToString(is_array($data) ? array_filter($data) : $data, ', ');
+            $data = StringHelper::arrayToString(array_filter($data), ', ');
         }
         
         // If it's an object, make it a string
