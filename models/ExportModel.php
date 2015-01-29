@@ -33,6 +33,7 @@ class ExportModel extends BaseModel
     const FieldTypeAssets      = 'Assets';
     const FieldTypeUsers       = 'Users';
     const FieldTypeLightswitch = 'Lightswitch';
+    const FieldTypeTable       = 'Table';
     
     // Delimiters
     const DelimiterSemicolon = ';';

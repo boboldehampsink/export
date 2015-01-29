@@ -285,6 +285,21 @@ class ExportService extends BaseApplicationComponent
                         }
                         
                         break;
+
+                    case ExportModel::FieldTypeTable:
+
+                        // Parse table checkboxes
+                        $table = array();
+                        foreach($data as $row) {
+                            foreach($row as $column => $value) {
+                                $table[] = $field->settings['columns'][$column]['type'] == 'checkbox' ? ($value == "" ? Craft::t("No") : Craft::t("Yes")) : $value;
+                            }
+                        }
+
+                        // Return parsed data as array
+                        $data = $table;
+
+                        break;
                
                 }
            
