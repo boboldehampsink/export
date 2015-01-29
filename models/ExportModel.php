@@ -17,10 +17,15 @@ class ExportModel extends BaseModel
     const HandleExpiryDate   = 'expiryDate';
     const HandleEnabled      = 'enabled';
     # Users
-    const HandleUsername     = 'username';
-    const HandleFirstName    = 'firstName';
-    const HandleLastName     = 'lastName';
-    const HandleEmail        = 'email';
+    const HandleUsername             = 'username';
+    const HandleFirstName            = 'firstName';
+    const HandleLastName             = 'lastName';
+    const HandleEmail                = 'email';
+    const HandlePreferredLocale      = 'preferredLocale';
+    const HandleWeekStartDay         = 'weekStartDay';
+    const HandleLastLoginDate        = 'lastLoginDate';
+    const HandleInvalidLoginCount    = 'invalidLoginCount';
+    const HandleLastInvalidLoginDate = 'lastInvalidLoginDate';
     
     // Fieldtypes
     const FieldTypeEntries     = 'Entries';
