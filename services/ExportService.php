@@ -300,14 +300,14 @@ class ExportService extends BaseApplicationComponent
         
         }
         
-        // If it's an array, make it a string
+        // If it's an object or an array, make it a string
         if(is_array($data)) {
-            $data = StringHelper::arrayToString(array_filter(ArrayHelper::flattenArray($data), 'strlen'), ', ');
+            $data = StringHelper::arrayToString(ArrayHelper::filterEmptyStringsFromArray(ArrayHelper::flattenArray($data)), ', ');
         }
         
         // If it's an object, make it a string
         if(is_object($data)) {
-            $data = StringHelper::arrayToString(array_filter(ArrayHelper::flattenArray(get_object_vars($data)), 'strlen'), ', ');
+            $data = StringHelper::arrayToString(ArrayHelper::filterEmptyStringsFromArray(ArrayHelper::flattenArray(get_object_vars($data))), ', ');
         }
                                
         return $data;
