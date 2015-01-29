@@ -23,6 +23,10 @@ The plugin's folder should be named "export"
 
 Changelog
 =================
+###0.4.6###
+- Added the ability to export Users's preferred locale, week start day, last login date, invalid login count and last invalid login date
+- Clean up arrays before exporting, making them more readable
+
 ###0.4.5###
 - Added getCsrfInput function to forms
 
