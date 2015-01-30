@@ -292,7 +292,7 @@ class ExportService extends BaseApplicationComponent
                         $table = array();
                         foreach($data as $row) {
                             foreach($row as $column => $value) {
-                                $table[] = $field->settings['columns'][$column]['type'] == 'checkbox' ? ($value == "" ? Craft::t("No") : Craft::t("Yes")) : $value;
+                                $table[] = $field->settings['columns'][$column]['type'] == 'checkbox' ? ($value == 1 ? Craft::t("Yes") : Craft::t("No")) : $value;
                             }
                         }
 
