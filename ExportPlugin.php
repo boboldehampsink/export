@@ -4,36 +4,35 @@ namespace Craft;
 class ExportPlugin extends BasePlugin
 {
 
-    function getName()
+    public function getName()
     {
         return Craft::t('Export');
     }
 
-    function getVersion()
+    public function getVersion()
     {
         return '0.4.7';
     }
 
-    function getDeveloper()
+    public function getDeveloper()
     {
         return 'Bob Olde Hampsink';
     }
 
-    function getDeveloperUrl()
+    public function getDeveloperUrl()
     {
         return 'http://www.itmundi.nl';
     }
-    
-    function hasCpSection()
+
+    public function hasCpSection()
     {
         return true;
     }
-    
-    function registerUserPermissions()
+
+    public function registerUserPermissions()
     {
         return array(
-            'reset' => array('label' => Craft::t('Reset export map'))
+            'reset' => array('label' => Craft::t('Reset export map')),
         );
     }
-    
 }

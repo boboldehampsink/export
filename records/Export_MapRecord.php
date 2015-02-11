@@ -13,8 +13,7 @@ class Export_MapRecord extends BaseRecord
     {
         return array(
             'settings' => AttributeType::Mixed,
-            'map'      => AttributeType::Mixed
+            'map'      => AttributeType::Mixed,
         );
     }
-    
 }

@@ -1,51 +1,46 @@
 <?php
 namespace Craft;
 
-class Export_UserService extends BaseApplicationComponent 
+class Export_UserService extends BaseApplicationComponent
 {
-
 
     public function getGroups()
     {
-    
+
         // Check if usergroups are allowed in this installation
-        if(isset(craft()->userGroups)) {
-    
+        if (isset(craft()->userGroups)) {
+
             // Get usergroups
             $groups = craft()->userGroups->getAllGroups();
-            
+
             // Return when groups found
-            if(count($groups)) {
-            
+            if (count($groups)) {
                 return $groups;
-                
             }
-        
+
             // Still return true when no groups found
             return true;
-        
         }
-        
+
         // Else, dont proceed with the user element
         return false;
-    
     }
-    
+
     public function getFields($settings, $reset)
     {
-    
+
         // Set criteria
-        $criteria = new \CDbCriteria;
+        $criteria = new \CDbCriteria();
         $criteria->condition = 'settings = :settings';
         $criteria->params = array(
-            ':settings' => JsonHelper::encode($settings)
+            ':settings' => JsonHelper::encode($settings),
         );
-        
+
         // Check if we have a map already
         $stored = Export_MapRecord::model()->find($criteria);
-                
-        if(!count($stored) || $reset) {
-       
+
+        if (!count($stored) || $reset) {
+
             // Set the static fields for this type
             $fields = array(
                 ExportModel::HandleId                   => array('name' => Craft::t("ID"), 'checked' => 0),
@@ -58,50 +53,44 @@ class Export_UserService extends BaseApplicationComponent
                 ExportModel::HandleStatus               => array('name' => Craft::t("Status"), 'checked' => 0),
                 ExportModel::HandleLastLoginDate        => array('name' => Craft::t("Last Login Date"), 'checked' => 0),
                 ExportModel::HandleInvalidLoginCount    => array('name' => Craft::t("Invalid Login Count"), 'checked' => 0),
-                ExportModel::HandleLastInvalidLoginDate => array('name' => Craft::t("Last Invalid Login Date"), 'checked' => 0)
+                ExportModel::HandleLastInvalidLoginDate => array('name' => Craft::t("Last Invalid Login Date"), 'checked' => 0),
             );
-            
+
             // Set the dynamic fields for this type
-            foreach(craft()->fields->getLayoutByType(ElementType::User)->getFields() as $field) {
+            foreach (craft()->fields->getLayoutByType(ElementType::User)->getFields() as $field) {
                 $data = $field->getField();
                 $fields[$data->handle] = array('name' => $data->name, 'checked' => 1);
             }
-            
         } else {
-        
-            // Get the stored map        
+
+            // Get the stored map
             $fields = $stored->map;
-        
         }
-        
+
         // Return fields
         return $fields;
-    
     }
-    
+
     public function setCriteria($settings)
     {
-    
+
         // Get users by criteria
         $criteria = craft()->elements->getCriteria(ElementType::User);
         $criteria->limit = null;
         $criteria->status = isset($settings['map']['status']) ? $settings['map']['status'] : null;
-        
+
         // Get by group
         $criteria->groupId = $settings['elementvars']['groups'];
-        
+
         return $criteria;
-    
     }
-    
+
     public function getAttributes($map, $element)
     {
-    
+
         // Get element as array
         $attributes = array_merge($element->getAttributes(), $element->getContent()->getAttributes());
-        
+
         return $attributes;
-    
-    }    
-    
+    }
 }

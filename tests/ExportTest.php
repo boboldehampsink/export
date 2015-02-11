@@ -1,140 +1,116 @@
 <?php
 namespace Craft;
 
-class ExportTest extends BaseTest 
+class ExportTest extends BaseTest
 {
-    
+
     public function setUp()
     {
-    
+
         // Load plugins
         $pluginsService = craft()->getComponent('plugins');
         $pluginsService->loadPlugins();
-    
-    } 
-    
-    function testActionDownloadEntries() 
+    }
+
+    public function testActionDownloadEntries()
     {
-    
-        $settings = array (
+        $settings = array(
           'type' => 'Entry',
-          'elementvars' => 
-          array (
+          'elementvars' => array(
             'section' => '14',
             'entrytype' => '',
           ),
-          'map' => 
-          array (
-            'elementId' => 
-            array (
+          'map' => array(
+            'elementId' => array(
               'name' => 'ID',
               'label' => 'ID',
               'checked' => '',
             ),
-            'slug' => 
-            array (
+            'slug' => array(
               'name' => 'Slug',
               'label' => 'Slug',
               'checked' => '',
             ),
-            'authorId' => 
-            array (
+            'authorId' => array(
               'name' => 'Author',
               'label' => 'Author',
               'checked' => '',
             ),
-            'postDate' => 
-            array (
+            'postDate' => array(
               'name' => 'Post Date',
               'label' => 'Post Date',
               'checked' => '',
             ),
-            'expiryDate' => 
-            array (
+            'expiryDate' => array(
               'name' => 'Expiry Date',
               'label' => 'Expiry Date',
               'checked' => '',
             ),
-            'enabled' => 
-            array (
+            'enabled' => array(
               'name' => 'Enabled',
               'label' => 'Enabled',
               'checked' => '',
             ),
-            'status' => 
-            array (
+            'status' => array(
               'name' => 'Status',
               'label' => 'Status',
               'checked' => '',
-            )
+            ),
           ),
         );
-            
+
         // Download
         $data = craft()->export->download($settings);
-        
+
         // check if we got a csv
         $this->assertInternalType('string', $data);
-        
     }
-    
-    function testActionDownloadUsers() 
+
+    public function testActionDownloadUsers()
     {
-    
-        $settings = array (
+        $settings = array(
           'type' => 'User',
-          'elementvars' => 
-          array (
-            'groups' => 
-            array (1),
+          'elementvars' => array(
+            'groups' => array(1),
           ),
-          'map' => 
-          array (
-            'elementId' => 
-            array (
+          'map' => array(
+            'elementId' => array(
               'name' => 'ID',
               'label' => 'ID',
               'checked' => '',
             ),
-            'username' => 
-            array (
+            'username' => array(
               'name' => 'Username',
               'label' => 'Username',
               'checked' => '1',
             ),
-            'firstName' => 
-            array (
+            'firstName' => array(
               'name' => 'First Name',
               'label' => 'First Name',
               'checked' => '1',
             ),
-            'lastName' => 
-            array (
+            'lastName' => array(
               'name' => 'Last Name',
               'label' => 'Last Name',
               'checked' => '1',
             ),
-            'email' => 
-            array (
+            'email' => array(
               'name' => 'Email',
               'label' => 'Email',
               'checked' => '1',
             ),
-            'status' => 
-            array (
+            'status' => array(
               'name' => 'Status',
               'label' => 'Status',
               'checked' => '',
-            )
+            ),
           ),
         );
-        
+
         // Download
         $data = craft()->export->download($settings);
-        
+
         // check if we got a csv
         $this->assertInternalType('string', $data);
-    
     }
-    
 }
