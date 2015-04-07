@@ -2,11 +2,26 @@
 
 namespace Craft;
 
+/**
+ * Export User Service.
+ *
+ * Handles export users.
+ *
+ * @author    Bob Olde Hampsink <b.oldehampsink@itmundi.nl>
+ * @copyright Copyright (c) 2015, Bob Olde Hampsink
+ * @license   http://buildwithcraft.com/license Craft License Agreement
+ *
+ * @link      http://github.com/boboldehampsink
+ */
 class Export_UserService extends BaseApplicationComponent
 {
+    /**
+     * Get user groups.
+     *
+     * @return array|bool
+     */
     public function getGroups()
     {
-
         // Check if usergroups are allowed in this installation
         if (isset(craft()->userGroups)) {
 
@@ -26,9 +41,16 @@ class Export_UserService extends BaseApplicationComponent
         return false;
     }
 
-    public function getFields($settings, $reset)
+    /**
+     * Return user fields.
+     *
+     * @param array $settings
+     * @param bool  $reset
+     *
+     * @return array
+     */
+    public function getFields(array $settings, $reset)
     {
-
         // Set criteria
         $criteria = new \CDbCriteria();
         $criteria->condition = 'settings = :settings';
@@ -71,9 +93,15 @@ class Export_UserService extends BaseApplicationComponent
         return $fields;
     }
 
-    public function setCriteria($settings)
+    /**
+     * Set user criteria.
+     *
+     * @param array $settings
+     *
+     * @return ElementCriteriaModel
+     */
+    public function setCriteria(array $settings)
     {
-
         // Get users by criteria
         $criteria = craft()->elements->getCriteria(ElementType::User);
         $criteria->limit = null;
@@ -85,7 +113,15 @@ class Export_UserService extends BaseApplicationComponent
         return $criteria;
     }
 
-    public function getAttributes($map, $element)
+    /**
+     * Get user attributes.
+     *
+     * @param array            $map
+     * @param BaseElementModel $element
+     *
+     * @return array
+     */
+    public function getAttributes(array $map, BaseElementModel $element)
     {
         $attributes = array();
 

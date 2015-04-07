@@ -2,14 +2,42 @@
 
 namespace Craft;
 
+/**
+ * Export service.
+ *
+ * Handles common export logics.
+ *
+ * @author    Bob Olde Hampsink <b.oldehampsink@itmundi.nl>
+ * @copyright Copyright (c) 2015, Bob Olde Hampsink
+ * @license   http://buildwithcraft.com/license Craft License Agreement
+ *
+ * @link      http://github.com/boboldehampsink
+ */
 class ExportService extends BaseApplicationComponent
 {
+    /**
+     * Contains the working export service's name.
+     *
+     * @var string
+     */
     private $_service;
+
+    /**
+     * Contains the default delimiter
+     * TODO: Make this configurable.
+     *
+     * @var string
+     */
     public $delimiter = ExportModel::DelimiterComma;
 
-    public function saveMap($settings, $map)
+    /**
+     * Saves an export map to the database.
+     *
+     * @param array $settings
+     * @param array $map
+     */
+    public function saveMap(array $settings, array $map)
     {
-
         // Set criteria
         $criteria = new \CDbCriteria();
         $criteria->condition = 'settings = :settings';
@@ -32,9 +60,15 @@ class ExportService extends BaseApplicationComponent
         $mapRecord->save(false);
     }
 
-    public function download($settings)
+    /**
+     * Download the export csv.
+     *
+     * @param array $settings
+     *
+     * @return string
+     */
+    public function download(array $settings)
     {
-
         // Get max power
         craft()->config->maxPowerCaptain();
 
@@ -62,7 +96,7 @@ class ExportService extends BaseApplicationComponent
 
                 // Put down columns
                 if (!$rows) {
-                    $row .= $this->parseColumns($settings, $element, $fields);
+                    $row .= $this->parseColumns($settings);
                 }
 
                 // Loop trough the fields
@@ -99,9 +133,15 @@ class ExportService extends BaseApplicationComponent
         return $export;
     }
 
-    protected function getData($settings)
+    /**
+     * Get data from sources.
+     *
+     * @param array $settings
+     *
+     * @return array
+     */
+    protected function getData(array $settings)
     {
-
         // Get other sources
         $sources = craft()->plugins->call('registerExportSource', array($settings));
 
@@ -129,8 +169,15 @@ class ExportService extends BaseApplicationComponent
         return $data;
     }
 
-    // Parse fields
-    protected function parseFields($settings, $element)
+    /**
+     * Parse fields.
+     *
+     * @param array $settings
+     * @param       $element
+     *
+     * @return array
+     */
+    protected function parseFields(array $settings, $element)
     {
         $fields = array();
 
@@ -160,8 +207,14 @@ class ExportService extends BaseApplicationComponent
         return $fields;
     }
 
-    // Parse column names
-    protected function parseColumns($settings, $element, $fields)
+    /**
+     * Parse column names.
+     *
+     * @param array $settings [description]
+     *
+     * @return string
+     */
+    protected function parseColumns(array $settings)
     {
         $columns = '';
 
@@ -188,7 +241,14 @@ class ExportService extends BaseApplicationComponent
         return $columns;
     }
 
-    // Parse reserved element values
+    /**
+     * Parse reserved element values.
+     *
+     * @param  $handle
+     * @param  $data
+     *
+     * @return string
+     */
     protected function parseElementData($handle, $data)
     {
         switch ($handle) {
@@ -222,7 +282,14 @@ class ExportService extends BaseApplicationComponent
         return $data;
     }
 
-    // Parse field values
+    /**
+     * Parse field values.
+     *
+     * @param string $handle
+     * @param mixed  $data
+     *
+     * @return string
+     */
     protected function parseFieldData($handle, $data)
     {
 

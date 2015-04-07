@@ -63,11 +63,10 @@
                         </div>
                     </td>
                     <td>
-                        <div class="field checkboxfield">
-                            <input type="hidden" name="reset" value="">
-                            <input type="checkbox" id="export-dummy-id" value="1" class="checkbox" name="reset">
-                            <label for="export-dummy-id"></label>
-                        </div>
+                        {{ forms.checkboxField({
+                            name: "reset",
+                            value: 1
+                        }) }}
                     </td>
                 </tr>
                 {% endif %}

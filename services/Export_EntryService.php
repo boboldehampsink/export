@@ -2,11 +2,26 @@
 
 namespace Craft;
 
+/**
+ * Export Entry Service.
+ *
+ * Handles exporting entries.
+ *
+ * @author    Bob Olde Hampsink <b.oldehampsink@itmundi.nl>
+ * @copyright Copyright (c) 2015, Bob Olde Hampsink
+ * @license   http://buildwithcraft.com/license Craft License Agreement
+ *
+ * @link      http://github.com/boboldehampsink
+ */
 class Export_EntryService extends BaseApplicationComponent
 {
+    /**
+     * Get entry sections.
+     *
+     * @return array|bool
+     */
     public function getGroups()
     {
-
         // Get editable sections for user
         $editable = craft()->sections->getEditableSections();
 
@@ -21,9 +36,16 @@ class Export_EntryService extends BaseApplicationComponent
         return $sections;
     }
 
-    public function getFields($settings, $reset)
+    /**
+     * Return entry fields.
+     *
+     * @param array $settings
+     * @param bool  $reset
+     *
+     * @return array
+     */
+    public function getFields(array $settings, $reset)
     {
-
         // Set criteria
         $criteria = new \CDbCriteria();
         $criteria->condition = 'settings = :settings';
@@ -97,7 +119,14 @@ class Export_EntryService extends BaseApplicationComponent
         return $fields;
     }
 
-    public function setCriteria($settings)
+    /**
+     * Set entry criteria.
+     *
+     * @param array $settings
+     *
+     * @return ElementCriteriaModel
+     */
+    public function setCriteria(array $settings)
     {
 
         // Get entries by criteria
@@ -112,7 +141,15 @@ class Export_EntryService extends BaseApplicationComponent
         return $criteria;
     }
 
-    public function getAttributes($map, $element)
+    /**
+     * Get entry attributes.
+     *
+     * @param array            $map
+     * @param BaseElementModel $element
+     *
+     * @return array
+     */
+    public function getAttributes(array $map, BaseElementModel $element)
     {
         $attributes = array();
 

@@ -2,18 +2,40 @@
 
 namespace Craft;
 
+/**
+ * Export Category Service.
+ *
+ * Handles exporting categories
+ *
+ * @author    Bob Olde Hampsink <b.oldehampsink@itmundi.nl>
+ * @copyright Copyright (c) 2015, Bob Olde Hampsink
+ * @license   http://buildwithcraft.com/license Craft License Agreement
+ *
+ * @link      http://github.com/boboldehampsink
+ */
 class Export_CategoryService extends BaseApplicationComponent
 {
+    /**
+     * Get category groups.
+     *
+     * @return array|bool
+     */
     public function getGroups()
     {
-
         // Return editable groups for user
         return craft()->categories->getEditableGroups();
     }
 
-    public function getFields($settings, $reset)
+    /**
+     * Return category fields.
+     *
+     * @param array $settings
+     * @param bool  $reset
+     *
+     * @return array
+     */
+    public function getFields(array $settings, $reset)
     {
-
         // Set criteria
         $criteria = new \CDbCriteria();
         $criteria->condition = 'settings = :settings';
@@ -50,9 +72,15 @@ class Export_CategoryService extends BaseApplicationComponent
         return $fields;
     }
 
-    public function setCriteria($settings)
+    /**
+     * Set entry criteria.
+     *
+     * @param array $settings
+     *
+     * @return ElementCriteriaModel
+     */
+    public function setCriteria(array $settings)
     {
-
         // Match with current data
         $criteria = craft()->elements->getCriteria(ElementType::Category);
         $criteria->limit = null;
@@ -64,7 +92,15 @@ class Export_CategoryService extends BaseApplicationComponent
         return $criteria;
     }
 
-    public function getAttributes($map, $element)
+    /**
+     * Get category attributes.
+     *
+     * @param array            $map
+     * @param BaseElementModel $element
+     *
+     * @return array
+     */
+    public function getAttributes(array $map, BaseElementModel $element)
     {
         $attributes = array();
 

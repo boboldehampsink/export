@@ -2,20 +2,35 @@
 
 namespace Craft;
 
+/**
+ * Export model.
+ *
+ * Contains reserved handles.
+ *
+ * @author    Bob Olde Hampsink <b.oldehampsink@itmundi.nl>
+ * @copyright Copyright (c) 2015, Bob Olde Hampsink
+ * @license   http://buildwithcraft.com/license Craft License Agreement
+ *
+ * @link      http://github.com/boboldehampsink
+ */
 class ExportModel extends BaseModel
 {
-    // Handles
+    /**
+     * Handles.
+     */
     const HandleId           = 'id';
     const HandleStatus       = 'status';
     const HandleParent       = 'parent';
     const HandleAncestors    = 'ancestors';
     const HandleTitle        = 'title';
     const HandleSlug         = 'slug';
+
     # Entries
     const HandleAuthor       = 'authorId';
     const HandlePostDate     = 'postDate';
     const HandleExpiryDate   = 'expiryDate';
     const HandleEnabled      = 'enabled';
+
     # Users
     const HandleUsername             = 'username';
     const HandleFirstName            = 'firstName';
@@ -27,7 +42,9 @@ class ExportModel extends BaseModel
     const HandleInvalidLoginCount    = 'invalidLoginCount';
     const HandleLastInvalidLoginDate = 'lastInvalidLoginDate';
 
-    // Fieldtypes
+    /**
+     * Fieldtypes.
+     */
     const FieldTypeEntries     = 'Entries';
     const FieldTypeCategories  = 'Categories';
     const FieldTypeAssets      = 'Assets';
@@ -36,7 +53,9 @@ class ExportModel extends BaseModel
     const FieldTypeTable       = 'Table';
     const FieldTypeRichText    = 'RichText';
 
-    // Delimiters
+    /**
+     * Delimiters.
+     */
     const DelimiterSemicolon = ';';
     const DelimiterComma     = ',';
     const DelimiterPipe      = '|';

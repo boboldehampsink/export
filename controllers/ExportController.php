@@ -2,11 +2,26 @@
 
 namespace Craft;
 
+/**
+ * Export controller.
+ *
+ * Handles mapping and export requests.
+ *
+ * @author    Bob Olde Hampsink <b.oldehampsink@itmundi.nl>
+ * @copyright Copyright (c) 2015, Bob Olde Hampsink
+ * @license   http://buildwithcraft.com/license Craft License Agreement
+ *
+ * @link      http://github.com/boboldehampsink
+ */
 class ExportController extends BaseController
 {
+    /**
+     * Get available entry types for section.
+     *
+     * @return string JSON
+     */
     public function actionGetEntryTypes()
     {
-
         // Only ajax post requests
         $this->requirePostRequest();
         $this->requireAjaxRequest();
@@ -22,7 +37,11 @@ class ExportController extends BaseController
         $this->returnJson($entrytypes);
     }
 
-    // Process input for mapping
+    /**
+     * Process input for mapping.
+     *
+     * @return string HTML
+     */
     public function actionMap()
     {
 
@@ -37,7 +56,11 @@ class ExportController extends BaseController
         ));
     }
 
-    // Download export
+    /**
+     * Download export.
+     *
+     * @return string CSV
+     */
     public function actionDownload()
     {
 
