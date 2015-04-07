@@ -23,6 +23,11 @@ The plugin's folder should be named "export"
 
 Changelog
 =================
+###0.5.0###
+- Added the ability to enter offset and limit for more control over the exported data and performance (#4)
+- Fixed export map checkbox styling
+- Added a registerExportService hook so you can write an export service for other/your own element type(s)
+
 ###0.4.8###
 - Export now runs the export map differently through the element model for better export results, closing issues #2 and #3
 
