@@ -5,8 +5,8 @@ namespace Craft;
 class ExportModel extends BaseModel
 {
     // Handles
+    const HandleId           = 'id';
     const HandleStatus       = 'status';
-    const HandleId           = 'elementId';
     const HandleParent       = 'parent';
     const HandleAncestors    = 'ancestors';
     const HandleTitle        = 'title';

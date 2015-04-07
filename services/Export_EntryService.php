@@ -114,15 +114,13 @@ class Export_EntryService extends BaseApplicationComponent
 
     public function getAttributes($map, $element)
     {
+        $attributes = array();
 
-        // Get element as array
-        $attributes = array_merge($element->getAttributes(), $element->getContent()->getAttributes());
-
-        // Try to parse fieldlayout through prepValue
-        $fields = $element->getFieldLayout()->getFields();
-        foreach ($fields as $field) {
-            $data = $field->getField();
-            $attributes[$data->handle] = $element->{$data->handle};
+        // Try to parse checked fields through prepValue
+        foreach ($map as $handle => $data) {
+            if ($data['checked']) {
+                $attributes[$handle] = $element->$handle;
+            }
         }
 
         // Title placeholder for all element types
