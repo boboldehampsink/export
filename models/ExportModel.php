@@ -34,6 +34,7 @@ class ExportModel extends BaseModel
     const FieldTypeUsers       = 'Users';
     const FieldTypeLightswitch = 'Lightswitch';
     const FieldTypeTable       = 'Table';
+    const FieldTypeRichText    = 'RichText';
 
     // Delimiters
     const DelimiterSemicolon = ';';

@@ -280,6 +280,13 @@ class ExportService extends BaseApplicationComponent
 
                         break;
 
+                    case ExportModel::FieldTypeRichText:
+
+                        // Resolve to string
+                        $data = (string) $data;
+
+                        break;
+
                 }
             }
 
