@@ -70,6 +70,13 @@ class Export_CategoryService extends BaseApplicationComponent
         // Get element as array
         $attributes = array_merge($element->getAttributes(), $element->getContent()->getAttributes());
 
+        // Try to parse fieldlayout through prepValue
+        $fields = $element->getFieldLayout()->getFields();
+        foreach ($fields as $field) {
+            $data = $field->getField();
+            $attributes[$data->handle] = $element->{$data->handle};
+        }
+
         // Get parent for categories
         if (array_key_exists(ExportModel::HandleParent, $map)) {
             if ($element->getAncestors()) {
