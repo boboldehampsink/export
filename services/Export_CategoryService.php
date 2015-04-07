@@ -93,7 +93,8 @@ class Export_CategoryService extends BaseApplicationComponent implements IExport
     {
         // Match with current data
         $criteria = craft()->elements->getCriteria(ElementType::Category);
-        $criteria->limit = null;
+        $criteria->offset = $settings['offset'];
+        $criteria->limit = $settings['limit'];
         $criteria->status = isset($settings['map']['status']) ? $settings['map']['status'] : null;
 
         // Look in same group when replacing

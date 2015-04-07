@@ -50,6 +50,40 @@
             {% endfor %}
 
             <tbody>
+                <tr>
+                    <td>
+                        <div class="field">
+                            <div class="heading">
+                                <label>{{ "Row offset"|t }}</label>
+                                <div class="instructions">
+                                    <p>{{ "Leave empty if not applicable"|t }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="field">
+                            <input type="text" class="text" size="5" name="export[offset]" value="">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="field">
+                            <div class="heading">
+                                <label>{{ "Row limit"|t }}</label>
+                                <div class="instructions">
+                                    <p>{{ "Leave empty if not applicable"|t }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="field">
+                            <input type="text" class="text" size="5" name="export[limit]" value="">
+                        </div>
+                    </td>
+                </tr>
                 {% if currentUser.can('reset') %}
                 <tr>
                     <td>

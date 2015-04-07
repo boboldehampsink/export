@@ -114,7 +114,8 @@ class Export_UserService extends BaseApplicationComponent implements IExportElem
     {
         // Get users by criteria
         $criteria = craft()->elements->getCriteria(ElementType::User);
-        $criteria->limit = null;
+        $criteria->offset = $settings['offset'];
+        $criteria->limit = $settings['limit'];
         $criteria->status = isset($settings['map']['status']) ? $settings['map']['status'] : null;
 
         // Get by group
