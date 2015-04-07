@@ -118,7 +118,7 @@ class Export_EntryService extends BaseApplicationComponent
 
         // Try to parse checked fields through prepValue
         foreach ($map as $handle => $data) {
-            if ($data['checked']) {
+            if ($data['checked'] && !strstr($handle, ExportModel::HandleTitle)) {
                 $attributes[$handle] = $element->$handle;
             }
         }
@@ -127,7 +127,7 @@ class Export_EntryService extends BaseApplicationComponent
         foreach (craft()->sections->getEntryTypesBySectionId($element->sectionId) as $entrytype) {
 
             // Set title
-            $attributes[ExportModel::HandleTitle.'_'.$entrytype->id] = $entrytype->id == $element->typeId ? $attributes[ExportModel::HandleTitle] : '';
+            $attributes[ExportModel::HandleTitle.'_'.$entrytype->id] = $entrytype->id == $element->typeId ? $element->{ExportModel::HandleTitle} : '';
         }
 
         // Get parent for structures
