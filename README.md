@@ -23,6 +23,9 @@ The plugin's folder should be named "export"
 
 Changelog
 =================
+###0.4.8###
+- Export now runs the export map differently through the element model for better export results, closing issues #2 and #3
+
 ###0.4.7###
 - Added the ability to parse table checkboxes for export
 
