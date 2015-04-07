@@ -11,11 +11,11 @@
     <form method="post" action="" class="centered" accept-charset="utf-8">
         {{ getCsrfInput() }}
         <input type="hidden" name="action" value="export/download">
-        
+
         {% for key, value in export if key != 'elementvars' %}
             <input type="hidden" name="export[{{ key }}]" value="{{ value }}">
         {% endfor %}
-        
+
         {% for key, value in export.elementvars %}
             {% if value is iterable %}
                 {% for subvalue in value %}
@@ -25,9 +25,9 @@
                 <input type="hidden" name="export[elementvars][{{ key }}]" value="{{ value }}">
             {% endif %}
         {% endfor %}
-        
+
         <p>{{ "Choose which fields you want to export."|t }}</p>
-        
+
         <table class="data sortable">
             <tbody>
         {% set fields = craft.export.getFields(export.type, reset) %}
@@ -49,7 +49,7 @@
                             <input type="text" class="text" name="fields[{{ handle }}][label]" value="{{ data.label is defined ? data.label : data.name }}">
                         </div>
                     </div>
-                </td>            
+                </td>
                 <td>
                     {{ forms.checkboxField({
                         label: 'Include in export'|t,
@@ -67,6 +67,6 @@
                 </tr>
             </tfoot>
         </table>
-        
+
     </form>
 {% endset %}

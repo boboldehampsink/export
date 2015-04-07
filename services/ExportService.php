@@ -1,9 +1,9 @@
 <?php
+
 namespace Craft;
 
 class ExportService extends BaseApplicationComponent
 {
-
     private $_service;
     public $delimiter = ExportModel::DelimiterComma;
 
@@ -42,7 +42,7 @@ class ExportService extends BaseApplicationComponent
         $this->_service = 'export_'.strtolower($settings['type']);
 
         // Create the export template
-        $export = "";
+        $export = '';
 
         // Get data
         $data = $this->getData($settings);
@@ -55,7 +55,7 @@ class ExportService extends BaseApplicationComponent
 
             // Loop trough data
             foreach ($data as $element) {
-                $row = "";
+                $row = '';
 
                 // Get fields
                 $fields = $this->parseFields($settings, $element);
@@ -163,7 +163,7 @@ class ExportService extends BaseApplicationComponent
     // Parse column names
     protected function parseColumns($settings, $element, $fields)
     {
-        $columns = "";
+        $columns = '';
 
         // Loop trough map
         foreach ($settings['map'] as $handle => $data) {
@@ -205,12 +205,12 @@ class ExportService extends BaseApplicationComponent
                 // Make data human readable
                 switch ($data) {
 
-                    case "0":
-                        $data = Craft::t("No");
+                    case '0':
+                        $data = Craft::t('No');
                         break;
 
-                    case "1":
-                        $data = Craft::t("Yes");
+                    case '1':
+                        $data = Craft::t('Yes');
                         break;
 
                 }
@@ -253,12 +253,12 @@ class ExportService extends BaseApplicationComponent
                         // Make data human readable
                         switch ($data) {
 
-                            case "0":
-                                $data = Craft::t("No");
+                            case '0':
+                                $data = Craft::t('No');
                                 break;
 
-                            case "1":
-                                $data = Craft::t("Yes");
+                            case '1':
+                                $data = Craft::t('Yes');
                                 break;
 
                         }
@@ -271,7 +271,7 @@ class ExportService extends BaseApplicationComponent
                         $table = array();
                         foreach ($data as $row) {
                             foreach ($row as $column => $value) {
-                                $table[] = $field->settings['columns'][$column]['type'] == 'checkbox' ? ($value == 1 ? Craft::t("Yes") : Craft::t("No")) : $value;
+                                $table[] = $field->settings['columns'][$column]['type'] == 'checkbox' ? ($value == 1 ? Craft::t('Yes') : Craft::t('No')) : $value;
                             }
                         }
 
@@ -288,7 +288,7 @@ class ExportService extends BaseApplicationComponent
         } else {
 
             // Don't return null, return empty
-            $data = "";
+            $data = '';
         }
 
         // If it's an object or an array, make it a string

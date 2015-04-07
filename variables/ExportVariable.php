@@ -1,9 +1,9 @@
 <?php
+
 namespace Craft;
 
 class ExportVariable
 {
-
     public function getGroups($elementType)
     {
 

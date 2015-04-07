@@ -10,12 +10,12 @@
     <form method="post" action="" class="centered" accept-charset="UTF-8" enctype="multipart/form-data">
         {{ getCsrfInput() }}
         <input type="hidden" name="action" value="export/map">
-        
+
         {% set elementTypes = {} %}
         {% for elementType, properties in craft.elements.getAllElementTypes if craft.export.getGroups(elementType) %}
             {% set elementTypes = elementTypes|merge([elementType]) %}
         {% endfor %}
-        
+
         <table class="data">
             <thead class="exportType">
                 <tr>
@@ -24,7 +24,7 @@
                             <div class="heading">
                                 <label>{{ "Element type"|t }}</label>
                                 <div class="instructions">
-                                    <p>{{ "Choose the element type you want to export from."|t }}</p>                
+                                    <p>{{ "Choose the element type you want to export from."|t }}</p>
                                 </div>
                             </div>
                         </div>
@@ -44,11 +44,11 @@
                     </td>
                 </tr>
             </thead>
-            
+
             {% for elementType in elementTypes %}
                 {% include 'export/sources/_' ~ elementType|lower %}
             {% endfor %}
-            
+
             <tbody>
                 {% if currentUser.can('reset') %}
                 <tr>
@@ -57,7 +57,7 @@
                             <div class="heading">
                                 <label>{{ "Reset export map"|t }}</label>
                                 <div class="instructions">
-                                    <p>{{ "Check this if you want to reset your fields and column labels."|t }}</p>                
+                                    <p>{{ "Check this if you want to reset your fields and column labels."|t }}</p>
                                 </div>
                             </div>
                         </div>
@@ -75,6 +75,6 @@
                 </tr>
             </tbody>
         </table>
-        
+
     </form>
 {% endset %}

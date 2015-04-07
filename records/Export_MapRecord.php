@@ -1,9 +1,9 @@
 <?php
+
 namespace Craft;
 
 class Export_MapRecord extends BaseRecord
 {
-
     public function getTableName()
     {
         return 'export_map';

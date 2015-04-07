@@ -1,9 +1,9 @@
 <?php
+
 namespace Craft;
 
 class ExportController extends BaseController
 {
-
     public function actionGetEntryTypes()
     {
 

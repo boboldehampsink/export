@@ -1,9 +1,9 @@
 <?php
+
 namespace Craft;
 
 class ExportTest extends BaseTest
 {
-
     public function setUp()
     {
 

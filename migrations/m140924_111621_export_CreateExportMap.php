@@ -1,8 +1,9 @@
 <?php
+
 namespace Craft;
 
 /**
- * The class name is the UTC timestamp in the format of mYYMMDD_HHMMSS_pluginHandle_migrationName
+ * The class name is the UTC timestamp in the format of mYYMMDD_HHMMSS_pluginHandle_migrationName.
  */
 class m140924_111621_export_CreateExportMap extends BaseMigration
 {

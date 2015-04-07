@@ -1,9 +1,9 @@
 <?php
+
 namespace Craft;
 
 class Export_UserService extends BaseApplicationComponent
 {
-
     public function getGroups()
     {
 
@@ -43,17 +43,17 @@ class Export_UserService extends BaseApplicationComponent
 
             // Set the static fields for this type
             $fields = array(
-                ExportModel::HandleId                   => array('name' => Craft::t("ID"), 'checked' => 0),
-                ExportModel::HandleUsername             => array('name' => Craft::t("Username"), 'checked' => 1),
-                ExportModel::HandleFirstName            => array('name' => Craft::t("First Name"), 'checked' => 1),
-                ExportModel::HandleLastName             => array('name' => Craft::t("Last Name"), 'checked' => 1),
-                ExportModel::HandleEmail                => array('name' => Craft::t("Email"), 'checked' => 1),
-                ExportModel::HandlePreferredLocale      => array('name' => Craft::t("Preferred Locale"), 'checked' => 0),
-                ExportModel::HandleWeekStartDay         => array('name' => Craft::t("Week Start Day"), 'checked' => 0),
-                ExportModel::HandleStatus               => array('name' => Craft::t("Status"), 'checked' => 0),
-                ExportModel::HandleLastLoginDate        => array('name' => Craft::t("Last Login Date"), 'checked' => 0),
-                ExportModel::HandleInvalidLoginCount    => array('name' => Craft::t("Invalid Login Count"), 'checked' => 0),
-                ExportModel::HandleLastInvalidLoginDate => array('name' => Craft::t("Last Invalid Login Date"), 'checked' => 0),
+                ExportModel::HandleId                   => array('name' => Craft::t('ID'), 'checked' => 0),
+                ExportModel::HandleUsername             => array('name' => Craft::t('Username'), 'checked' => 1),
+                ExportModel::HandleFirstName            => array('name' => Craft::t('First Name'), 'checked' => 1),
+                ExportModel::HandleLastName             => array('name' => Craft::t('Last Name'), 'checked' => 1),
+                ExportModel::HandleEmail                => array('name' => Craft::t('Email'), 'checked' => 1),
+                ExportModel::HandlePreferredLocale      => array('name' => Craft::t('Preferred Locale'), 'checked' => 0),
+                ExportModel::HandleWeekStartDay         => array('name' => Craft::t('Week Start Day'), 'checked' => 0),
+                ExportModel::HandleStatus               => array('name' => Craft::t('Status'), 'checked' => 0),
+                ExportModel::HandleLastLoginDate        => array('name' => Craft::t('Last Login Date'), 'checked' => 0),
+                ExportModel::HandleInvalidLoginCount    => array('name' => Craft::t('Invalid Login Count'), 'checked' => 0),
+                ExportModel::HandleLastInvalidLoginDate => array('name' => Craft::t('Last Invalid Login Date'), 'checked' => 0),
             );
 
             // Set the dynamic fields for this type

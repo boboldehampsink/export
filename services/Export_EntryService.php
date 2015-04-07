@@ -1,9 +1,9 @@
 <?php
+
 namespace Craft;
 
 class Export_EntryService extends BaseApplicationComponent
 {
-
     public function getGroups()
     {
 
@@ -61,16 +61,16 @@ class Export_EntryService extends BaseApplicationComponent
 
                 // Set the static fields for this type
                 $layout = array(
-                    ExportModel::HandleId         => array('name' => Craft::t("ID"), 'checked' => 0),
-                    ExportModel::HandleTitle."_".$entrytype->id => array('name' => $entrytype->hasTitleField ? $entrytype->titleLabel : Craft::t("Title"), 'checked' => 1, 'entrytype' => $entrytype->id),
-                    ExportModel::HandleSlug       => array('name' => Craft::t("Slug"), 'checked' => 0),
-                    ExportModel::HandleParent     => array('name' => Craft::t("Parent"), 'checked' => 0),
-                    ExportModel::HandleAncestors  => array('name' => Craft::t("Ancestors"), 'checked' => 0),
-                    ExportModel::HandleAuthor     => array('name' => Craft::t("Author"), 'checked' => 0),
-                    ExportModel::HandlePostDate   => array('name' => Craft::t("Post Date"), 'checked' => 0),
-                    ExportModel::HandleExpiryDate => array('name' => Craft::t("Expiry Date"), 'checked' => 0),
-                    ExportModel::HandleEnabled    => array('name' => Craft::t("Enabled"), 'checked' => 0),
-                    ExportModel::HandleStatus     => array('name' => Craft::t("Status"), 'checked' => 0),
+                    ExportModel::HandleId         => array('name' => Craft::t('ID'), 'checked' => 0),
+                    ExportModel::HandleTitle.'_'.$entrytype->id => array('name' => $entrytype->hasTitleField ? $entrytype->titleLabel : Craft::t('Title'), 'checked' => 1, 'entrytype' => $entrytype->id),
+                    ExportModel::HandleSlug       => array('name' => Craft::t('Slug'), 'checked' => 0),
+                    ExportModel::HandleParent     => array('name' => Craft::t('Parent'), 'checked' => 0),
+                    ExportModel::HandleAncestors  => array('name' => Craft::t('Ancestors'), 'checked' => 0),
+                    ExportModel::HandleAuthor     => array('name' => Craft::t('Author'), 'checked' => 0),
+                    ExportModel::HandlePostDate   => array('name' => Craft::t('Post Date'), 'checked' => 0),
+                    ExportModel::HandleExpiryDate => array('name' => Craft::t('Expiry Date'), 'checked' => 0),
+                    ExportModel::HandleEnabled    => array('name' => Craft::t('Enabled'), 'checked' => 0),
+                    ExportModel::HandleStatus     => array('name' => Craft::t('Status'), 'checked' => 0),
                 );
 
                 // Set the dynamic fields for this type
@@ -122,7 +122,7 @@ class Export_EntryService extends BaseApplicationComponent
         foreach (craft()->sections->getEntryTypesBySectionId($element->sectionId) as $entrytype) {
 
             // Set title
-            $attributes[ExportModel::HandleTitle.'_'.$entrytype->id] = $entrytype->id == $element->typeId ? $attributes[ExportModel::HandleTitle] : "";
+            $attributes[ExportModel::HandleTitle.'_'.$entrytype->id] = $entrytype->id == $element->typeId ? $attributes[ExportModel::HandleTitle] : '';
         }
 
         // Get parent for structures

@@ -1,9 +1,9 @@
 <?php
+
 namespace Craft;
 
 class ExportPlugin extends BasePlugin
 {
-
     public function getName()
     {
         return Craft::t('Export');

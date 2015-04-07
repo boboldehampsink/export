@@ -1,9 +1,9 @@
 <?php
+
 namespace Craft;
 
 class ExportModel extends BaseModel
 {
-
     // Handles
     const HandleStatus       = 'status';
     const HandleId           = 'elementId';
