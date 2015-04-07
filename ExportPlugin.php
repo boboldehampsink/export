@@ -76,4 +76,13 @@ class ExportPlugin extends BasePlugin
             'reset' => array('label' => Craft::t('Reset export map')),
         );
     }
+
+    /**
+     * Run on plugin initialisation.
+     */
+    public function init()
+    {
+        // Import Export Element Type Interface
+        Craft::import('plugins.export.services.IExportElementType');
+    }
 }

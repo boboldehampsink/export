@@ -73,7 +73,9 @@ class ExportService extends BaseApplicationComponent
         craft()->config->maxPowerCaptain();
 
         // Check what service we're gonna need
-        $this->_service = 'export_'.strtolower($settings['type']);
+        if (!($this->_service = $this->getService($settings['type']))) {
+            throw new Exception(Craft::t('Unknown Element Type Service called.'));
+        }
 
         // Create the export template
         $export = '';
@@ -134,6 +136,37 @@ class ExportService extends BaseApplicationComponent
     }
 
     /**
+     * Get service to use for exporting.
+     *
+     * @param string $elementType
+     *
+     * @return object|bool
+     */
+    public function getService($elementType)
+    {
+        // Check if there's a service for this element type elsewhere
+        $service = craft()->plugins->callFirst('registerExportService', array(
+            'elementType' => $elementType,
+        ));
+
+        // If not, do internal check
+        if ($service == null) {
+
+            // Get from right elementType
+            $service = 'export_'.strtolower($elementType);
+        }
+
+        // Check if elementtype can be imported
+        if (isset(craft()->$service) && craft()->$service instanceof IExportElementType) {
+
+            // Return this service
+            return craft()->$service;
+        }
+
+        return false;
+    }
+
+    /**
      * Get data from sources.
      *
      * @param array $settings
@@ -159,8 +192,7 @@ class ExportService extends BaseApplicationComponent
         if (!count($data)) {
 
             // Find data
-            $service = $this->_service;
-            $criteria = craft()->$service->setCriteria($settings);
+            $criteria = $this->_service->setCriteria($settings);
 
             // Gather data
             $data = $criteria->find();
@@ -185,8 +217,7 @@ class ExportService extends BaseApplicationComponent
         if ($element instanceof BaseElementModel) {
 
             // Get service
-            $service = $this->_service;
-            $attributes = craft()->$service->getAttributes($settings['map'], $element);
+            $attributes = $this->_service->getAttributes($settings['map'], $element);
         } else {
 
             // No element, i.e. from export source

@@ -13,8 +13,18 @@ namespace Craft;
  *
  * @link      http://github.com/boboldehampsink
  */
-class Export_UserService extends BaseApplicationComponent
+class Export_UserService extends BaseApplicationComponent implements IExportElementType
 {
+    /**
+     * Return export template.
+     *
+     * @return string
+     */
+    public function getTemplate()
+    {
+        return 'export/sources/_user';
+    }
+
     /**
      * Get user groups.
      *

@@ -13,8 +13,18 @@ namespace Craft;
  *
  * @link      http://github.com/boboldehampsink
  */
-class Export_CategoryService extends BaseApplicationComponent
+class Export_CategoryService extends BaseApplicationComponent implements IExportElementType
 {
+    /**
+     * Return export template.
+     *
+     * @return string
+     */
+    public function getTemplate()
+    {
+        return 'export/sources/_category';
+    }
+
     /**
      * Get category groups.
      *

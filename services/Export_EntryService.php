@@ -13,8 +13,18 @@ namespace Craft;
  *
  * @link      http://github.com/boboldehampsink
  */
-class Export_EntryService extends BaseApplicationComponent
+class Export_EntryService extends BaseApplicationComponent implements IExportElementType
 {
+    /**
+     * Return export template.
+     *
+     * @return string
+     */
+    public function getTemplate()
+    {
+        return 'export/sources/_entry';
+    }
+
     /**
      * Get entry sections.
      *

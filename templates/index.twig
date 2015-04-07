@@ -12,7 +12,7 @@
         <input type="hidden" name="action" value="export/map">
 
         {% set elementTypes = {} %}
-        {% for elementType, properties in craft.elements.getAllElementTypes if craft.export.getGroups(elementType) %}
+        {% for elementType in craft.elements.getAllElementTypes if craft.export.getGroups(elementType.getClassHandle()) %}
             {% set elementTypes = elementTypes|merge([elementType]) %}
         {% endfor %}
 
@@ -35,7 +35,7 @@
                                 <div class="select">
                                     <select name="export[type]" id="types">
                                     {% for elementType in elementTypes %}
-                                        <option value="{{ elementType }}">{{ elementType }}</option>
+                                        <option value="{{ elementType.getClassHandle() }}">{{ elementType.getName() }}</option>
                                     {% endfor %}
                                     </select>
                                 </div>
@@ -46,7 +46,7 @@
             </thead>
 
             {% for elementType in elementTypes %}
-                {% include 'export/sources/_' ~ elementType|lower %}
+                {% include craft.export.getTemplate(elementType.getClassHandle()) %}
             {% endfor %}
 
             <tbody>
