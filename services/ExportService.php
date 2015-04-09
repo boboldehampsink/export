@@ -114,7 +114,7 @@ class ExportService extends BaseApplicationComponent
                     $data = $this->parseFieldData($handle, $data);
 
                     // Put in quotes and escape
-                    $row .= '"'.addcslashes($data, '"').'"'.$this->delimiter;
+                    $row .= '"'.addcslashes($data, '\\"').'"'.$this->delimiter;
                 }
 
                 // Remove last comma
@@ -264,7 +264,7 @@ class ExportService extends BaseApplicationComponent
             if ($data['checked'] == 1) {
 
                 // Add column
-                $columns .= '"'.addcslashes($data['label'], '"').'"'.$this->delimiter;
+                $columns .= '"'.addcslashes($data['label'], '\\"').'"'.$this->delimiter;
             }
         }
 
