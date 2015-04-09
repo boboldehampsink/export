@@ -12,11 +12,11 @@ Features:
 - Ability to save your sort and column settings
 - Has a hook "registerExportSource" to add/replace exports with your own source.
 - Has a hook "registerExportOperation" to parse special export fields
+- Has a hook "registerExportService" to add your own Element Type export service.
 
 Todo:
-- Export all ElementTypes (currently only Entries, Users and Categories)
 - Support JSON and XML output
-- Permissions, who can export what
+- Handle large exports more smoothly
 
 Important:
 The plugin's folder should be named "export"
@@ -27,6 +27,8 @@ Changelog
 - Added the ability to enter offset and limit for more control over the exported data and performance (#4)
 - Fixed export map checkbox styling
 - Added a registerExportService hook so you can write an export service for other/your own element type(s)
+- Fixed escaping of slashes in export data
+- Added MIT license
 
 ###0.4.8###
 - Export now runs the export map differently through the element model for better export results, closing issues #2 and #3
