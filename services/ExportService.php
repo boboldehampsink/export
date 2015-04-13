@@ -84,19 +84,14 @@ class ExportService extends BaseApplicationComponent
         // If there is data, process
         if (count($data)) {
 
-            // Count rows
-            $rows = 0;
+            // Put down columns
+            fputcsv($export, $this->parseColumns($settings));
 
             // Loop trough data
             foreach ($data as $element) {
 
                 // Get fields
                 $fields = $this->parseFields($settings, $element);
-
-                // Put down columns
-                if (!$rows) {
-                    fputcsv($export, $this->parseColumns($settings));
-                }
 
                 // Gather row data
                 $rows = array();
@@ -116,9 +111,6 @@ class ExportService extends BaseApplicationComponent
 
                 // Add rows to export
                 fputcsv($export, $rows);
-
-                // Count rows
-                $rows++;
             }
         }
 
