@@ -23,6 +23,9 @@ The plugin's folder should be named "export"
 
 Changelog
 =================
+###0.5.2###
+- Fixed multioptions fieldtype exporting
+
 ###0.5.1###
 - Use native php csv export function to generate more correct csv's
 

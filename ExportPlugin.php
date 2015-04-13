@@ -32,7 +32,7 @@ class ExportPlugin extends BasePlugin
      */
     public function getVersion()
     {
-        return '0.5.1';
+        return '0.5.2';
     }
 
     /**
