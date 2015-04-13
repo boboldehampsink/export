@@ -368,6 +368,20 @@ class ExportService extends BaseApplicationComponent
 
                         break;
 
+                    case ExportModel::FieldCheckboxes:
+                    case ExportModel::FieldMultiSelect:
+
+                        // Parse multi select values
+                        $multi = array();
+                        foreach ($data as $row) {
+                            $multi[] = $row->value;
+                        }
+
+                        // Return parsed data as array
+                        $data = $multi;
+
+                        break;
+
                 }
             }
 

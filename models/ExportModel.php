@@ -52,4 +52,6 @@ class ExportModel extends BaseModel
     const FieldTypeLightswitch = 'Lightswitch';
     const FieldTypeTable       = 'Table';
     const FieldTypeRichText    = 'RichText';
+    const FieldCheckboxes      = 'Checkboxes';
+    const FieldMultiSelect     = 'MultiSelect';
 }
