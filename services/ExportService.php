@@ -23,14 +23,6 @@ class ExportService extends BaseApplicationComponent
     private $_service;
 
     /**
-     * Contains the default delimiter
-     * TODO: Make this configurable.
-     *
-     * @var string
-     */
-    public $delimiter = ExportModel::DelimiterComma;
-
-    /**
      * Saves an export map to the database.
      *
      * @param array $settings
@@ -80,8 +72,11 @@ class ExportService extends BaseApplicationComponent
             throw new Exception(Craft::t('Unknown Element Type Service called.'));
         }
 
-        // Create the export template
-        $export = '';
+        // Open output buffer
+        ob_start();
+
+        // Write to output stream
+        $export = fopen('php://output', 'w');
 
         // Get data
         $data = $this->getData($settings);
@@ -94,15 +89,17 @@ class ExportService extends BaseApplicationComponent
 
             // Loop trough data
             foreach ($data as $element) {
-                $row = '';
 
                 // Get fields
                 $fields = $this->parseFields($settings, $element);
 
                 // Put down columns
                 if (!$rows) {
-                    $row .= $this->parseColumns($settings);
+                    fputcsv($export, $this->parseColumns($settings));
                 }
+
+                // Gather row data
+                $rows = array();
 
                 // Loop trough the fields
                 foreach ($fields as $handle => $data) {
@@ -113,29 +110,24 @@ class ExportService extends BaseApplicationComponent
                     // Parse field data
                     $data = $this->parseFieldData($handle, $data);
 
-                    // Put in quotes and escape
-                    $row .= '"'.addcslashes($data, '\\"').'"'.$this->delimiter;
+                    // Encode and add to rows
+                    $rows[] = StringHelper::convertToUTF8($data);
                 }
 
-                // Remove last comma
-                $row = substr($row, 0, -1);
-
-                // Encode row
-                $row = StringHelper::convertToUTF8($row);
-
-                // And start a new line
-                $row = $row."\r\n";
-
-                // Append to data
-                $export .= $row;
+                // Add rows to export
+                fputcsv($export, $rows);
 
                 // Count rows
                 $rows++;
             }
         }
 
+        // Close buffer and return data
+        fclose($export);
+        $data = ob_get_clean();
+
         // Return the data to controller
-        return $export;
+        return $data;
     }
 
     /**
@@ -255,7 +247,7 @@ class ExportService extends BaseApplicationComponent
      */
     protected function parseColumns(array $settings)
     {
-        $columns = '';
+        $columns = array();
 
         // Loop trough map
         foreach ($settings['map'] as $handle => $data) {
@@ -264,18 +256,9 @@ class ExportService extends BaseApplicationComponent
             if ($data['checked'] == 1) {
 
                 // Add column
-                $columns .= '"'.addcslashes($data['label'], '\\"').'"'.$this->delimiter;
+                $columns[] = StringHelper::convertToUTF8($data['label']);
             }
         }
-
-        // Remove last comma
-        $columns = substr($columns, 0, -1);
-
-        // Encode columns
-        $columns = StringHelper::convertToUTF8($columns);
-
-        // And start a new line
-        $columns = $columns."\r\n";
 
         return $columns;
     }

@@ -52,11 +52,4 @@ class ExportModel extends BaseModel
     const FieldTypeLightswitch = 'Lightswitch';
     const FieldTypeTable       = 'Table';
     const FieldTypeRichText    = 'RichText';
-
-    /**
-     * Delimiters.
-     */
-    const DelimiterSemicolon = ';';
-    const DelimiterComma     = ',';
-    const DelimiterPipe      = '|';
 }
