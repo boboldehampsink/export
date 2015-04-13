@@ -1,0 +1,67 @@
+{% extends "_layouts/cp" %}
+
+{% set title = "Export"|t %}
+
+{% set tabs = {
+    overview: { label: "Export"|t, url: url('export') },
+    history:  { label: "History"|t, url: url('export/history') },
+} %}
+
+{% set selectedTab = 'history' %}
+
+{% if craft.request.getParam('task') %}
+    {% includeJsResource 'export/js/task.js' %}
+    {% includeJs 'checkForTask(' ~ craft.request.getParam('task') ~ ', \'' ~ craft.export.history[0].file ~ '\');' %}
+{% endif %}
+
+{% set content %}
+<div class="tableview">
+    <table class="data fullwidth" id="history">
+        <thead>
+            <tr>
+                <th scope="col" data-attribute="date">{{ "Filename"|t }}</th>
+                <th scope="col" data-attribute="type">{{ "Type"|t }}</th>
+                <th scope="col" data-attribute="rows">{{ "Rows"|t }}</th>
+                <th scope="col" data-attribute="started">{{ "Started"|t }}</th>
+                <th scope="col" data-attribute="finished">{{ "Finished"|t }}</th>
+                <th scope="col" data-attribute="totaltime">{{ "Total time"|t }}</th>
+                <th scope="col" data-attribute="user">{{ "User"|t }}</th>
+                <th scope="col" data-attribute="download">{{ "Download"|t }}</th>
+                <td class="thin"></td>
+            </tr>
+        </thead>
+        <tbody>
+        {% for item in craft.export.history %}
+            <tr>
+                <td scope="row" data-title="{{ 'Filename'|t }}">
+                    <div class="element" data-id="{{ item.id }}" data-status="{% if item.status == 'started' %}pending{% elseif item.status == 'reverted' %}archived{% else %}live{% endif %}" data-label="{{ item.file }}">
+                        <div class="label">
+                            <span class="status {% if item.status == 'started' %}pending{% else %}live{% endif %}"></span>
+                            <span class="title">{{ item.file }}</span>
+                        </div>
+                    </div>
+                </td>
+                <td data-title="{{ 'Type'|t }}">{% if item.type %}{{ item.type|t }}{% else %}{{ "Entry"|t }}{% endif %}</td>
+                <td data-title="{{ 'Rows'|t }}">{{ item.rows }}</td>
+                <td data-title="{{ 'Started'|t }}">{{ item.dateCreated | datetime }}</td>
+                <td data-title="{{ 'Finished'|t }}">{% if item.status != 'started' %}{{ item.dateUpdated | datetime }}{% endif %}</td>
+                <td data-title="{{ 'Total time'|t }}">{% if item.status != 'started' %}{{ item.dateCreated.diff(item.dateUpdated).humanDuration() }}{% endif %}</td>
+                <td data-title="{{ 'User'|t }}">
+                    <a href="users/{{ item.user.id }}" class="go">{{ item.user.username }}</a>
+                </td>
+                <td data-title="{{ 'Download'|t }}">
+                    {% if item.type is not empty %}
+                        <a href="{{ actionUrl('export/history/download', {'id': item.id }) }}" class="btn small">{{ 'Download'|t }}</a>
+                    {% else %}
+                        <a href="javascript:void(0)" class="btn small disabled" onclick="return alert('{{ "The original file is not available for downloading"|t }}')">{{ 'Download'|t }}</a>
+                    {% endif %}
+                </td>
+                <td class="thin">
+                    <a class="delete icon" href="{{ actionUrl('export/history/delete', {'id': item.id }) }}" title="{{ "Delete"|t }}" role="button" onclick="return confirm('{{ "Are you sure you want to delete the history of" }} {{ item.file }}')"></a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endset %}

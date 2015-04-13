@@ -79,4 +79,15 @@ class ExportVariable
 
         return false;
     }
+
+    /**
+     * Show history overview.
+     *
+     * @return array
+     */
+    public function history()
+    {
+        // Return all history
+        return craft()->export->history();
+    }
 }

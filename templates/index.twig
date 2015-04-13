@@ -2,6 +2,13 @@
 
 {% set title = "Export"|t %}
 
+{% set tabs = {
+    overview: { label: "Export"|t, url: url('export') },
+    history:  { label: "History"|t, url: url('export/history') },
+} %}
+
+{% set selectedTab = 'overview' %}
+
 {% includeJsResource 'export/js/export.js' %}
 
 {% import "_includes/forms" as forms %}

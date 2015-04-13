@@ -57,4 +57,10 @@ class ExportModel extends BaseModel
     const FieldTypeDropdown     = 'Dropdown';
     const FieldTypeMultiSelect  = 'MultiSelect';
     const FieldTypeDate         = 'Date';
+
+    /**
+     * Statuses.
+     */
+    const StatusStarted  = 'started';
+    const StatusFinished = 'finished';
 }

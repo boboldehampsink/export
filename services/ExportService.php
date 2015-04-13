@@ -57,6 +57,20 @@ class ExportService extends BaseApplicationComponent
     }
 
     /**
+     * Show previous exports.
+     *
+     * @return array
+     */
+    public function history()
+    {
+        // Set criteria
+        $criteria = new \CDbCriteria();
+        $criteria->order = 'id desc';
+
+        return Export_HistoryRecord::model()->findAll($criteria);
+    }
+
+    /**
      * Download the export csv.
      *
      * @param array $settings
