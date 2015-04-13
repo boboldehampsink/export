@@ -23,6 +23,9 @@ The plugin's folder should be named "export"
 
 Changelog
 =================
+###0.5.1###
+- Use native php csv export function to generate more correct csv's
+
 ###0.5.0###
 - Added the ability to enter offset and limit for more control over the exported data and performance (#4)
 - Fixed export map checkbox styling
