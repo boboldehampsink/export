@@ -88,6 +88,6 @@ class ExportVariable
     public function history()
     {
         // Return all history
-        return craft()->export->history();
+        return craft()->export_history->show();
     }
 }
