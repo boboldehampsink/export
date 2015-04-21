@@ -351,8 +351,21 @@ class ExportService extends BaseApplicationComponent
                         // Parse table checkboxes
                         $table = array();
                         foreach ($data as $row) {
+
+                            // Keep track of column #
+                            $i = 1;
+
+                            // Loop through columns
                             foreach ($row as $column => $value) {
-                                $table[] = $field->settings['columns'][$column]['type'] == 'checkbox' ? ($value == 1 ? Craft::t('Yes') : Craft::t('No')) : $value;
+
+                                // Get column
+                                $column = isset($field->settings['columns'][$column]) ? $field->settings['columns'][$column] : (isset($field->settings['columns']['col'.$i]) ? $field->settings['columns']['col'.$i] : array('type' => 'dummy'));
+
+                                // Keep track of column #
+                                $i++;
+
+                                // Parse
+                                $table[] = $column['type'] == 'checkbox' ? ($value == 1 ? Craft::t('Yes') : Craft::t('No')) : $value;
                             }
                         }
 
