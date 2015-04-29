@@ -375,6 +375,7 @@ class ExportService extends BaseApplicationComponent
                         break;
 
                     case ExportModel::FieldTypeRichText:
+                    case ExportModel::FieldTypeDate:
 
                         // Resolve to string
                         $data = (string) $data;

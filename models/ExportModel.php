@@ -54,4 +54,5 @@ class ExportModel extends BaseModel
     const FieldTypeRichText    = 'RichText';
     const FieldCheckboxes      = 'Checkboxes';
     const FieldMultiSelect     = 'MultiSelect';
+    const FieldTypeDate        = 'Date';
 }
