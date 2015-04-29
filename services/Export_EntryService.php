@@ -141,6 +141,7 @@ class Export_EntryService extends BaseApplicationComponent implements IExportEle
 
         // Get entries by criteria
         $criteria = craft()->elements->getCriteria(ElementType::Entry);
+        $criteria->order = 'id '.$settings['sort'];
         $criteria->offset = $settings['offset'];
         $criteria->limit = $settings['limit'];
         $criteria->status = isset($settings['map']['status']) ? $settings['map']['status'] : null;

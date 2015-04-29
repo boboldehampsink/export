@@ -54,6 +54,30 @@
                     <td>
                         <div class="field">
                             <div class="heading">
+                                <label>{{ "Sort"|t }}</label>
+                                <div class="instructions">
+                                    <p>{{ "Choose how you want to sort (by ID)."|t }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="field">
+                            <div class="input">
+                                <div class="select">
+                                    <select name="export[sort]" id="sort">
+                                        <option value="asc">{{ "Ascending"|t }}</option>
+                                        <option value="desc">{{ "Descending"|t }}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="field">
+                            <div class="heading">
                                 <label>{{ "Row offset"|t }}</label>
                                 <div class="instructions">
                                     <p>{{ "Leave empty if not applicable"|t }}</p>
