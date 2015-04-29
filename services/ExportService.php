@@ -291,6 +291,14 @@ class ExportService extends BaseApplicationComponent
 
                 break;
 
+            case ExportModel::HandlePostDate:
+            case ExportModel::HandleExpiryDate:
+
+                // Resolve to string
+                $data = (string) $data;
+
+                break;
+
         }
 
         return $data;
