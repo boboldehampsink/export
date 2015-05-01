@@ -45,14 +45,16 @@ class ExportModel extends BaseModel
     /**
      * Fieldtypes.
      */
-    const FieldTypeEntries     = 'Entries';
-    const FieldTypeCategories  = 'Categories';
-    const FieldTypeAssets      = 'Assets';
-    const FieldTypeUsers       = 'Users';
-    const FieldTypeLightswitch = 'Lightswitch';
-    const FieldTypeTable       = 'Table';
-    const FieldTypeRichText    = 'RichText';
-    const FieldTypeCheckboxes  = 'Checkboxes';
-    const FieldTypeMultiSelect = 'MultiSelect';
-    const FieldTypeDate        = 'Date';
+    const FieldTypeEntries      = 'Entries';
+    const FieldTypeCategories   = 'Categories';
+    const FieldTypeAssets       = 'Assets';
+    const FieldTypeUsers        = 'Users';
+    const FieldTypeLightswitch  = 'Lightswitch';
+    const FieldTypeTable        = 'Table';
+    const FieldTypeRichText     = 'RichText';
+    const FieldTypeCheckboxes   = 'Checkboxes';
+    const FieldTypeRadioButtons = 'RadioButtons';
+    const FieldTypeDropdown     = 'Dropdown';
+    const FieldTypeMultiSelect  = 'MultiSelect';
+    const FieldTypeDate         = 'Date';
 }

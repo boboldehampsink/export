@@ -384,6 +384,8 @@ class ExportService extends BaseApplicationComponent
 
                     case ExportModel::FieldTypeRichText:
                     case ExportModel::FieldTypeDate:
+                    case ExportModel::FieldTypeRadioButtons:
+                    case ExportModel::FieldTypeDropdown:
 
                         // Resolve to string
                         $data = (string) $data;
