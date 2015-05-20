@@ -46,7 +46,7 @@ class ExportService extends BaseApplicationComponent
         if (!count($mapRecord) || $mapRecord->settings != $settings) {
 
             // Save settings and map to database
-            $mapRecord           = new Export_MapRecord();
+            $mapRecord = new Export_MapRecord();
             $mapRecord->settings = $settings;
         }
 
@@ -117,6 +117,9 @@ class ExportService extends BaseApplicationComponent
         // Close buffer and return data
         fclose($export);
         $data = ob_get_clean();
+
+        // Use windows friendly newlines
+        $data = str_replace("\n", "\r\n", $data);
 
         // Return the data to controller
         return $data;
