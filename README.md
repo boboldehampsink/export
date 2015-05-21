@@ -23,6 +23,12 @@ The plugin's folder should be named "export"
 
 Changelog
 =================
+###0.5.3###
+- Added the ability to control the sorting of data
+- Improved the display of dates
+- Improved the display of single option fields
+- Use Windows friendly newlines
+
 ###0.5.2###
 - Fixed multioptions fieldtype exporting
 
