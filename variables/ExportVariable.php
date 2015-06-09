@@ -65,6 +65,10 @@ class ExportVariable
     {
         // Get export vars
         $export = craft()->request->getParam('export');
+        
+        // Unset non-map settings
+        unset($export['limit'], $export['offset']);
+        ksort($export);
 
         // Check if elementtype can be imported
         if ($service = craft()->export->getService($elementType)) {

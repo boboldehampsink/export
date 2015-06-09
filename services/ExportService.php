@@ -32,6 +32,7 @@ class ExportService extends BaseApplicationComponent
     {
         // Unset non-map settings
         unset($settings['limit'], $settings['offset']);
+        ksort($settings);
 
         // Set criteria
         $criteria = new \CDbCriteria();
