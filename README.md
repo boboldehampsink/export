@@ -23,6 +23,9 @@ The plugin's folder should be named "export"
 
 Changelog
 =================
+###0.5.4###
+- Fixed export history maps (thanks to MRolefes)
+
 ###0.5.3###
 - Added the ability to control the sorting of data
 - Improved the display of dates
