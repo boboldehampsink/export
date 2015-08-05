@@ -35,7 +35,7 @@
                                 <div class="select">
                                     <select name="export[type]" id="types">
                                     {% for elementType in elementTypes %}
-                                        <option value="{{ elementType.getClassHandle() }}">{{ elementType.getName() }}</option>
+                                        <option value="{{ elementType.getClassHandle() }}" {{ craft.request.param('elementType') == elementType.getClassHandle() ? 'selected' }}>{{ elementType.getName() }}</option>
                                     {% endfor %}
                                     </select>
                                 </div>
