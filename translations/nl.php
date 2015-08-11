@@ -1,4 +1,5 @@
 <?php
+
 return array(
     'Export' => 'Export',
     'Reset export map' => 'Reset exporteer indeling',
@@ -46,5 +47,5 @@ return array(
     'Choose the section you want to export from.' => 'Kies de sectie waarvan u wilt exporteren.',
     'Entrytype' => 'Entrytype',
     'Choose the entrytype you want to export from.' => 'Kies het entrytype waarvan u wilt exporteren.',
-    'Choose the groups you want to export from.' => 'Kies de groepen waarvan u wilt exporteren.'
+    'Choose the groups you want to export from.' => 'Kies de groepen waarvan u wilt exporteren.',
 );
