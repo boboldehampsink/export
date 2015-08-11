@@ -23,6 +23,10 @@ The plugin's folder should be named "export"
 
 Changelog
 =================
+###0.5.5###
+- Added ability to pre-select export elementtype through query string (thanks to gijsstegehuis)
+- Added Dutch translations (thanks to rutgerbakker)
+
 ###0.5.4###
 - Fixed export history maps (thanks to MRolefes)
 
