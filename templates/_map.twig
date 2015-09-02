@@ -63,7 +63,10 @@
             </tbody>
             <tfoot>
                 <tr>
-                    <td colspan="3" style="border-bottom: none"><input type="submit" class="btn submit" value="{{ 'Export'|t }}"></td>
+                    <td colspan="3" style="border-bottom: none; padding-top:20px">
+                        <input type="submit" class="btn submit js-btn-export" value="{{ 'Export'|t }}">
+                        <div class="spinner js-export-spinner hidden"></div>
+                    </td>
                 </tr>
             </tfoot>
         </table>

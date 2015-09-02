@@ -40,5 +40,9 @@ $(function() {
         $('table.sortable tbody').sortable().disableSelection();
     
     }
-    
+
+    $('.js-btn-export').click(function(){
+        $('.js-export-spinner').removeClass('hidden');
+    });
+
 });
