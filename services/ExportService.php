@@ -91,12 +91,9 @@ class ExportService extends BaseApplicationComponent
             // Loop trough data
             foreach ($data as $row) {
 
-                // fetch element in case of element id
+                // Fetch element in case of element id
                 if (is_numeric($row)) {
-                    $criteria = $this->_service->setCriteria($settings);
-                    $criteria->id = $row;
-                    $element = $criteria->first();
-                    $row = $element;
+                    $row = craft()->elements->getElementById($row, $settings['type']);
                 }
 
                 // Get fields
