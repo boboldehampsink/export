@@ -73,6 +73,10 @@ class ExportService extends BaseApplicationComponent
             throw new Exception(Craft::t('Unknown Element Type Service called.'));
         }
 
+        // Get delimiter
+        $delimiter = craft()->plugins->callFirst('registerExportCsvDelimiter');
+        $delimiter = is_null($delimiter) ? ',' : $delimiter;
+
         // Write to output stream
         $export = fopen('php://temp', 'r+');
 
@@ -83,7 +87,7 @@ class ExportService extends BaseApplicationComponent
         if (count($data)) {
 
             // Put down columns
-            fputcsv($export, $this->parseColumns($settings));
+            fputcsv($export, $this->parseColumns($settings), $delimiter);
 
             // Loop trough data
             foreach ($data as $element) {
@@ -108,7 +112,7 @@ class ExportService extends BaseApplicationComponent
                 }
 
                 // Add rows to export
-                fputcsv($export, $rows);
+                fputcsv($export, $rows, $delimiter);
             }
         }
 
