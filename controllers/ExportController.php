@@ -57,14 +57,11 @@ class ExportController extends BaseController
     }
 
     /**
-     * Download export.
-     *
-     * @return string CSV
+     * Start export task.
      */
-    public function actionDownload()
+    public function actionExport()
     {
-
-        // Get export post
+        // Get import post
         $settings = craft()->request->getRequiredPost('export');
 
         // Get mapping fields
@@ -73,13 +70,26 @@ class ExportController extends BaseController
         // Save map
         craft()->export->saveMap($settings, $map);
 
-        // Set more settings
-        $settings['map'] = $map;
+        // Set filename and rows
+        $settings['file'] = 'export_'.strtolower($settings['type']).'_'.date('Ymd').'.csv';
+        $settings['rows'] = 0;
 
-        // Get data
-        $data = craft()->export->download($settings);
+        // Create history
+        $history = craft()->export_history->start($settings);
 
-        // Download the csv
-        craft()->request->sendFile('export.csv', $data, array('forceDownload' => true, 'mimeType' => 'text/csv'));
+        // Add history to settings
+        $settings['history'] = $history;
+
+        // UNCOMMENT FOR DEBUGGING
+        //craft()->export->debug($settings, $history, 1);
+
+        // Create the import task
+        $task = craft()->tasks->createTask('Export', Craft::t('Exporting').' '.strtolower($settings['type']), $settings);
+
+        // Notify user
+        craft()->userSession->setNotice(Craft::t('Export process started.'));
+
+        // Redirect to history
+        $this->redirect('export/history?task='.$task->id);
     }
 }

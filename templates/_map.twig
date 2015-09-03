@@ -10,7 +10,7 @@
 {% set content %}
     <form method="post" action="" class="centered" accept-charset="utf-8">
         {{ getCsrfInput() }}
-        <input type="hidden" name="action" value="export/download">
+        <input type="hidden" name="action" value="export/export">
 
         {% for key, value in export if key != 'elementvars' %}
             <input type="hidden" name="export[{{ key }}]" value="{{ value }}">
