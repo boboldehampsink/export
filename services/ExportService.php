@@ -73,11 +73,8 @@ class ExportService extends BaseApplicationComponent
             throw new Exception(Craft::t('Unknown Element Type Service called.'));
         }
 
-        // Open output buffer
-        ob_start();
-
         // Write to output stream
-        $export = fopen('php://output', 'w');
+        $export = fopen('php://temp', 'r+');
 
         // Get data
         $data = $this->getData($settings);
@@ -116,8 +113,9 @@ class ExportService extends BaseApplicationComponent
         }
 
         // Close buffer and return data
+        rewind($export);
+        $data = fgets($export);
         fclose($export);
-        $data = ob_get_clean();
 
         // Use windows friendly newlines
         $data = str_replace("\n", "\r\n", $data);
