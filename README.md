@@ -13,6 +13,7 @@ Features:
 - Has a hook "registerExportSource" to add/replace exports with your own source.
 - Has a hook "registerExportOperation" to parse special export fields
 - Has a hook "registerExportService" to add your own Element Type export service.
+- Has a hook "registerExportCsvDelimiter" to specify your preferred CSV delimiter.
 
 Todo:
 - Support JSON and XML output
