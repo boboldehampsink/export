@@ -23,12 +23,16 @@ The plugin's folder should be named "export"
 
 Changelog
 =================
+###0.5.6###
+- Show spinner while generating export (thanks to @gijsstegehuis)
+- Added the ability to register the preferred CSV delimiter via the registerExportCsvDelimiter hook
+
 ###0.5.5###
-- Added ability to pre-select export elementtype through query string (thanks to gijsstegehuis)
-- Added Dutch translations (thanks to rutgerbakker)
+- Added ability to pre-select export elementtype through query string (thanks to @gijsstegehuis)
+- Added Dutch translations (thanks to @rutgerbakker)
 
 ###0.5.4###
-- Fixed export history maps (thanks to MRolefes)
+- Fixed export history maps (thanks to @MRolefes)
 
 ###0.5.3###
 - Added the ability to control the sorting of data
