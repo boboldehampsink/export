@@ -93,10 +93,15 @@ class ExportService extends BaseApplicationComponent
             fputcsv($export, $this->parseColumns($settings), $delimiter);
 
             // Loop trough data
-            foreach ($data as $element) {
+            foreach ($data as $row) {
+
+                // Fetch element in case of element id
+                if (is_numeric($row)) {
+                    $row = craft()->elements->getElementById($row, $settings['type']);
+                }
 
                 // Get fields
-                $fields = $this->parseFields($settings, $element);
+                $fields = $this->parseFields($settings, $row);
 
                 // Gather row data
                 $rows = array();
@@ -194,8 +199,8 @@ class ExportService extends BaseApplicationComponent
             // Find data
             $criteria = $this->_service->setCriteria($settings);
 
-            // Gather data
-            $data = $criteria->find();
+            // Gather element ids
+            $data = $criteria->ids();
         }
 
         return $data;
