@@ -24,6 +24,9 @@ The plugin's folder should be named "export"
 
 Changelog
 =================
+###0.5.7###
+- Fetch elements individually for less memory consumption (thanks to @gijsstegehuis)
+
 ###0.5.6###
 - Show spinner while generating export (thanks to @gijsstegehuis)
 - Added the ability to register the preferred CSV delimiter via the registerExportCsvDelimiter hook
