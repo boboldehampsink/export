@@ -95,6 +95,11 @@ class ExportService extends BaseApplicationComponent
             // Loop trough data
             foreach ($data as $element) {
 
+                // Fetch element in case of element id
+                if (is_numeric($element)) {
+                    $element = craft()->elements->getElementById($element, $settings['type']);
+                }
+
                 // Get fields
                 $fields = $this->parseFields($settings, $element);
 
@@ -194,8 +199,8 @@ class ExportService extends BaseApplicationComponent
             // Find data
             $criteria = $this->_service->setCriteria($settings);
 
-            // Gather data
-            $data = $criteria->find();
+            // Gather element ids
+            $data = $criteria->ids();
         }
 
         return $data;
