@@ -30,8 +30,16 @@
 
         <table class="data sortable">
             <tbody>
-        {% set fields = craft.export.getFields(export.type, reset) %}
-        {% for handle, data in fields %}
+    {% set fields = craft.export.getFields(export.type, reset) %}
+    {% for handle, data in fields %}
+        {% if data.fieldtype is defined %}
+            {% set customTableRow = craft.export.customTableRow(data.fieldtype) %}
+        {% else %}
+            {% set customTableRow = false %}
+        {% endif %}
+        {% if customTableRow %}
+            {% include customTableRow ignore missing %}
+        {% else %}
             <tr>
                 <td>
                     <div class="field">
@@ -59,7 +67,8 @@
                     }) }}
                 </td>
             </tr>
-        {% endfor %}
+        {% endif %}
+    {% endfor %}
             </tbody>
             <tfoot>
                 <tr>
