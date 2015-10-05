@@ -79,4 +79,17 @@ class ExportVariable
 
         return false;
     }
+
+    /**
+     * Get path to fieldtype's custom table row template.
+     *
+     * @param string $fieldHandle
+     *
+     * @return string
+     */
+    public function customTableRow($fieldHandle)
+    {
+        // Return custom <tr> for template
+        return craft()->export->getCustomTableRow($fieldHandle);
+    }
 }

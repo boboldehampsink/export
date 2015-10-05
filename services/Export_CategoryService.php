@@ -70,7 +70,7 @@ class Export_CategoryService extends BaseApplicationComponent implements IExport
             // Set the dynamic fields for this type
             foreach (craft()->fields->getLayoutByType(ElementType::Category)->getFields() as $field) {
                 $data = $field->getField();
-                $fields[$data->handle] = array('name' => $data->name, 'checked' => 1);
+                $fields[$data->handle] = array('name' => $data->name, 'checked' => 1, 'fieldtype' => $data->type);
             }
         } else {
 
@@ -119,7 +119,11 @@ class Export_CategoryService extends BaseApplicationComponent implements IExport
         // Try to parse checked fields through prepValue
         foreach ($map as $handle => $data) {
             if ($data['checked']) {
-                $attributes[$handle] = $element->$handle;
+                try {
+                    $attributes[$handle] = $element->$handle;
+                } catch (\Exception $e) {
+                    $attributes[$handle] = null;
+                }
             }
         }
 
@@ -136,6 +140,9 @@ class Export_CategoryService extends BaseApplicationComponent implements IExport
                 $attributes[ExportModel::HandleAncestors] = implode('/', $element->getAncestors()->find());
             }
         }
+
+        // Call hook allowing 3rd-party plugins to modify attributes
+        craft()->plugins->call('modifyExportAttributes', array(&$attributes, $element));
 
         return $attributes;
     }

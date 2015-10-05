@@ -23,6 +23,20 @@ class ExportService extends BaseApplicationComponent
     private $_service;
 
     /**
+     * Custom <tr> paths.
+     *
+     * @var array
+     */
+    public $customTableRowPaths = array();
+
+    /**
+     * Whether custom table row paths have been loaded.
+     *
+     * @var bool
+     */
+    private $_loadedTableRowPaths = false;
+
+    /**
      * Saves an export map to the database.
      *
      * @param array $settings
@@ -161,6 +175,42 @@ class ExportService extends BaseApplicationComponent
 
             // Return this service
             return craft()->$service;
+        }
+
+        return false;
+    }
+
+    /**
+     * Get path to fieldtype's custom <tr> template.
+     *
+     * @param string $fieldHandle
+     *
+     * @return string
+     */
+    public function getCustomTableRow($fieldHandle)
+    {
+        // If table row paths haven't been loaded
+        if (!$this->_loadedTableRowPaths) {
+
+            // Call hook for all plugins
+            $responses = craft()->plugins->call('registerExportTableRowPaths');
+
+            // Loop through responses from each plugin
+            foreach ($responses as $customPaths) {
+
+                // Append custom paths to master list
+                $this->customTableRowPaths = array_merge($this->customTableRowPaths, $customPaths);
+            }
+
+            // Table row paths have been loaded
+            $this->_loadedTableRowPaths = true;
+        }
+
+        // If fieldtype has been registered and is not falsey
+        if (array_key_exists($fieldHandle, $this->customTableRowPaths) && $this->customTableRowPaths[$fieldHandle]) {
+
+            // Return specified custom path
+            return $this->customTableRowPaths[$fieldHandle];
         }
 
         return false;

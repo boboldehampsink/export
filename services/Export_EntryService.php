@@ -111,7 +111,7 @@ class Export_EntryService extends BaseApplicationComponent implements IExportEle
                     $fieldData = array();
                     foreach ($tab->getFields() as $field) {
                         $data = $field->getField();
-                        $fieldData[$data->handle] = array('name' => $data->name, 'checked' => 1);
+                        $fieldData[$data->handle] = array('name' => $data->name, 'checked' => 1, 'fieldtype' => $data->type);
                     }
                     $layout += $fieldData;
                 }
@@ -168,7 +168,11 @@ class Export_EntryService extends BaseApplicationComponent implements IExportEle
         // Try to parse checked fields through prepValue
         foreach ($map as $handle => $data) {
             if ($data['checked'] && !strstr($handle, ExportModel::HandleTitle)) {
-                $attributes[$handle] = $element->$handle;
+                try {
+                    $attributes[$handle] = $element->$handle;
+                } catch (\Exception $e) {
+                    $attributes[$handle] = null;
+                }
             }
         }
 
@@ -192,6 +196,9 @@ class Export_EntryService extends BaseApplicationComponent implements IExportEle
                 $attributes[ExportModel::HandleAncestors] = implode('/', $element->getAncestors()->find());
             }
         }
+
+        // Call hook allowing 3rd-party plugins to modify attributes
+        craft()->plugins->call('modifyExportAttributes', array(&$attributes, $element));
 
         return $attributes;
     }
