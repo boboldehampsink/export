@@ -1,7 +1,7 @@
 <?php
 
 return array(
-    'Export' => 'Export',
+    'Export' => 'Exporteren',
     'Reset export map' => 'Reset exporteer indeling',
     'All' => 'Alle',
     'Unknown Element Type Service called.' => 'Onbekende Element Type Service genoemd.',
