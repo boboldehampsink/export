@@ -185,16 +185,12 @@ class Export_EntryService extends BaseApplicationComponent implements IExportEle
 
         // Get parent for structures
         if (array_key_exists(ExportModel::HandleParent, $map)) {
-            if ($element->getAncestors()) {
-                $attributes[ExportModel::HandleParent] = $element->getAncestors(1)->first();
-            }
+            $attributes[ExportModel::HandleParent] = $element->getAncestors() ? $element->getAncestors(1)->first() : '';
         }
 
         // Get ancestors for structures
         if (array_key_exists(ExportModel::HandleAncestors, $map)) {
-            if ($element->getAncestors()) {
-                $attributes[ExportModel::HandleAncestors] = implode('/', $element->getAncestors()->find());
-            }
+            $attributes[ExportModel::HandleAncestors] = $element->getAncestors() ? implode('/', $element->getAncestors()->find()) : '';
         }
 
         // Call hook allowing 3rd-party plugins to modify attributes
