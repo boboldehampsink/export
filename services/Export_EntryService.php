@@ -103,6 +103,7 @@ class Export_EntryService extends BaseApplicationComponent implements IExportEle
                     ExportModel::HandleExpiryDate => array('name' => Craft::t('Expiry Date'), 'checked' => 0),
                     ExportModel::HandleEnabled    => array('name' => Craft::t('Enabled'), 'checked' => 0),
                     ExportModel::HandleStatus     => array('name' => Craft::t('Status'), 'checked' => 0),
+                    ExportModel::HandleUri        => array('name'  => Craft::t('Uri'), 'checked' => 0),
                 );
 
                 // Set the dynamic fields for this type
