@@ -30,6 +30,7 @@ class ExportModel extends BaseModel
     const HandlePostDate     = 'postDate';
     const HandleExpiryDate   = 'expiryDate';
     const HandleEnabled      = 'enabled';
+    const HandleUri          = 'uri';
 
     # Users
     const HandleUsername             = 'username';
