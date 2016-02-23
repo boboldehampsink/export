@@ -60,8 +60,8 @@ class ExportService extends BaseApplicationComponent
      * Download the export csv.
      *
      * @param array $settings
-     *
      * @return string
+     * @throws Exception
      */
     public function download(array $settings)
     {
@@ -189,7 +189,7 @@ class ExportService extends BaseApplicationComponent
         }
 
         // Cut up data from source
-        if ($settings['offset']) {
+        if (array_key_exists('offset', $settings)) {
             $data = array_slice($data, $settings['offset'], $settings['limit']);
         }
 
