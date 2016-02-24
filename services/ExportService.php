@@ -42,12 +42,12 @@ class ExportService extends BaseApplicationComponent
         );
 
         // Check if we have a map already
-        $mapRecord = $this->findExportMapRecord($criteria);
+        $mapRecord = $this->findMap($criteria);
 
         if (!count($mapRecord) || $mapRecord->settings != $settings) {
 
             // Save settings and map to database
-            $mapRecord = $this->getNewExportMapRecord();
+            $mapRecord = $this->getNewMap();
             $mapRecord->settings = $settings;
         }
 
@@ -61,7 +61,7 @@ class ExportService extends BaseApplicationComponent
      * @param \CDbCriteria $criteria
      * @return Export_MapRecord|array|null
      */
-    protected function findExportMapRecord(\CDbCriteria $criteria)
+    public function findMap(\CDbCriteria $criteria)
     {
         return Export_MapRecord::model()->find($criteria);
     }
@@ -70,7 +70,7 @@ class ExportService extends BaseApplicationComponent
      * @codeCoverageIgnore
      * @return Export_MapRecord
      */
-    protected function getNewExportMapRecord()
+    protected function getNewMap()
     {
         return new Export_MapRecord();
     }

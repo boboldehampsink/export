@@ -5,9 +5,7 @@ namespace Craft;
 use PHPUnit_Framework_MockObject_MockObject as MockObject;
 
 /**
- * Export test.
- *
- * Contains unit tests for the Export plugin.
+ * Contains unit tests for the ExportService.
  *
  * @author    Bob Olde Hampsink <b.oldehampsink@itmundi.nl>
  * @copyright Copyright (c) 2015, Bob Olde Hampsink
@@ -39,6 +37,8 @@ class ExportServiceTest extends BaseTest
     }
 
     /**
+     * Save map should save a new map when record not found
+     *
      * @covers ::saveMap
      */
     public function testSaveMapShouldSaveNewMapWhenRecordNotFound()
@@ -49,15 +49,17 @@ class ExportServiceTest extends BaseTest
         $service = $this->getMockExportService();
 
         $mockExportMap = $this->getMockExportMap();
-        $service->expects($this->exactly(1))->method('findExportMapRecord')
+        $service->expects($this->exactly(1))->method('findMap')
             ->with($this->isInstanceOf('CDbCriteria'))->willReturn(null);
-        $service->expects($this->exactly(1))->method('getNewExportMapRecord')->willReturn($mockExportMap);
+        $service->expects($this->exactly(1))->method('getNewMap')->willReturn($mockExportMap);
         $mockExportMap->expects($this->exactly(1))->method('save')->with(false);
 
         $service->saveMap($settings, $map);
     }
 
     /**
+     * Save map should save an existing map when record found
+     *
      * @covers ::saveMap
      */
     public function testSaveMapShouldSaveExistingMapWhenRecordFound()
@@ -68,9 +70,9 @@ class ExportServiceTest extends BaseTest
         $service = $this->getMockExportService();
 
         $mockExportMap = $this->getMockExportMap();
-        $service->expects($this->exactly(1))->method('findExportMapRecord')
+        $service->expects($this->exactly(1))->method('findMap')
             ->with($this->isInstanceOf('CDbCriteria'))->willReturn($mockExportMap);
-        $service->expects($this->exactly(0))->method('getNewExportMapRecord');
+        $service->expects($this->exactly(0))->method('getNewMap');
         $mockExportMap->expects($this->exactly(1))->method('save')->with(false);
 
         $service->saveMap($settings, $map);
@@ -114,6 +116,8 @@ class ExportServiceTest extends BaseTest
     }
 
     /**
+     * Download with valid settings should export data
+     *
      * @param array $settings
      * @param array $attributes
      * @param string $expectedResult
@@ -146,6 +150,8 @@ class ExportServiceTest extends BaseTest
     }
 
     /**
+     * Data provider for valid download types
+     *
      * @return array
      */
     public function provideValidDownloadTypes()
@@ -170,6 +176,8 @@ class ExportServiceTest extends BaseTest
     }
 
     /**
+     * Data provider for valid download settings
+     *
      * @return array
      */
     public function provideValidDownloadSettings()
@@ -411,7 +419,7 @@ class ExportServiceTest extends BaseTest
     private function getMockExportService()
     {
         $service = $this->getMockBuilder('Craft\ExportService')
-            ->setMethods(array('findExportMapRecord', 'getNewExportMapRecord'))
+            ->setMethods(array('findMap', 'getNewMap'))
             ->getMock();
         return $service;
     }
