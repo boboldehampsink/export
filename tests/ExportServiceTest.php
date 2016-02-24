@@ -34,7 +34,46 @@ class ExportServiceTest extends BaseTest
         require_once __DIR__ . '/../services/Export_EntryService.php';
         require_once __DIR__ . '/../services/Export_UserService.php';
         require_once __DIR__ . '/../services/Export_CategoryService.php';
+        require_once __DIR__ . '/../records/Export_MapRecord.php';
         require_once __DIR__ . '/../models/ExportModel.php';
+    }
+
+    /**
+     * @covers ::saveMap
+     */
+    public function testSaveMapShouldSaveNewMapWhenRecordNotFound()
+    {
+        $settings = array();
+        $map = array();
+
+        $service = $this->getMockExportService();
+
+        $mockExportMap = $this->getMockExportMap();
+        $service->expects($this->exactly(1))->method('findExportMapRecord')
+            ->with($this->isInstanceOf('CDbCriteria'))->willReturn(null);
+        $service->expects($this->exactly(1))->method('getNewExportMapRecord')->willReturn($mockExportMap);
+        $mockExportMap->expects($this->exactly(1))->method('save')->with(false);
+
+        $service->saveMap($settings, $map);
+    }
+
+    /**
+     * @covers ::saveMap
+     */
+    public function testSaveMapShouldSaveExistingMapWhenRecordFound()
+    {
+        $settings = array();
+        $map = array();
+
+        $service = $this->getMockExportService();
+
+        $mockExportMap = $this->getMockExportMap();
+        $service->expects($this->exactly(1))->method('findExportMapRecord')
+            ->with($this->isInstanceOf('CDbCriteria'))->willReturn($mockExportMap);
+        $service->expects($this->exactly(0))->method('getNewExportMapRecord');
+        $mockExportMap->expects($this->exactly(1))->method('save')->with(false);
+
+        $service->saveMap($settings, $map);
     }
 
     /**
@@ -135,6 +174,7 @@ class ExportServiceTest extends BaseTest
      */
     public function provideValidDownloadSettings()
     {
+        $now = new DateTime();
         return array(
             'Entry' => array(
                 'settings' => array(
@@ -187,12 +227,12 @@ class ExportServiceTest extends BaseTest
                     'elementId' => 1,
                     'slug' => 'testslug',
                     'authorId' => 2,
-                    'postDate' => new DateTime(),
+                    'postDate' => $now,
                     'expiryDate' => new DateTime(),
                     'enabled' => '1',
                     'status' => 'live',
                 ),
-                'result' => 'ID,Slug,Author,"Post Date",Enabled' . "\r\n" . '1,testslug,,2016-02-23,Yes' . "\r\n",
+                'result' => 'ID,Slug,Author,"Post Date",Enabled' . "\r\n" . '1,testslug,,' . (string)$now . ',Yes' . "\r\n",
             ),
             'User' => array(
                 'settings' => array(
@@ -310,7 +350,7 @@ class ExportServiceTest extends BaseTest
     }
 
     /**
-     * @return MockObject
+     * @return BaseElementModel|MockObject
      */
     private function getMockElement()
     {
@@ -321,7 +361,7 @@ class ExportServiceTest extends BaseTest
     }
 
     /**
-     * @return MockObject
+     * @return UserModel|MockObject
      */
     private function getMockUser()
     {
@@ -344,7 +384,7 @@ class ExportServiceTest extends BaseTest
     }
 
     /**
-     * @return MockObject
+     * @return FieldModel|MockObject
      */
     private function getMockField()
     {
@@ -352,5 +392,27 @@ class ExportServiceTest extends BaseTest
             ->disableOriginalConstructor()
             ->getMock();
         return $mockField;
+    }
+
+    /**
+     * @return Export_MapRecord|MockObject
+     */
+    private function getMockExportMap()
+    {
+        $mockExportMap = $this->getMockBuilder('Craft\Export_MapRecord')
+            ->disableOriginalConstructor()
+            ->getMock();
+        return $mockExportMap;
+    }
+
+    /**
+     * @return ExportService|MockObject
+     */
+    private function getMockExportService()
+    {
+        $service = $this->getMockBuilder('Craft\ExportService')
+            ->setMethods(array('findExportMapRecord', 'getNewExportMapRecord'))
+            ->getMock();
+        return $service;
     }
 }
