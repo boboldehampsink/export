@@ -139,13 +139,11 @@ class ExportServiceTest extends BaseTest
             $this->setMockUsersService($mockUser);
         }
 
-        if (empty($sources)) {
-            $mockElement = $this->getMockElement();
-            $this->setMockElementsService($mockElement);
+        $mockElement = $this->getMockElement();
+        $this->setMockElementsService($mockElement);
 
-            $mockField = $this->getMockField();
-            $this->setMockFieldsService($mockField);
-        }
+        $mockField = $this->getMockField();
+        $this->setMockFieldsService($mockField);
 
         $this->setMockPluginsService($sources);
 
