@@ -93,6 +93,7 @@ class Export_UserServiceTest extends BaseTest
         $stored = null;
         $mockFieldHandle = 'mockFieldHandle';
         $mockFieldName = 'mockFieldName';
+        $mockFieldType = 'mockFieldType';
         $expectedResult = array(
             'id' => array(
                 'name' => 'ID',
@@ -141,11 +142,12 @@ class Export_UserServiceTest extends BaseTest
             $mockFieldHandle => array(
                 'name' => $mockFieldName,
                 'checked' => 1,
+                'fieldtype' => $mockFieldType,
             ),
         );
 
         $this->setMockExportService($stored);
-        $mockField = $this->getMockField($mockFieldHandle, $mockFieldName);
+        $mockField = $this->getMockField($mockFieldHandle, $mockFieldName, $mockFieldType);
         $mockFieldLayout = $this->getMockFieldLayout($mockField);
         $this->setMockFieldsService($mockFieldLayout);
 
@@ -229,17 +231,19 @@ class Export_UserServiceTest extends BaseTest
     /**
      * @param $mockFieldHandle
      * @param $mockFieldName
+     * @param $mockFieldType
      * @return FieldModel|MockObject
      */
-    private function getMockField($mockFieldHandle, $mockFieldName)
+    private function getMockField($mockFieldHandle, $mockFieldName, $mockFieldType)
     {
         $mockField = $this->getMockBuilder('Craft\FieldModel')
             ->disableOriginalConstructor()
             ->getMock();
 
-        $mockField->expects($this->exactly(2))->method('__get')->willReturnMap(array(
+        $mockField->expects($this->any())->method('__get')->willReturnMap(array(
             array('handle', $mockFieldHandle),
             array('name', $mockFieldName),
+            array('type', $mockFieldType),
         ));
         return $mockField;
     }

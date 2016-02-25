@@ -40,7 +40,7 @@ class Export_UserService extends BaseApplicationComponent implements IExportElem
             $groups = craft()->userGroups->getAllGroups();
 
             // Return when groups found
-            $result = count($groups) ?  $groups : true;
+            $result = count($groups) ? $groups : true;
         }
 
         // Else, dont proceed with the user element
