@@ -18,7 +18,7 @@ class ExportService extends BaseApplicationComponent
     /**
      * Contains the working export service's name.
      *
-     * @var string
+     * @var IExportElementType
      */
     private $_service;
 
@@ -238,14 +238,11 @@ class ExportService extends BaseApplicationComponent
         $fields = array();
 
         // Only get element attributes and content attributes
+        $attributes = $element;
         if ($element instanceof BaseElementModel) {
 
             // Get service
             $attributes = $this->_service->getAttributes($settings['map'], $element);
-        } else {
-
-            // No element, i.e. from export source
-            $attributes = $element;
         }
 
         // Loop through the map
