@@ -69,7 +69,7 @@ class Export_UserService extends BaseApplicationComponent implements IExportElem
         );
 
         // Check if we have a map already
-        $stored = Export_MapRecord::model()->find($criteria);
+        $stored = craft()->export->findMap($criteria);
 
         if (!count($stored) || $reset) {
 

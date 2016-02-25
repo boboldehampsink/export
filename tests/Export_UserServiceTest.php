@@ -5,7 +5,7 @@ namespace Craft;
 use PHPUnit_Framework_MockObject_MockObject as MockObject;
 
 /**
- * Contains unit tests for the Export_CategoryService.
+ * Contains unit tests for the Export_UserService.
  *
  * @author    Bob Olde Hampsink <b.oldehampsink@itmundi.nl>
  * @copyright Copyright (c) 2015, Bob Olde Hampsink
@@ -13,10 +13,10 @@ use PHPUnit_Framework_MockObject_MockObject as MockObject;
  *
  * @link      http://github.com/boboldehampsink
  *
- * @coversDefaultClass Craft\Export_CategoryService
+ * @coversDefaultClass Craft\Export_UserService
  * @covers ::<!public>
  */
-class Export_CategoryServiceTest extends BaseTest
+class Export_UserServiceTest extends BaseTest
 {
     /**
      * {@inheritdoc}
@@ -27,16 +27,16 @@ class Export_CategoryServiceTest extends BaseTest
         parent::setUpBeforeClass();
 
         // Require dependencies
-        require_once __DIR__ . '/../services/Export_CategoryService.php';
+        require_once __DIR__ . '/../services/Export_UserService.php';
         require_once __DIR__ . '/../services/IExportElementType.php';
     }
 
     /**
-     * Export_CategoryService should implement IExportElementType
+     * Export_UserService should implement IExportElementType
      */
-    public function testExportCategoryServiceShouldImplementIExportElementType()
+    public function testExportUserServiceShouldImplementIExportElementType()
     {
-        $this->assertInstanceOf('Craft\IExportElementType', new Export_CategoryService());
+        $this->assertInstanceOf('Craft\IExportElementType', new Export_UserService());
     }
 
     /**
@@ -44,34 +44,49 @@ class Export_CategoryServiceTest extends BaseTest
      */
     public function testGetTemplateShouldReturnTemplatePath()
     {
-        $service = new Export_CategoryService();
+        $service = new Export_UserService();
         $template = $service->getTemplate();
-        $this->assertEquals('export/sources/_category', $template);
+        $this->assertEquals('export/sources/_user', $template);
     }
 
     /**
      * @covers ::getGroups
      */
-    public function testGetGroupsShouldGetAllEditableCategoryGroups()
+    public function testGetGroupsShouldGetAllUserGroups()
     {
-        $expectedResult = array('editableGroup');
+        $expectedResult = array('userGroup');
 
-        $mockCategoriesService = $this->getMock('Craft\CategoriesService');
-        $mockCategoriesService->expects($this->exactly(1))->method('getEditableGroups')->willReturn($expectedResult);
-        $this->setComponent(craft(), 'categories', $mockCategoriesService);
+        $mockUserGroupsService = $this->getMock('Craft\UserGroupsService');
+        $mockUserGroupsService->expects($this->exactly(1))->method('getAllGroups')->willReturn($expectedResult);
+        $this->setComponent(craft(), 'userGroups', $mockUserGroupsService);
 
-        $service = new Export_CategoryService();
+        $service = new Export_UserService();
         $result = $service->getGroups();
 
         $this->assertEquals($expectedResult, $result);
     }
 
     /**
-     * Get fields should return default category fields plus fields from category field layout
+     * @covers ::getGroups
+     */
+    public function testGetGroupsShouldReturnTrueWhenNoUserGroupsFound()
+    {
+        $mockUserGroupsService = $this->getMock('Craft\UserGroupsService');
+        $mockUserGroupsService->expects($this->exactly(1))->method('getAllGroups')->willReturn(array());
+        $this->setComponent(craft(), 'userGroups', $mockUserGroupsService);
+
+        $service = new Export_UserService();
+        $result = $service->getGroups();
+
+        $this->assertTrue($result);
+    }
+
+    /**
+     * Get fields should return default user fields plus fields from user field layout
      *
      * @covers ::getFields
      */
-    public function testGetFieldsShouldReturnDefaultCategoryFieldsWhenNoStoredMapFound()
+    public function testGetFieldsShouldReturnDefaultUserFieldsWhenNoStoredMapFound()
     {
         $settings = array();
         $reset = false;
@@ -83,20 +98,44 @@ class Export_CategoryServiceTest extends BaseTest
                 'name' => 'ID',
                 'checked' => 0,
             ),
-            'title' => array(
-                'name' => 'Title',
+            'username' => array(
+                'name' => 'Username',
                 'checked' => 1,
             ),
-            'slug' => array(
-                'name' => 'Slug',
+            'firstName' => array(
+                'name' => 'First Name',
+                'checked' => 1,
+            ),
+            'lastName' => array(
+                'name' => 'Last Name',
+                'checked' => 1,
+            ),
+            'email' => array(
+                'name' => 'Email',
+                'checked' => 1,
+            ),
+            'preferredLocale' => array(
+                'name' => 'Preferred Locale',
                 'checked' => 0,
             ),
-            'parent' => array(
-                'name' => 'Parent',
+            'weekStartDay' => array(
+                'name' => 'Week Start Day',
                 'checked' => 0,
             ),
-            'ancestors' => array(
-                'name' => 'Ancestors',
+            'status' => array(
+                'name' => 'Status',
+                'checked' => 0,
+            ),
+            'lastLoginDate' => array(
+                'name' => 'Last Login Date',
+                'checked' => 0,
+            ),
+            'invalidLoginCount' => array(
+                'name' => 'Invalid Login Count',
+                'checked' => 0,
+            ),
+            'lastInvalidLoginDate' => array(
+                'name' => 'Last Invalid Login Date',
                 'checked' => 0,
             ),
             $mockFieldHandle => array(
@@ -110,14 +149,14 @@ class Export_CategoryServiceTest extends BaseTest
         $mockFieldLayout = $this->getMockFieldLayout($mockField);
         $this->setMockFieldsService($mockFieldLayout);
 
-        $service = new Export_CategoryService();
+        $service = new Export_UserService();
         $result = $service->getFields($settings, $reset);
 
         $this->assertSame($expectedResult, $result);
     }
 
     /**
-     * Get fields should return default category fields plus fields from category field layout
+     * Get fields should return default user fields plus fields from user field layout
      *
      * @covers ::getFields
      */
@@ -131,7 +170,7 @@ class Export_CategoryServiceTest extends BaseTest
         $mockExportMap = $this->getMockExportMapRecord($mockMap);
         $this->setMockExportService($mockExportMap);
 
-        $service = new Export_CategoryService();
+        $service = new Export_UserService();
         $result = $service->getFields($settings, $reset);
 
         $this->assertSame($mockMap, $result);
@@ -147,14 +186,14 @@ class Export_CategoryServiceTest extends BaseTest
             'offset' => 0,
             'limit' => 10,
             'elementvars' => array(
-                'group' => 1,
+                'groups' => 1,
             )
         );
 
         $mockElementCriteria = $this->getMockElementCriteria();
         $this->setElementsService($mockElementCriteria);
 
-        $service = new Export_CategoryService();
+        $service = new Export_UserService();
         $result = $service->setCriteria($settings);
 
         $this->assertInstanceOf('Craft\ElementCriteriaModel', $result);
@@ -169,31 +208,18 @@ class Export_CategoryServiceTest extends BaseTest
             'handle1' => array(
                 'checked' => 1
             ),
-            'parent' => array(
-                'checked' => '0',
-            ),
-            'ancestors' => array(
-                'checked' => '0',
-            ),
         );
 
         $expectedResult = array(
             'handle1' => 'value1',
-            'parent' => 'parent',
-            'ancestors' => 'ancestor1/ancestor2',
         );
-
-        $mockElementCriteria = $this->getMockElementCriteria();
-        $mockElementCriteria->expects($this->exactly(1))->method('first')->willReturn('parent');
-        $mockElementCriteria->expects($this->exactly(1))->method('find')->willReturn(array('ancestor1', 'ancestor2'));
 
         $mockElement = $this->getMockElement();
         $mockElement->expects($this->any())->method('__get')->willReturnMap(array(
             array('handle1', 'value1'),
         ));
-        $mockElement->expects($this->exactly(4))->method('getAncestors')->willReturn($mockElementCriteria);
 
-        $service = new Export_CategoryService();
+        $service = new Export_UserService();
         $result = $service->getAttributes($map, $mockElement);
 
 
@@ -253,7 +279,7 @@ class Export_CategoryServiceTest extends BaseTest
     {
         $mockFieldsService = $this->getMock('Craft\FieldsService');
         $mockFieldsService->expects($this->exactly(1))->method('getLayoutByType')
-            ->with(ElementType::Category)->willReturn($mockFieldLayout);
+            ->with(ElementType::User)->willReturn($mockFieldLayout);
         $this->setComponent(craft(), 'fields', $mockFieldsService);
     }
 
