@@ -341,7 +341,7 @@ class ExportService extends BaseApplicationComponent
      *
      * @return string
      */
-    protected function parseFieldData($handle, $data)
+    public function parseFieldData($handle, $data)
     {
 
         // Do we have any data at all

@@ -125,6 +125,7 @@ class ExportServiceTest extends BaseTest
      *
      * @dataProvider provideValidDownloadSettings
      * @covers ::download
+     * @covers ::parseFieldData
      */
     public function testDownloadWithValidSettingsShouldExportData(array $settings, array $attributes, $sources = array(), $expectedResult)
     {
@@ -152,6 +153,31 @@ class ExportServiceTest extends BaseTest
         $data = $service->download($settings);
 
         $this->assertEquals($expectedResult, $data);
+    }
+
+    /**
+     * @param string $fieldType
+     * @param mixed $data
+     * @param string $expectedResult
+     *
+     * @dataProvider provideFieldTypeData
+     * @covers ::parseFieldData
+     */
+    public function testParseFieldDataWithFieldTypes($fieldType, $data, $expectedResult)
+    {
+        $fieldHandle = 'fieldHandle';
+
+        $mockField = $this->getMockField();
+        $mockField->expects($this->any())->method('__get')->willReturnMap(array(
+            array('handle', $fieldHandle),
+            array('type', $fieldType),
+        ));
+
+        $this->setMockFieldsService($mockField);
+
+        $service = new ExportService();
+        $result = $service->parseFieldData($fieldHandle, $data);
+        $this->assertSame($expectedResult, $result);
     }
 
     /**
@@ -337,6 +363,63 @@ class ExportServiceTest extends BaseTest
                 'sources' => array(),
                 'result' => 'Username,"First Name","Last Name",Email,Enabled' . "\r\n" . 'name,Hanzel,Grimm,Hanzel.Grimm@gmail.com,No' . "\r\n",
             ),
+        );
+    }
+
+    /**
+     * Data provider for field type data
+     *
+     * @return array
+     */
+    public function provideFieldTypeData()
+    {
+        return array(
+            'default' => array(
+                'fieldType' => 'default',
+                'data' => 'default',
+                'expectedResult' => 'default',
+            ),
+            'object' => array(
+                'fieldType' => 'object',
+                'data' => (object)array('value' => 'test'),
+                'expectedResult' => 'test',
+            ),
+            'Lightswitch yes' => array(
+                'fieldType' => 'Lightswitch',
+                'data' => '1',
+                'expectedResult' => 'Yes',
+            ),
+            'Lightswitch no' => array(
+                'fieldType' => 'Lightswitch',
+                'data' => '0',
+                'expectedResult' => 'No',
+            ),
+            'RichText' => array(
+                'fieldType' => 'RichText',
+                'data' => '<b>test</b>',
+                'expectedResult' => '<b>test</b>',
+            ),
+            'MultiSelect' => array(
+                'fieldType' => 'MultiSelect',
+                'data' => array(
+                    (object)array('value' => 'option1'),
+                    (object)array('value' => 'option2'),
+                ),
+                'expectedResult' => 'option1, option2',
+            ),
+            'Table' => array(
+                'fieldType' => 'Table',
+                'data' => array(array(
+                    array('column1' => 'value1'),
+                    array('column2' => 'value2'),
+                )),
+                'expectedResult' => 'value1, value2',
+            ),
+            'Entries' => array(
+                'fieldType' => 'Entries',
+                'data' => 'dummy',
+                'expectedResult' => 'dummy',
+            )
         );
     }
 
