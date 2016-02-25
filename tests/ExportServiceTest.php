@@ -120,28 +120,33 @@ class ExportServiceTest extends BaseTest
      *
      * @param array $settings
      * @param array $attributes
+     * @param array $sources
      * @param string $expectedResult
      *
      * @dataProvider provideValidDownloadSettings
      * @covers ::download
      */
-    public function testDownloadWithValidSettingsShouldExportData(array $settings, array $attributes, $expectedResult)
+    public function testDownloadWithValidSettingsShouldExportData(array $settings, array $attributes, $sources = array(), $expectedResult)
     {
         $elementIds = array(1);
 
         $mockElementCriteria = $this->getMockElementCriteria(array('ids' => $elementIds));
         $this->setMockExportTypeService($settings['type'], $mockElementCriteria, $attributes);
 
-        $mockElement = $this->getMockElement();
-        $this->setMockElementsService($mockElement);
-
         if (@$settings['map']['authorId']['checked']) {
             $mockUser = $this->getMockUser();
             $this->setMockUsersService($mockUser);
         }
 
-        $mockField = $this->getMockField();
-        $this->setMockFieldsService($mockField);
+        if (empty($sources)) {
+            $mockElement = $this->getMockElement();
+            $this->setMockElementsService($mockElement);
+
+            $mockField = $this->getMockField();
+            $this->setMockFieldsService($mockField);
+        }
+
+        $this->setMockPluginsService($sources);
 
         $service = new ExportService();
         $data = $service->download($settings);
@@ -240,7 +245,41 @@ class ExportServiceTest extends BaseTest
                     'enabled' => '1',
                     'status' => 'live',
                 ),
+                'sources' => array(),
                 'result' => 'ID,Slug,Author,"Post Date",Enabled' . "\r\n" . '1,testslug,,' . (string)$now . ',Yes' . "\r\n",
+            ),
+            'EntryFromSource' => array(
+                'settings' => array(
+                    'type' => 'Entry',
+                    'offset' => 0,
+                    'limit' => 10,
+                    'elementvars' => array(
+                        'section' => '14',
+                        'entrytype' => '',
+                    ),
+                    'map' => array(
+                        'elementId' => array(
+                            'name' => 'ID',
+                            'label' => 'ID',
+                            'checked' => '1',
+                        ),
+                        'slug' => array(
+                            'name' => 'Slug',
+                            'label' => 'Slug',
+                            'checked' => '1',
+                        ),
+                    ),
+                ),
+                'attributes' => array(),
+                'sources' => array(
+                    'plugin' => array(
+                        array(
+                            'elementId' => 1,
+                            'slug' => 'testslug'
+                        ),
+                    ),
+                ),
+                'result' => 'ID,Slug' . "\r\n" . '1,testslug' . "\r\n",
             ),
             'User' => array(
                 'settings' => array(
@@ -295,6 +334,7 @@ class ExportServiceTest extends BaseTest
                     'enabled' => '0',
                     'status' => 'live',
                 ),
+                'sources' => array(),
                 'result' => 'Username,"First Name","Last Name",Email,Enabled' . "\r\n" . 'name,Hanzel,Grimm,Hanzel.Grimm@gmail.com,No' . "\r\n",
             ),
         );
@@ -311,7 +351,7 @@ class ExportServiceTest extends BaseTest
             ->getMock();
 
         foreach ($methods as $method => $result) {
-            $mockElementCriteria->expects($this->exactly(1))->method($method)->willReturn($result);
+            $mockElementCriteria->expects($this->any())->method($method)->willReturn($result);
         }
 
         return $mockElementCriteria;
@@ -422,5 +462,17 @@ class ExportServiceTest extends BaseTest
             ->setMethods(array('findMap', 'getNewMap'))
             ->getMock();
         return $service;
+    }
+
+    /**
+     * @param $sources
+     */
+    private function setMockPluginsService($sources)
+    {
+        $mockPluginsService = $this->getMockBuilder('Craft\PluginsService')
+            ->disableOriginalConstructor()
+            ->getMock();
+        $mockPluginsService->expects($this->any())->method('call')->willReturn($sources);
+        $this->setComponent(craft(), 'plugins', $mockPluginsService);
     }
 }
