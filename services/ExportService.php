@@ -18,7 +18,7 @@ class ExportService extends BaseApplicationComponent
     /**
      * Contains the working export service's name.
      *
-     * @var string
+     * @var IExportElementType
      */
     private $_service;
 
@@ -56,12 +56,12 @@ class ExportService extends BaseApplicationComponent
         );
 
         // Check if we have a map already
-        $mapRecord = Export_MapRecord::model()->find($criteria);
+        $mapRecord = $this->findMap($criteria);
 
         if (!count($mapRecord) || $mapRecord->settings != $settings) {
 
             // Save settings and map to database
-            $mapRecord = new Export_MapRecord();
+            $mapRecord = $this->getNewMap();
             $mapRecord->settings = $settings;
         }
 
@@ -71,11 +71,30 @@ class ExportService extends BaseApplicationComponent
     }
 
     /**
+     * @codeCoverageIgnore
+     * @param \CDbCriteria $criteria
+     * @return Export_MapRecord|array|null
+     */
+    public function findMap(\CDbCriteria $criteria)
+    {
+        return Export_MapRecord::model()->find($criteria);
+    }
+
+    /**
+     * @codeCoverageIgnore
+     * @return Export_MapRecord
+     */
+    protected function getNewMap()
+    {
+        return new Export_MapRecord();
+    }
+
+    /**
      * Download the export csv.
      *
      * @param array $settings
-     *
      * @return string
+     * @throws Exception
      */
     public function download(array $settings)
     {
@@ -239,7 +258,7 @@ class ExportService extends BaseApplicationComponent
         }
 
         // Cut up data from source
-        if ($settings['offset']) {
+        if (array_key_exists('offset', $settings)) {
             $data = array_slice($data, $settings['offset'], $settings['limit']);
         }
 
@@ -269,14 +288,11 @@ class ExportService extends BaseApplicationComponent
         $fields = array();
 
         // Only get element attributes and content attributes
+        $attributes = $element;
         if ($element instanceof BaseElementModel) {
 
             // Get service
             $attributes = $this->_service->getAttributes($settings['map'], $element);
-        } else {
-
-            // No element, i.e. from export source
-            $attributes = $element;
         }
 
         // Loop through the map
@@ -375,7 +391,7 @@ class ExportService extends BaseApplicationComponent
      *
      * @return string
      */
-    protected function parseFieldData($handle, $data)
+    public function parseFieldData($handle, $data)
     {
 
         // Do we have any data at all

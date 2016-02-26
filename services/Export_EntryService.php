@@ -64,7 +64,7 @@ class Export_EntryService extends BaseApplicationComponent implements IExportEle
         );
 
         // Check if we have a map already
-        $stored = Export_MapRecord::model()->find($criteria);
+        $stored = craft()->export->findMap($criteria);
 
         if (!count($stored) || $reset) {
 
@@ -75,15 +75,7 @@ class Export_EntryService extends BaseApplicationComponent implements IExportEle
             $entrytype = $settings['elementvars']['entrytype'];
 
             // If "All"
-            if (empty($entrytype)) {
-
-                // Get entrytype models
-                $entrytypes = craft()->sections->getEntryTypesBySectionId($section);
-            } else {
-
-                // Get entrytype model
-                $entrytypes = array(craft()->sections->getEntryTypeById($entrytype));
-            }
+            $entrytypes = empty($entrytype) ? craft()->sections->getEntryTypesBySectionId($section) : array(craft()->sections->getEntryTypeById($entrytype));
 
             // Create a nice field map
             $fields = array();
