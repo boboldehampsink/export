@@ -7,9 +7,9 @@ namespace Craft;
  *
  * Handles common export logics.
  *
- * @author    Bob Olde Hampsink <b.oldehampsink@itmundi.nl>
+ * @author    Bob Olde Hampsink <b.oldehampsink@nerds.company>
  * @copyright Copyright (c) 2015, Bob Olde Hampsink
- * @license   http://buildwithcraft.com/license Craft License Agreement
+ * @license   MIT
  *
  * @link      http://github.com/boboldehampsink
  */
@@ -72,7 +72,9 @@ class ExportService extends BaseApplicationComponent
 
     /**
      * @codeCoverageIgnore
+     *
      * @param \CDbCriteria $criteria
+     *
      * @return Export_MapRecord|array|null
      */
     public function findMap(\CDbCriteria $criteria)
@@ -82,6 +84,7 @@ class ExportService extends BaseApplicationComponent
 
     /**
      * @codeCoverageIgnore
+     *
      * @return Export_MapRecord
      */
     protected function getNewMap()
@@ -93,7 +96,9 @@ class ExportService extends BaseApplicationComponent
      * Download the export csv.
      *
      * @param array $settings
+     *
      * @return string
+     *
      * @throws Exception
      */
     public function download(array $settings)
@@ -449,7 +454,7 @@ class ExportService extends BaseApplicationComponent
                                 $column = isset($field->settings['columns'][$column]) ? $field->settings['columns'][$column] : (isset($field->settings['columns']['col'.$i]) ? $field->settings['columns']['col'.$i] : array('type' => 'dummy'));
 
                                 // Keep track of column #
-                                $i++;
+                                ++$i;
 
                                 // Parse
                                 $table[] = $column['type'] == 'checkbox' ? ($value == 1 ? Craft::t('Yes') : Craft::t('No')) : $value;

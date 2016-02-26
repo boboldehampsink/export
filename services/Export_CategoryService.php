@@ -7,9 +7,9 @@ namespace Craft;
  *
  * Handles exporting categories
  *
- * @author    Bob Olde Hampsink <b.oldehampsink@itmundi.nl>
+ * @author    Bob Olde Hampsink <b.oldehampsink@nerds.company>
  * @copyright Copyright (c) 2015, Bob Olde Hampsink
- * @license   http://buildwithcraft.com/license Craft License Agreement
+ * @license   MIT
  *
  * @link      http://github.com/boboldehampsink
  */
@@ -60,10 +60,10 @@ class Export_CategoryService extends BaseApplicationComponent implements IExport
 
             // Set the static fields for this type
             $fields = array(
-                ExportModel::HandleId        => array('name' => Craft::t('ID'), 'checked' => 0),
-                ExportModel::HandleTitle     => array('name' => Craft::t('Title'), 'checked' => 1),
-                ExportModel::HandleSlug      => array('name' => Craft::t('Slug'), 'checked' => 0),
-                ExportModel::HandleParent    => array('name' => Craft::t('Parent'), 'checked' => 0),
+                ExportModel::HandleId => array('name' => Craft::t('ID'), 'checked' => 0),
+                ExportModel::HandleTitle => array('name' => Craft::t('Title'), 'checked' => 1),
+                ExportModel::HandleSlug => array('name' => Craft::t('Slug'), 'checked' => 0),
+                ExportModel::HandleParent => array('name' => Craft::t('Parent'), 'checked' => 0),
                 ExportModel::HandleAncestors => array('name' => Craft::t('Ancestors'), 'checked' => 0),
             );
 

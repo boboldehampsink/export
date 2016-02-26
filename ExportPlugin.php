@@ -7,9 +7,9 @@ namespace Craft;
  *
  * Plugin that allows you to export data to CSV files.
  *
- * @author    Bob Olde Hampsink <b.oldehampsink@itmundi.nl>
+ * @author    Bob Olde Hampsink <b.oldehampsink@nerds.company>
  * @copyright Copyright (c) 2015, Bob Olde Hampsink
- * @license   http://buildwithcraft.com/license Craft License Agreement
+ * @license   MIT
  *
  * @link      http://github.com/boboldehampsink
  */

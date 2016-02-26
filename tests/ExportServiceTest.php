@@ -7,9 +7,9 @@ use PHPUnit_Framework_MockObject_MockObject as MockObject;
 /**
  * Contains unit tests for the ExportService.
  *
- * @author    Bob Olde Hampsink <b.oldehampsink@itmundi.nl>
+ * @author    Bob Olde Hampsink <b.oldehampsink@nerds.company>
  * @copyright Copyright (c) 2015, Bob Olde Hampsink
- * @license   http://buildwithcraft.com/license Craft License Agreement
+ * @license   MIT
  *
  * @link      http://github.com/boboldehampsink
  *
@@ -27,17 +27,17 @@ class ExportServiceTest extends BaseTest
         parent::setUpBeforeClass();
 
         // Require dependencies
-        require_once __DIR__ . '/../services/ExportService.php';
-        require_once __DIR__ . '/../services/IExportElementType.php';
-        require_once __DIR__ . '/../services/Export_EntryService.php';
-        require_once __DIR__ . '/../services/Export_UserService.php';
-        require_once __DIR__ . '/../services/Export_CategoryService.php';
-        require_once __DIR__ . '/../records/Export_MapRecord.php';
-        require_once __DIR__ . '/../models/ExportModel.php';
+        require_once __DIR__.'/../services/ExportService.php';
+        require_once __DIR__.'/../services/IExportElementType.php';
+        require_once __DIR__.'/../services/Export_EntryService.php';
+        require_once __DIR__.'/../services/Export_UserService.php';
+        require_once __DIR__.'/../services/Export_CategoryService.php';
+        require_once __DIR__.'/../records/Export_MapRecord.php';
+        require_once __DIR__.'/../models/ExportModel.php';
     }
 
     /**
-     * Save map should save a new map when record not found
+     * Save map should save a new map when record not found.
      *
      * @covers ::saveMap
      */
@@ -58,7 +58,7 @@ class ExportServiceTest extends BaseTest
     }
 
     /**
-     * Save map should save an existing map when record found
+     * Save map should save an existing map when record found.
      *
      * @covers ::saveMap
      */
@@ -79,7 +79,7 @@ class ExportServiceTest extends BaseTest
     }
 
     /**
-     * Download with unknown type should throw exception
+     * Download with unknown type should throw exception.
      *
      * @covers ::download
      * @covers ::getService
@@ -98,7 +98,7 @@ class ExportServiceTest extends BaseTest
     }
 
     /**
-     * Download of type entry should use export_entry service
+     * Download of type entry should use export_entry service.
      *
      * @param array $settings
      *
@@ -116,11 +116,11 @@ class ExportServiceTest extends BaseTest
     }
 
     /**
-     * Download with valid settings should export data
+     * Download with valid settings should export data.
      *
-     * @param array $settings
-     * @param array $attributes
-     * @param array $sources
+     * @param array  $settings
+     * @param array  $attributes
+     * @param array  $sources
      * @param string $expectedResult
      *
      * @dataProvider provideValidDownloadSettings
@@ -155,7 +155,7 @@ class ExportServiceTest extends BaseTest
 
     /**
      * @param string $fieldType
-     * @param mixed $data
+     * @param mixed  $data
      * @param string $expectedResult
      *
      * @dataProvider provideFieldTypeData
@@ -179,7 +179,7 @@ class ExportServiceTest extends BaseTest
     }
 
     /**
-     * Data provider for valid download types
+     * Data provider for valid download types.
      *
      * @return array
      */
@@ -205,13 +205,14 @@ class ExportServiceTest extends BaseTest
     }
 
     /**
-     * Data provider for valid download settings
+     * Data provider for valid download settings.
      *
      * @return array
      */
     public function provideValidDownloadSettings()
     {
         $now = new DateTime();
+
         return array(
             'Entry' => array(
                 'settings' => array(
@@ -270,7 +271,7 @@ class ExportServiceTest extends BaseTest
                     'status' => 'live',
                 ),
                 'sources' => array(),
-                'result' => 'ID,Slug,Author,"Post Date",Enabled' . "\r\n" . '1,testslug,,' . (string)$now . ',Yes' . "\r\n",
+                'result' => 'ID,Slug,Author,"Post Date",Enabled'."\r\n".'1,testslug,,'.(string) $now.',Yes'."\r\n",
             ),
             'EntryFromSource' => array(
                 'settings' => array(
@@ -299,11 +300,11 @@ class ExportServiceTest extends BaseTest
                     'plugin' => array(
                         array(
                             'elementId' => 1,
-                            'slug' => 'testslug'
+                            'slug' => 'testslug',
                         ),
                     ),
                 ),
-                'result' => 'ID,Slug' . "\r\n" . '1,testslug' . "\r\n",
+                'result' => 'ID,Slug'."\r\n".'1,testslug'."\r\n",
             ),
             'User' => array(
                 'settings' => array(
@@ -359,13 +360,13 @@ class ExportServiceTest extends BaseTest
                     'status' => 'live',
                 ),
                 'sources' => array(),
-                'result' => 'Username,"First Name","Last Name",Email,Enabled' . "\r\n" . 'name,Hanzel,Grimm,Hanzel.Grimm@gmail.com,No' . "\r\n",
+                'result' => 'Username,"First Name","Last Name",Email,Enabled'."\r\n".'name,Hanzel,Grimm,Hanzel.Grimm@gmail.com,No'."\r\n",
             ),
         );
     }
 
     /**
-     * Data provider for field type data
+     * Data provider for field type data.
      *
      * @return array
      */
@@ -379,7 +380,7 @@ class ExportServiceTest extends BaseTest
             ),
             'object' => array(
                 'fieldType' => 'object',
-                'data' => (object)array('value' => 'test'),
+                'data' => (object) array('value' => 'test'),
                 'expectedResult' => 'test',
             ),
             'Lightswitch yes' => array(
@@ -400,8 +401,8 @@ class ExportServiceTest extends BaseTest
             'MultiSelect' => array(
                 'fieldType' => 'MultiSelect',
                 'data' => array(
-                    (object)array('value' => 'option1'),
-                    (object)array('value' => 'option2'),
+                    (object) array('value' => 'option1'),
+                    (object) array('value' => 'option2'),
                 ),
                 'expectedResult' => 'option1, option2',
             ),
@@ -417,12 +418,13 @@ class ExportServiceTest extends BaseTest
                 'fieldType' => 'Entries',
                 'data' => 'dummy',
                 'expectedResult' => 'dummy',
-            )
+            ),
         );
     }
 
     /**
      * @param array $methods
+     *
      * @return ElementCriteriaModel|MockObject
      */
     private function getMockElementCriteria(array $methods = array())
@@ -439,18 +441,18 @@ class ExportServiceTest extends BaseTest
     }
 
     /**
-     * @param string $type
+     * @param string               $type
      * @param ElementCriteriaModel $mockElementCriteria
-     * @param array $attributes
+     * @param array                $attributes
      */
     private function setMockExportTypeService($type, ElementCriteriaModel $mockElementCriteria, array $attributes = array())
     {
-        $className = 'Craft\Export_' . $type . 'Service';
+        $className = 'Craft\Export_'.$type.'Service';
         if (class_exists($className)) {
             $mockExportTypeService = $this->getMock($className);
             $mockExportTypeService->expects($this->any())->method('setCriteria')->willReturn($mockElementCriteria);
             $mockExportTypeService->expects($this->any())->method('getAttributes')->willReturn($attributes);
-            $this->setComponent(craft(), 'export_' . strtolower($type), $mockExportTypeService);
+            $this->setComponent(craft(), 'export_'.strtolower($type), $mockExportTypeService);
         }
     }
 
@@ -486,6 +488,7 @@ class ExportServiceTest extends BaseTest
         $mockElement = $this->getMockBuilder('Craft\BaseElementModel')
             ->disableOriginalConstructor()
             ->getMock();
+
         return $mockElement;
     }
 
@@ -497,6 +500,7 @@ class ExportServiceTest extends BaseTest
         $mockUser = $this->getMockBuilder('Craft\UserModel')
             ->disableOriginalConstructor()
             ->getMock();
+
         return $mockUser;
     }
 
@@ -520,6 +524,7 @@ class ExportServiceTest extends BaseTest
         $mockField = $this->getMockBuilder('Craft\FieldModel')
             ->disableOriginalConstructor()
             ->getMock();
+
         return $mockField;
     }
 
@@ -531,6 +536,7 @@ class ExportServiceTest extends BaseTest
         $mockExportMap = $this->getMockBuilder('Craft\Export_MapRecord')
             ->disableOriginalConstructor()
             ->getMock();
+
         return $mockExportMap;
     }
 
@@ -542,6 +548,7 @@ class ExportServiceTest extends BaseTest
         $service = $this->getMockBuilder('Craft\ExportService')
             ->setMethods(array('findMap', 'getNewMap'))
             ->getMock();
+
         return $service;
     }
 

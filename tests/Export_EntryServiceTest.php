@@ -7,9 +7,9 @@ use PHPUnit_Framework_MockObject_MockObject as MockObject;
 /**
  * Contains unit tests for the Export_EntryService.
  *
- * @author    Bob Olde Hampsink <b.oldehampsink@itmundi.nl>
+ * @author    Bob Olde Hampsink <b.oldehampsink@nerds.company>
  * @copyright Copyright (c) 2015, Bob Olde Hampsink
- * @license   http://buildwithcraft.com/license Craft License Agreement
+ * @license   MIT
  *
  * @link      http://github.com/boboldehampsink
  *
@@ -27,12 +27,12 @@ class Export_EntryServiceTest extends BaseTest
         parent::setUpBeforeClass();
 
         // Require dependencies
-        require_once __DIR__ . '/../services/Export_EntryService.php';
-        require_once __DIR__ . '/../services/IExportElementType.php';
+        require_once __DIR__.'/../services/Export_EntryService.php';
+        require_once __DIR__.'/../services/IExportElementType.php';
     }
 
     /**
-     * Export_EntryService should implement IExportElementType
+     * Export_EntryService should implement IExportElementType.
      */
     public function testExportEntryServiceShouldImplementIExportElementType()
     {
@@ -70,7 +70,7 @@ class Export_EntryServiceTest extends BaseTest
     }
 
     /**
-     * Get fields should return default entry fields plus fields from entry field layout
+     * Get fields should return default entry fields plus fields from entry field layout.
      *
      * @covers ::getFields
      */
@@ -80,7 +80,7 @@ class Export_EntryServiceTest extends BaseTest
             'elementvars' => array(
                 'section' => 1,
                 'entrytype' => 0,
-            )
+            ),
         );
         $reset = false;
         $stored = null;
@@ -151,7 +151,7 @@ class Export_EntryServiceTest extends BaseTest
     }
 
     /**
-     * Get fields should return default entry fields plus fields from entry field layout
+     * Get fields should return default entry fields plus fields from entry field layout.
      *
      * @covers ::getFields
      */
@@ -183,7 +183,7 @@ class Export_EntryServiceTest extends BaseTest
             'elementvars' => array(
                 'section' => 1,
                 'entrytype' => 1,
-            )
+            ),
         );
 
         $mockElementCriteria = $this->getMockElementCriteria();
@@ -202,7 +202,7 @@ class Export_EntryServiceTest extends BaseTest
     {
         $map = array(
             'handle1' => array(
-                'checked' => 1
+                'checked' => 1,
             ),
             'parent' => array(
                 'checked' => '0',
@@ -232,10 +232,8 @@ class Export_EntryServiceTest extends BaseTest
         $mockEntryType = $this->getMockEntryType();
         $this->setMockSectionsService($mockEntryType);
 
-
         $service = new Export_EntryService();
         $result = $service->getAttributes($map, $mockElement);
-
 
         $this->assertSame($expectedResult, $result);
     }
@@ -244,6 +242,7 @@ class Export_EntryServiceTest extends BaseTest
      * @param $mockFieldHandle
      * @param $mockFieldName
      * @param $mockFieldType
+     *
      * @return FieldModel|MockObject
      */
     private function getMockField($mockFieldHandle, $mockFieldName, $mockFieldType)
@@ -257,6 +256,7 @@ class Export_EntryServiceTest extends BaseTest
             array('name', $mockFieldName),
             array('type', $mockFieldType),
     ));
+
         return $mockField;
     }
 
@@ -272,6 +272,7 @@ class Export_EntryServiceTest extends BaseTest
 
     /**
      * @param $mockField
+     *
      * @return FieldLayoutModel|MockObject
      */
     private function getMockFieldLayout($mockField)
@@ -291,6 +292,7 @@ class Export_EntryServiceTest extends BaseTest
             ->getMock();
 
         $mockFieldLayout->expects($this->exactly(1))->method('getTabs')->willReturn(array($mockFieldLayoutTab));
+
         return $mockFieldLayout;
     }
 
@@ -307,14 +309,16 @@ class Export_EntryServiceTest extends BaseTest
 
     /**
      * @param $mockMap
+     *
      * @return Export_MapRecord|MockObject
      */
     private function getMockExportMapRecord($mockMap)
     {
         $mockExportMap = $this->getMockBuilder('Craft\Export_MapRecord')
             ->disableOriginalConstructor()
-            ->getMock();;
+            ->getMock();
         $mockExportMap->expects($this->exactly(1))->method('__get')->with('map')->willReturn($mockMap);
+
         return $mockExportMap;
     }
 
@@ -326,6 +330,7 @@ class Export_EntryServiceTest extends BaseTest
         $mockElementCriteria = $this->getMockBuilder('Craft\ElementCriteriaModel')
             ->disableOriginalConstructor()
             ->getMock();
+
         return $mockElementCriteria;
     }
 
@@ -349,6 +354,7 @@ class Export_EntryServiceTest extends BaseTest
         $mockElement = $this->getMockBuilder('Craft\BaseElementModel')
             ->disableOriginalConstructor()
             ->getMock();
+
         return $mockElement;
     }
 
@@ -360,6 +366,7 @@ class Export_EntryServiceTest extends BaseTest
         $mockEntryType = $this->getMockBuilder('Craft\EntryTypeModel')
             ->disableOriginalConstructor()
             ->getMock();
+
         return $mockEntryType;
     }
 

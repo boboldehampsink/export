@@ -1,5 +1,16 @@
 <?php
 
+/**
+ * Export translations.
+ *
+ * Dutch translations
+ *
+ * @author    Bob Olde Hampsink <b.oldehampsink@nerds.company>
+ * @copyright Copyright (c) 2015, Bob Olde Hampsink
+ * @license   MIT
+ *
+ * @link      http://github.com/boboldehampsink
+ */
 return array(
     'Export' => 'Exporteren',
     'Reset export map' => 'Reset exporteer indeling',

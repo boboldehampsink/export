@@ -7,9 +7,9 @@ namespace Craft;
  *
  * Acts as a bridge between services and templates.
  *
- * @author    Bob Olde Hampsink <b.oldehampsink@itmundi.nl>
+ * @author    Bob Olde Hampsink <b.oldehampsink@nerds.company>
  * @copyright Copyright (c) 2015, Bob Olde Hampsink
- * @license   http://buildwithcraft.com/license Craft License Agreement
+ * @license   MIT
  *
  * @link      http://github.com/boboldehampsink
  */
@@ -65,7 +65,7 @@ class ExportVariable
     {
         // Get export vars
         $export = craft()->request->getParam('export');
-        
+
         // Unset non-map settings
         unset($export['limit'], $export['offset']);
         ksort($export);

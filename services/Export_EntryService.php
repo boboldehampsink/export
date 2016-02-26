@@ -7,9 +7,9 @@ namespace Craft;
  *
  * Handles exporting entries.
  *
- * @author    Bob Olde Hampsink <b.oldehampsink@itmundi.nl>
+ * @author    Bob Olde Hampsink <b.oldehampsink@nerds.company>
  * @copyright Copyright (c) 2015, Bob Olde Hampsink
- * @license   http://buildwithcraft.com/license Craft License Agreement
+ * @license   MIT
  *
  * @link      http://github.com/boboldehampsink
  */
@@ -85,16 +85,16 @@ class Export_EntryService extends BaseApplicationComponent implements IExportEle
 
                 // Set the static fields for this type
                 $layout = array(
-                    ExportModel::HandleId         => array('name' => Craft::t('ID'), 'checked' => 0),
+                    ExportModel::HandleId => array('name' => Craft::t('ID'), 'checked' => 0),
                     ExportModel::HandleTitle.'_'.$entrytype->id => array('name' => $entrytype->hasTitleField ? $entrytype->titleLabel : Craft::t('Title'), 'checked' => 1, 'entrytype' => $entrytype->id),
-                    ExportModel::HandleSlug       => array('name' => Craft::t('Slug'), 'checked' => 0),
-                    ExportModel::HandleParent     => array('name' => Craft::t('Parent'), 'checked' => 0),
-                    ExportModel::HandleAncestors  => array('name' => Craft::t('Ancestors'), 'checked' => 0),
-                    ExportModel::HandleAuthor     => array('name' => Craft::t('Author'), 'checked' => 0),
-                    ExportModel::HandlePostDate   => array('name' => Craft::t('Post Date'), 'checked' => 0),
+                    ExportModel::HandleSlug => array('name' => Craft::t('Slug'), 'checked' => 0),
+                    ExportModel::HandleParent => array('name' => Craft::t('Parent'), 'checked' => 0),
+                    ExportModel::HandleAncestors => array('name' => Craft::t('Ancestors'), 'checked' => 0),
+                    ExportModel::HandleAuthor => array('name' => Craft::t('Author'), 'checked' => 0),
+                    ExportModel::HandlePostDate => array('name' => Craft::t('Post Date'), 'checked' => 0),
                     ExportModel::HandleExpiryDate => array('name' => Craft::t('Expiry Date'), 'checked' => 0),
-                    ExportModel::HandleEnabled    => array('name' => Craft::t('Enabled'), 'checked' => 0),
-                    ExportModel::HandleStatus     => array('name' => Craft::t('Status'), 'checked' => 0),
+                    ExportModel::HandleEnabled => array('name' => Craft::t('Enabled'), 'checked' => 0),
+                    ExportModel::HandleStatus => array('name' => Craft::t('Status'), 'checked' => 0),
                 );
 
                 // Set the dynamic fields for this type
@@ -140,7 +140,7 @@ class Export_EntryService extends BaseApplicationComponent implements IExportEle
 
         // Get by section and entrytype
         $criteria->sectionId = $settings['elementvars']['section'];
-        $criteria->type      = $settings['elementvars']['entrytype'];
+        $criteria->type = $settings['elementvars']['entrytype'];
 
         return $criteria;
     }

@@ -7,9 +7,9 @@ use PHPUnit_Framework_MockObject_MockObject as MockObject;
 /**
  * Contains unit tests for the Export_UserService.
  *
- * @author    Bob Olde Hampsink <b.oldehampsink@itmundi.nl>
+ * @author    Bob Olde Hampsink <b.oldehampsink@nerds.company>
  * @copyright Copyright (c) 2015, Bob Olde Hampsink
- * @license   http://buildwithcraft.com/license Craft License Agreement
+ * @license   MIT
  *
  * @link      http://github.com/boboldehampsink
  *
@@ -27,12 +27,12 @@ class Export_UserServiceTest extends BaseTest
         parent::setUpBeforeClass();
 
         // Require dependencies
-        require_once __DIR__ . '/../services/Export_UserService.php';
-        require_once __DIR__ . '/../services/IExportElementType.php';
+        require_once __DIR__.'/../services/Export_UserService.php';
+        require_once __DIR__.'/../services/IExportElementType.php';
     }
 
     /**
-     * Export_UserService should implement IExportElementType
+     * Export_UserService should implement IExportElementType.
      */
     public function testExportUserServiceShouldImplementIExportElementType()
     {
@@ -82,7 +82,7 @@ class Export_UserServiceTest extends BaseTest
     }
 
     /**
-     * Get fields should return default user fields plus fields from user field layout
+     * Get fields should return default user fields plus fields from user field layout.
      *
      * @covers ::getFields
      */
@@ -158,7 +158,7 @@ class Export_UserServiceTest extends BaseTest
     }
 
     /**
-     * Get fields should return default user fields plus fields from user field layout
+     * Get fields should return default user fields plus fields from user field layout.
      *
      * @covers ::getFields
      */
@@ -189,7 +189,7 @@ class Export_UserServiceTest extends BaseTest
             'limit' => 10,
             'elementvars' => array(
                 'groups' => 1,
-            )
+            ),
         );
 
         $mockElementCriteria = $this->getMockElementCriteria();
@@ -208,7 +208,7 @@ class Export_UserServiceTest extends BaseTest
     {
         $map = array(
             'handle1' => array(
-                'checked' => 1
+                'checked' => 1,
             ),
         );
 
@@ -224,7 +224,6 @@ class Export_UserServiceTest extends BaseTest
         $service = new Export_UserService();
         $result = $service->getAttributes($map, $mockElement);
 
-
         $this->assertSame($expectedResult, $result);
     }
 
@@ -232,6 +231,7 @@ class Export_UserServiceTest extends BaseTest
      * @param $mockFieldHandle
      * @param $mockFieldName
      * @param $mockFieldType
+     *
      * @return FieldModel|MockObject
      */
     private function getMockField($mockFieldHandle, $mockFieldName, $mockFieldType)
@@ -245,6 +245,7 @@ class Export_UserServiceTest extends BaseTest
             array('name', $mockFieldName),
             array('type', $mockFieldType),
         ));
+
         return $mockField;
     }
 
@@ -260,6 +261,7 @@ class Export_UserServiceTest extends BaseTest
 
     /**
      * @param $mockField
+     *
      * @return FieldLayoutModel|MockObject
      */
     private function getMockFieldLayout($mockField)
@@ -273,6 +275,7 @@ class Export_UserServiceTest extends BaseTest
             ->disableOriginalConstructor()
             ->getMock();
         $mockFieldLayout->expects($this->exactly(1))->method('getFields')->willReturn(array($mockFieldLayoutField));
+
         return $mockFieldLayout;
     }
 
@@ -289,14 +292,16 @@ class Export_UserServiceTest extends BaseTest
 
     /**
      * @param $mockMap
+     *
      * @return Export_MapRecord|MockObject
      */
     private function getMockExportMapRecord($mockMap)
     {
         $mockExportMap = $this->getMockBuilder('Craft\Export_MapRecord')
             ->disableOriginalConstructor()
-            ->getMock();;
+            ->getMock();
         $mockExportMap->expects($this->exactly(1))->method('__get')->with('map')->willReturn($mockMap);
+
         return $mockExportMap;
     }
 
@@ -308,6 +313,7 @@ class Export_UserServiceTest extends BaseTest
         $mockElementCriteria = $this->getMockBuilder('Craft\ElementCriteriaModel')
             ->disableOriginalConstructor()
             ->getMock();
+
         return $mockElementCriteria;
     }
 
@@ -331,6 +337,7 @@ class Export_UserServiceTest extends BaseTest
         $mockElement = $this->getMockBuilder('Craft\BaseElementModel')
             ->disableOriginalConstructor()
             ->getMock();
+
         return $mockElement;
     }
 }
