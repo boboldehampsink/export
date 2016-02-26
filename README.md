@@ -22,8 +22,18 @@ Todo:
 Important:
 The plugin's folder should be named "export"
 
+Development
+=================
+Run this from your Craft installation to test your changes to this plugin before submitting a Pull Request
+```bash
+phpunit --bootstrap craft/app/tests/bootstrap.php --configuration craft/plugins/export/phpunit.xml.dist --coverage-text craft/plugins/export/tests
+```
+
 Changelog
 =================
+###0.5.8###
+- All service code is now fully covered by unit tests
+
 ###0.5.7###
 - Fetch elements individually for less memory consumption (thanks to @gijsstegehuis)
 
