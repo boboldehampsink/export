@@ -211,13 +211,16 @@ class Export_UserServiceTest extends BaseTest
     public function testGetAttributes(array $map, array $expectedResult)
     {
         $mockElement = $this->getMockElement();
-        $mockElement->expects($this->any())->method('__get')->willReturnCallback(function ($handle) {if ($handle == 'exception') {
-            throw new Exception('MockException');
-        } elseif ($handle != 'parent' && $handle != 'ancestors') {
-            return $handle . '_value';
-        }
-            return null;
-        });
+        $mockElement->expects($this->any())->method('__get')->willReturnCallback(
+            function ($handle) {
+                if ($handle == 'exception') {
+                    throw new Exception('MockException');
+                } elseif ($handle != 'parent' && $handle != 'ancestors') {
+                    return $handle . '_value';
+                }
+                return null;
+            }
+        );
 
         $service = new Export_UserService();
         $result = $service->getAttributes($map, $mockElement);

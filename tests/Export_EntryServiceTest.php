@@ -205,13 +205,16 @@ class Export_EntryServiceTest extends BaseTest
     public function testGetAttributes(array $map, array $expectedResult)
     {
         $mockElement = $this->getMockElement();
-        $mockElement->expects($this->any())->method('__get')->willReturnCallback(function ($handle) {if ($handle == 'exception') {
-            throw new Exception('MockException');
-        } elseif ($handle != 'parent' && $handle != 'ancestors') {
-            return $handle . '_value';
-        }
-            return null;
-        });
+        $mockElement->expects($this->any())->method('__get')->willReturnCallback(
+            function ($handle) {
+                if ($handle == 'exception') {
+                    throw new Exception('MockException');
+                } elseif ($handle != 'parent' && $handle != 'ancestors') {
+                    return $handle . '_value';
+                }
+                return null;
+            }
+        );
 
         $this->setAttributesMockElementCriteria($map, $mockElement);
 
@@ -273,7 +276,7 @@ class Export_EntryServiceTest extends BaseTest
             array('handle', $mockFieldHandle),
             array('name', $mockFieldName),
             array('type', $mockFieldType),
-    ));
+        ));
 
         return $mockField;
     }

@@ -172,13 +172,16 @@ class Export_CategoryServiceTest extends BaseTest
     public function testGetAttributes(array $map, array $expectedResult)
     {
         $mockElement = $this->getMockElement();
-        $mockElement->expects($this->any())->method('__get')->willReturnCallback(function ($handle) {if ($handle == 'exception') {
-                throw new Exception('MockException');
-            } elseif ($handle != 'parent' && $handle != 'ancestors') {
-                return $handle . '_value';
+        $mockElement->expects($this->any())->method('__get')->willReturnCallback(
+            function ($handle) {
+                if ($handle == 'exception') {
+                    throw new Exception('MockException');
+                } elseif ($handle != 'parent' && $handle != 'ancestors') {
+                    return $handle . '_value';
+                }
+                return null;
             }
-            return null;
-        });
+        );
 
         $this->setAttributesMockElementCriteria($map, $mockElement);
 
