@@ -1,4 +1,4 @@
-Export plugin for Craft CMS
+Export plugin for Craft CMS [![Build Status](https://travis-ci.org/boboldehampsink/export.svg?branch=master)](https://travis-ci.org/boboldehampsink/export) [![Code Coverage](https://scrutinizer-ci.com/g/boboldehampsink/export/badges/coverage.png?b=develop)](https://scrutinizer-ci.com/g/boboldehampsink/export/?branch=develop) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/boboldehampsink/export/badges/quality-score.png?b=develop)](https://scrutinizer-ci.com/g/boboldehampsink/export/?branch=develop)
 =================
 
 Plugin that allows you to export data to CSV files.
