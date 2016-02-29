@@ -202,29 +202,53 @@ class Export_UserServiceTest extends BaseTest
     }
 
     /**
+     * @param array $map
+     * @param array $expectedResult
+     *
+     * @dataProvider provideValidAttributesMap
      * @covers ::getAttributes
      */
-    public function testGetAttributes()
+    public function testGetAttributes(array $map, array $expectedResult)
     {
-        $map = array(
-            'handle1' => array(
-                'checked' => 1,
-            ),
-        );
-
-        $expectedResult = array(
-            'handle1' => 'value1',
-        );
-
         $mockElement = $this->getMockElement();
-        $mockElement->expects($this->any())->method('__get')->willReturnMap(array(
-            array('handle1', 'value1'),
-        ));
+        $mockElement->expects($this->any())->method('__get')->willReturnCallback(
+            function ($handle) {
+                if ($handle == 'exception') {
+                    throw new Exception('MockException');
+                } elseif ($handle != 'parent' && $handle != 'ancestors') {
+                    return $handle . '_value';
+                }
+                return null;
+            }
+        );
 
         $service = new Export_UserService();
         $result = $service->getAttributes($map, $mockElement);
 
         $this->assertSame($expectedResult, $result);
+    }
+
+    /**
+     * @return array
+     */
+    public function provideValidAttributesMap()
+    {
+        return array(
+            'valid' => array(
+                'map' => array(
+                    'handle1' => array(
+                        'checked' => 1,
+                    ),
+                    'exception' => array(
+                        'checked' => 1,
+                    )
+                ),
+                'expectedResult' => array(
+                    'handle1' => 'handle1_value',
+                    'exception' => null,
+                ),
+            )
+        );
     }
 
     /**

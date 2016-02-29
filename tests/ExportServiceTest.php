@@ -179,6 +179,41 @@ class ExportServiceTest extends BaseTest
     }
 
     /**
+     * @covers ::getCustomTableRow
+     */
+    public function testGetCustomTableRowShouldReturnCustomTemplateForFieldTemplate()
+    {
+        $fieldHandle = 'fieldHandle';
+        $expectedResult = 'customTemplate';
+        $responses = array(
+            array($fieldHandle => $expectedResult),
+        );
+
+        $this->setMockPluginsService($responses);
+
+        $service = new exportService();
+        $result = $service->getCustomTableRow($fieldHandle);
+
+        $this->assertSame($expectedResult, $result);
+    }
+
+    /**
+     * @covers ::getCustomTableRow
+     */
+    public function testGetCustomTableRowShouldReturnFalseWhenNoCustomTemplateFound()
+    {
+        $fieldHandle = 'fieldHandle';
+        $responses = array();
+
+        $this->setMockPluginsService($responses);
+
+        $service = new exportService();
+        $result = $service->getCustomTableRow($fieldHandle);
+
+        $this->assertFalse($result);
+    }
+
+    /**
      * Data provider for valid download types.
      *
      * @return array

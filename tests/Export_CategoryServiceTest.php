@@ -163,42 +163,63 @@ class Export_CategoryServiceTest extends BaseTest
     }
 
     /**
+     * @param array $map
+     * @param array $expectedResult
+     *
+     * @dataProvider provideValidAttributesMap
      * @covers ::getAttributes
      */
-    public function testGetAttributes()
+    public function testGetAttributes(array $map, array $expectedResult)
     {
-        $map = array(
-            'handle1' => array(
-                'checked' => 1,
-            ),
-            'parent' => array(
-                'checked' => '0',
-            ),
-            'ancestors' => array(
-                'checked' => '0',
-            ),
-        );
-
-        $expectedResult = array(
-            'handle1' => 'value1',
-            'parent' => 'parent',
-            'ancestors' => 'ancestor1/ancestor2',
-        );
-
-        $mockElementCriteria = $this->getMockElementCriteria();
-        $mockElementCriteria->expects($this->exactly(1))->method('first')->willReturn('parent');
-        $mockElementCriteria->expects($this->exactly(1))->method('find')->willReturn(array('ancestor1', 'ancestor2'));
-
         $mockElement = $this->getMockElement();
-        $mockElement->expects($this->any())->method('__get')->willReturnMap(array(
-            array('handle1', 'value1'),
-        ));
-        $mockElement->expects($this->exactly(4))->method('getAncestors')->willReturn($mockElementCriteria);
+        $mockElement->expects($this->any())->method('__get')->willReturnCallback(
+            function ($handle) {
+                if ($handle == 'exception') {
+                    throw new Exception('MockException');
+                } elseif ($handle != 'parent' && $handle != 'ancestors') {
+                    return $handle . '_value';
+                }
+                return null;
+            }
+        );
+
+        $this->setAttributesMockElementCriteria($map, $mockElement);
 
         $service = new Export_CategoryService();
         $result = $service->getAttributes($map, $mockElement);
 
         $this->assertSame($expectedResult, $result);
+    }
+
+    /**
+     * @return array
+     */
+    public function provideValidAttributesMap()
+    {
+        return array(
+            'valid' => array(
+                'map' => array(
+                    'handle1' => array(
+                        'checked' => 1,
+                    ),
+                    'exception' => array(
+                        'checked' => 1,
+                    ),
+                    'parent' => array(
+                        'checked' => '0',
+                    ),
+                    'ancestors' => array(
+                        'checked' => '0',
+                    ),
+                ),
+                'expectedResult' => array(
+                    'handle1' => 'handle1_value',
+                    'exception' => null,
+                    'parent' => 'parent',
+                    'ancestors' => 'ancestor1/ancestor2',
+                ),
+            )
+        );
     }
 
     /**
@@ -313,5 +334,23 @@ class Export_CategoryServiceTest extends BaseTest
             ->getMock();
 
         return $mockElement;
+    }
+
+    /**
+     * @param array $map
+     * @param BaseElementModel|MockObject $mockElement
+     */
+    private function setAttributesMockElementCriteria(array $map, BaseElementModel $mockElement)
+    {
+        $mockElementCriteria = $this->getMockElementCriteria();
+        if (array_key_exists('parent', $map)) {
+            $mockElementCriteria->expects($this->exactly(1))->method('first')
+                ->willReturn('parent');
+        }
+        if (array_key_exists('ancestors', $map)) {
+            $mockElementCriteria->expects($this->exactly(1))->method('find')
+                ->willReturn(array('ancestor1', 'ancestor2'));
+        }
+        $mockElement->expects($this->any())->method('getAncestors')->willReturn($mockElementCriteria);
     }
 }
