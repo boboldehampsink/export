@@ -284,7 +284,7 @@ class ExportService extends BaseApplicationComponent
      * Parse fields.
      *
      * @param array $settings
-     * @param       $element
+     * @param mixed $element
      *
      * @return array
      */
@@ -317,7 +317,7 @@ class ExportService extends BaseApplicationComponent
     /**
      * Parse column names.
      *
-     * @param array $settings [description]
+     * @param array $settings
      *
      * @return string
      */
@@ -342,8 +342,8 @@ class ExportService extends BaseApplicationComponent
     /**
      * Parse reserved element values.
      *
-     * @param  $handle
-     * @param  $data
+     * @param string $handle
+     * @param string $data
      *
      * @return string
      */
@@ -351,37 +351,17 @@ class ExportService extends BaseApplicationComponent
     {
         switch ($handle) {
 
+            // Get username of author
             case ExportModel::HandleAuthor:
+                return craft()->users->getUserById($data)->username;
 
-                // Get username of author
-                $data = craft()->users->getUserById($data)->username;
-
-                break;
-
+            // Make data human readable
             case ExportModel::HandleEnabled:
-
-                // Make data human readable
-                switch ($data) {
-
-                    case '0':
-                        $data = Craft::t('No');
-                        break;
-
-                    case '1':
-                        $data = Craft::t('Yes');
-                        break;
-
-                }
-
-                break;
+                return $data == '0' ? Craft::t('No') : Craft::t('Yes');
 
             case ExportModel::HandlePostDate:
             case ExportModel::HandleExpiryDate:
-
-                // Resolve to string
-                $data = (string) $data;
-
-                break;
+                return (string) $data;
 
         }
 
@@ -392,7 +372,7 @@ class ExportService extends BaseApplicationComponent
      * Parse field values.
      *
      * @param string $handle
-     * @param mixed  $data
+     * @param string $data
      *
      * @return string
      */
@@ -415,14 +395,11 @@ class ExportService extends BaseApplicationComponent
                     case ExportModel::FieldTypeCategories:
                     case ExportModel::FieldTypeAssets:
                     case ExportModel::FieldTypeUsers:
-
                         // Show names
                         $data = $data instanceof ElementCriteriaModel ? implode(', ', $data->find()) : $data;
-
                         break;
 
                     case ExportModel::FieldTypeLightswitch:
-
                         // Make data human readable
                         switch ($data) {
 
@@ -435,11 +412,9 @@ class ExportService extends BaseApplicationComponent
                                 break;
 
                         }
-
                         break;
 
                     case ExportModel::FieldTypeTable:
-
                         // Parse table checkboxes
                         $table = array();
                         foreach ($data as $row) {
@@ -463,22 +438,18 @@ class ExportService extends BaseApplicationComponent
 
                         // Return parsed data as array
                         $data = $table;
-
                         break;
 
                     case ExportModel::FieldTypeRichText:
                     case ExportModel::FieldTypeDate:
                     case ExportModel::FieldTypeRadioButtons:
                     case ExportModel::FieldTypeDropdown:
-
                         // Resolve to string
                         $data = (string) $data;
-
                         break;
 
                     case ExportModel::FieldTypeCheckboxes:
                     case ExportModel::FieldTypeMultiSelect:
-
                         // Parse multi select values
                         $multi = array();
                         foreach ($data as $row) {
@@ -487,7 +458,6 @@ class ExportService extends BaseApplicationComponent
 
                         // Return parsed data as array
                         $data = $multi;
-
                         break;
 
                 }
