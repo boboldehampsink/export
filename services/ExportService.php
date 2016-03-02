@@ -18,7 +18,7 @@ class ExportService extends BaseApplicationComponent
     /**
      * Contains the working export service's name.
      *
-     * @var IExportElementType
+     * @var IExportElementType|bool
      */
     private $_service;
 
@@ -125,12 +125,12 @@ class ExportService extends BaseApplicationComponent
         $data = $this->getData($settings);
 
         // If there is data, process
-        if (count($data)) {
+        if (is_array($data) && count($data)) {
 
             // Put down columns
             fputcsv($export, $this->parseColumns($settings), $delimiter);
 
-            // Loop trough data
+            // Loop through data
             foreach ($data as $element) {
 
                 // Fetch element in case of element id
@@ -209,7 +209,7 @@ class ExportService extends BaseApplicationComponent
      *
      * @param string $fieldHandle
      *
-     * @return string
+     * @return string|bool
      */
     public function getCustomTableRow($fieldHandle)
     {
@@ -325,7 +325,7 @@ class ExportService extends BaseApplicationComponent
     {
         $columns = array();
 
-        // Loop trough map
+        // Loop through map
         foreach ($settings['map'] as $handle => $data) {
 
             // If checked
@@ -417,22 +417,24 @@ class ExportService extends BaseApplicationComponent
                     case ExportModel::FieldTypeTable:
                         // Parse table checkboxes
                         $table = array();
-                        foreach ($data as $row) {
-
-                            // Keep track of column #
-                            $i = 1;
-
-                            // Loop through columns
-                            foreach ($row as $column => $value) {
-
-                                // Get column
-                                $column = isset($field->settings['columns'][$column]) ? $field->settings['columns'][$column] : (isset($field->settings['columns']['col'.$i]) ? $field->settings['columns']['col'.$i] : array('type' => 'dummy'));
+                        if (is_array($data)) {
+                            foreach ($data as $row) {
 
                                 // Keep track of column #
-                                ++$i;
+                                $i = 1;
 
-                                // Parse
-                                $table[] = $column['type'] == 'checkbox' ? ($value == 1 ? Craft::t('Yes') : Craft::t('No')) : $value;
+                                // Loop through columns
+                                foreach ($row as $column => $value) {
+
+                                    // Get column
+                                    $column = isset($field->settings['columns'][$column]) ? $field->settings['columns'][$column] : (isset($field->settings['columns']['col'.$i]) ? $field->settings['columns']['col'.$i] : array('type' => 'dummy'));
+
+                                    // Keep track of column #
+                                    ++$i;
+
+                                    // Parse
+                                    $table[] = $column['type'] == 'checkbox' ? ($value == 1 ? Craft::t('Yes') : Craft::t('No')) : $value;
+                                }
                             }
                         }
 
@@ -452,8 +454,10 @@ class ExportService extends BaseApplicationComponent
                     case ExportModel::FieldTypeMultiSelect:
                         // Parse multi select values
                         $multi = array();
-                        foreach ($data as $row) {
-                            $multi[] = $row->value;
+                        if (is_array($data)) {
+                            foreach ($data as $row) {
+                                $multi[] = $row->value;
+                            }
                         }
 
                         // Return parsed data as array
