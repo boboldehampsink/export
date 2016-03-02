@@ -263,7 +263,7 @@ class ExportService extends BaseApplicationComponent
         }
 
         // Cut up data from source
-        if (array_key_exists('offset', $settings)) {
+        if (!empty($settings['offset']) && !empty($settings['limit'])) {
             $data = array_slice($data, $settings['offset'], $settings['limit']);
         }
 
