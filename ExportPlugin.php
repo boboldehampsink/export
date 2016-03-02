@@ -32,7 +32,7 @@ class ExportPlugin extends BasePlugin
      */
     public function getVersion()
     {
-        return '0.5.8';
+        return '0.5.9';
     }
 
     /**
@@ -52,7 +52,7 @@ class ExportPlugin extends BasePlugin
      */
     public function getDeveloperUrl()
     {
-        return 'http://www.itmundi.nl';
+        return 'http://github.com/boboldehampsink';
     }
 
     /**
