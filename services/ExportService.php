@@ -372,7 +372,7 @@ class ExportService extends BaseApplicationComponent
      * Parse field values.
      *
      * @param string $handle
-     * @param string $data
+     * @param mixed  $data
      *
      * @return string
      */
