@@ -395,6 +395,7 @@ class ExportService extends BaseApplicationComponent
                     case ExportModel::FieldTypeCategories:
                     case ExportModel::FieldTypeAssets:
                     case ExportModel::FieldTypeUsers:
+                    case ExportModel::FieldTypeTags:
                         // Show names
                         $data = $data instanceof ElementCriteriaModel ? implode(', ', $data->find()) : $data;
                         break;
