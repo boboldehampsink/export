@@ -31,6 +31,9 @@ phpunit --bootstrap craft/app/tests/bootstrap.php --configuration craft/plugins/
 
 Changelog
 =================
+###0.5.10###
+- Added Tags support (thanks to @timkelty)
+
 ###0.5.9###
 - Fixed bug if offset was an empty string
 
