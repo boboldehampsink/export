@@ -455,10 +455,8 @@ class ExportService extends BaseApplicationComponent
                     case ExportModel::FieldTypeMultiSelect:
                         // Parse multi select values
                         $multi = array();
-                        if (is_array($data)) {
-                            foreach ($data as $row) {
-                                $multi[] = $row->value;
-                            }
+                        foreach ($data as $row) {
+                            $multi[] = $row->value;
                         }
 
                         // Return parsed data as array
