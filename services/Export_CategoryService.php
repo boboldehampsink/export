@@ -68,10 +68,13 @@ class Export_CategoryService extends BaseApplicationComponent implements IExport
             );
 
             // Set the dynamic fields for this type
-            foreach (craft()->fields->getLayoutByType(ElementType::Category)->getFields() as $field) {
-                $data = $field->getField();
-                $fields[$data->handle] = array('name' => $data->name, 'checked' => 1, 'fieldtype' => $data->type);
+            if( $group = craft()->categories->getGroupById( $settings["elementvars"]["group"] ) ){
+                foreach (craft()->fields->getLayoutById( $group->fieldLayoutId )->getFields() as $field) {
+                    $data = $field->getField();
+                    $fields[$data->handle] = array('name' => $data->name, 'checked' => 1, 'fieldtype' => $data->type);
+                }
             }
+
         } else {
 
             // Get the stored map
