@@ -116,7 +116,9 @@ class Export_UserService extends BaseApplicationComponent implements IExportElem
         $criteria->status = isset($settings['map']['status']) ? $settings['map']['status'] : null;
 
         // Get by group
-        $criteria->groupId = $settings['elementvars']['groups'];
+        if (isset($settings['elementvars']) && isset($settings['elementvars']['groups'])) {
+            $criteria->groupId = $settings['elementvars']['groups'];
+        }
 
         return $criteria;
     }
