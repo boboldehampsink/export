@@ -92,4 +92,16 @@ class ExportVariable
         // Return custom <tr> for template
         return craft()->export->getCustomTableRow($fieldHandle);
     }
+<<<<<<< HEAD
+=======
+
+    /**
+     * Return the plugins settings
+     *
+     * @return BaseModel
+     */
+    public function getSettings() {
+        return craft()->plugins->getPlugin('export')->getSettings();
+    }
+>>>>>>> 7543ef1... Able to select options on whether or not you want to export and email the result later or download the responsr
 }

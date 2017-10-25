@@ -1,0 +1,27 @@
+{% import "_includes/forms" as forms %}
+
+<h3>Export</h3>
+
+<p class="instructions">
+    You are able to update the Export plugin settings here
+</p>
+
+<form method="post" accept-charset="UTF-8" data-saveshortcut>
+    <input type="hidden" name="action" value="plugins/savePluginSettings">
+    <input type="hidden" name="pluginClass" value="export">
+    {{ getCsrfInput() }}
+    <div class="field" id="emailRecipients">
+        <div class="heading">
+            <label for="emailRecipients">Default Email Recipient/s. <small>You can comma separate for multiple recipients.</small></label>
+            {{ forms.text({
+            id: 'emailRecipients',
+            name: 'emailRecipients',
+            value: settings.emailRecipients,
+            placeholder: 'foo@bar.com,john.doe@example.com',
+            }) }}
+        </div>
+    </div>
+    <div class="buttons">
+        <input class="btn submit" type="submit" value="{{ 'Save' | t }}">
+    </div>
+</form>

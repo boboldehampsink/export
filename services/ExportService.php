@@ -13,6 +13,10 @@ namespace Craft;
  *
  * @link      http://github.com/boboldehampsink
  */
+<<<<<<< HEAD
+=======
+
+>>>>>>> 7543ef1... Able to select options on whether or not you want to export and email the result later or download the responsr
 class ExportService extends BaseApplicationComponent
 {
     /**
