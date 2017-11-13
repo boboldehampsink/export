@@ -16,59 +16,62 @@
             <input type="hidden" name="export[{{ key }}]" value="{{ value }}">
         {% endfor %}
 
-        {% for key, value in export.elementvars %}
-            {% if value is iterable %}
-                {% for subvalue in value %}
-                    <input type="hidden" name="export[elementvars][{{ key }}][]" value="{{ subvalue }}">
-                {% endfor %}
-            {% else %}
-                <input type="hidden" name="export[elementvars][{{ key }}]" value="{{ value }}">
-            {% endif %}
-        {% endfor %}
+        {% if export.elementvars is defined %}
+            {% for key, value in export.elementvars %}
+                {% if value is iterable %}
+                    {% for subvalue in value %}
+                        <input type="hidden" name="export[elementvars][{{ key }}][]" value="{{ subvalue }}">
+                    {% endfor %}
+                {% else %}
+                    <input type="hidden" name="export[elementvars][{{ key }}]" value="{{ value }}">
+                {% endif %}
+            {% endfor %}
+        {% endif %}
 
         <p>{{ "Choose which fields you want to export."|t }}</p>
 
         <table class="data sortable">
             <tbody>
-    {% set fields = craft.export.getFields(export.type, reset) %}
-    {% for handle, data in fields %}
-        {% if data.fieldtype is defined %}
-            {% set customTableRow = craft.export.customTableRow(data.fieldtype) %}
-        {% else %}
-            {% set customTableRow = false %}
-        {% endif %}
-        {% if customTableRow %}
-            {% include customTableRow ignore missing %}
-        {% else %}
-            <tr>
-                <td>
-                    <div class="field">
-                        <div class="heading">
-                            <label>{{ data.name }}</label>
-                            <input type="hidden" name="fields[{{ handle }}][name]" value="{{ data.name }}">
-                            {% if data.entrytype is defined %}<input type="hidden" name="fields[{{ handle }}][entrytype]" value="{{ data.entrytype }}">{% endif %}
-                        </div>
-                    </div>
-                </td>
-                <td>
-                    <div class="field">
-                        <div class="heading">
-                            <label>{{ "as"|t }}</label>
-                            <input type="text" class="text" name="fields[{{ handle }}][label]" value="{{ data.label is defined ? data.label : data.name }}">
-                        </div>
-                    </div>
-                </td>
-                <td>
-                    {{ forms.checkboxField({
-                        label: 'Include in export'|t,
-                        instructions: "This value will be included in the export file."|t,
-                        name: "fields[" ~ handle ~ "][checked]",
-                        checked: data.checked
-                    }) }}
-                </td>
-            </tr>
-        {% endif %}
-    {% endfor %}
+                {% set fields = craft.export.getFields(export.type, reset) %}
+                {% for handle, data in fields %}
+                    {% if data.fieldtype is defined %}
+                        {% set customTableRow = craft.export.customTableRow(data.fieldtype) %}
+                    {% else %}
+                        {% set customTableRow = false %}
+                    {% endif %}
+                    
+                    {% if customTableRow %}
+                        {% include customTableRow ignore missing %}
+                    {% else %}
+                        <tr>
+                            <td>
+                                <div class="field">
+                                    <div class="heading">
+                                        <label>{{ data.name }}</label>
+                                        <input type="hidden" name="fields[{{ handle }}][name]" value="{{ data.name }}">
+                                        {% if data.entrytype is defined %}<input type="hidden" name="fields[{{ handle }}][entrytype]" value="{{ data.entrytype }}">{% endif %}
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="field">
+                                    <div class="heading">
+                                        <label>{{ "as"|t }}</label>
+                                        <input type="text" class="text" name="fields[{{ handle }}][label]" value="{{ data.label is defined ? data.label : data.name }}">
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                {{ forms.checkboxField({
+                                    label: 'Include in export'|t,
+                                    instructions: "This value will be included in the export file."|t,
+                                    name: "fields[" ~ handle ~ "][checked]",
+                                    checked: data.checked
+                                }) }}
+                            </td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
             </tbody>
             <tfoot>
                 <tr>

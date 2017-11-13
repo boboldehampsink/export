@@ -449,6 +449,7 @@ class ExportService extends BaseApplicationComponent
                     case ExportModel::FieldTypeDropdown:
                         // Resolve to string
                         $data = (string) $data;
+                        $data = preg_replace('/\r|\n/', '', $data);
                         break;
 
                     case ExportModel::FieldTypeCheckboxes:
