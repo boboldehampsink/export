@@ -12,6 +12,12 @@
         {{ getCsrfInput() }}
         <input type="hidden" name="action" value="export/download">
 
+<<<<<<< HEAD
+=======
+        <input type="hidden" name="deliveryOption" value="{{ deliveryOption }}">
+        <input type="hidden" name="emailRecipients" value="{{ emailRecipients }}">
+
+>>>>>>> 7543ef1... Able to select options on whether or not you want to export and email the result later or download the responsr
         {% for key, value in export if key != 'elementvars' %}
             <input type="hidden" name="export[{{ key }}]" value="{{ value }}">
         {% endfor %}

@@ -18,6 +18,7 @@
 
         <table class="data">
             <thead class="exportType">
+<<<<<<< HEAD
                 <tr>
                     <td>
                         <div class="field">
@@ -43,6 +44,33 @@
                         </div>
                     </td>
                 </tr>
+=======
+            <tr>
+                <td>
+                    <div class="field">
+                        <div class="heading">
+                            <label>{{ "Element type"|t }}</label>
+                            <div class="instructions">
+                                <p>{{ "Choose the element type you want to export from."|t }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div class="field">
+                        <div class="input">
+                            <div class="select">
+                                <select name="export[type]" id="types">
+                                    {% for elementType in elementTypes %}
+                                        <option value="{{ elementType.getClassHandle() }}" {{ craft.request.param('elementType') == elementType.getClassHandle() ? 'selected' }}>{{ elementType.getName() }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+>>>>>>> 7543ef1... Able to select options on whether or not you want to export and email the result later or download the responsr
             </thead>
 
             {% for elementType in elementTypes %}
@@ -50,6 +78,7 @@
             {% endfor %}
 
             <tbody>
+<<<<<<< HEAD
                 <tr>
                     <td>
                         <div class="field">
@@ -109,6 +138,67 @@
                     </td>
                 </tr>
                 {% if currentUser.can('reset') %}
+=======
+            <tr>
+                <td>
+                    <div class="field">
+                        <div class="heading">
+                            <label>{{ "Sort"|t }}</label>
+                            <div class="instructions">
+                                <p>{{ "Choose how you want to sort (by ID)."|t }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div class="field">
+                        <div class="input">
+                            <div class="select">
+                                <select name="export[sort]" id="sort">
+                                    <option value="asc">{{ "Ascending"|t }}</option>
+                                    <option value="desc">{{ "Descending"|t }}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="field">
+                        <div class="heading">
+                            <label>{{ "Row offset"|t }}</label>
+                            <div class="instructions">
+                                <p>{{ "Leave empty if not applicable"|t }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div class="field">
+                        <input type="text" class="text" size="5" name="export[offset]" value="">
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="field">
+                        <div class="heading">
+                            <label>{{ "Row limit"|t }}</label>
+                            <div class="instructions">
+                                <p>{{ "Leave empty if not applicable"|t }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div class="field">
+                        <input type="text" class="text" size="5" name="export[limit]" value="">
+                    </div>
+                </td>
+            </tr>
+            {% if currentUser.can('reset') %}
+>>>>>>> 7543ef1... Able to select options on whether or not you want to export and email the result later or download the responsr
                 <tr>
                     <td>
                         <div class="field">
@@ -127,10 +217,45 @@
                         }) }}
                     </td>
                 </tr>
+<<<<<<< HEAD
                 {% endif %}
                 <tr>
                     <td colspan="2" style="border-bottom: none"><input type="submit" class="btn submit" value="{{ 'Next'|t }}"></td>
                 </tr>
+=======
+            {% endif %}
+            <tr>
+                <td>
+                    <div class="field">
+                        <div class="heading">
+                            <label>{{ "Delivery Option"|t }}</label>
+                            <div class="instructions">
+                                <p>{{ "Choose how you want to recieve this export"|t }}
+                                <p>{{ "If the email option is selected, you are able to customise the delivery addresses. You are able to comma seperate the emails below."|t }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="input">
+                            <div class="select">
+                                <select name="deliveryOption" id="deliveryOption">
+                                    <option value="download">{{ "Download"|t }}</option>
+                                    <option value="email">{{ "Email"|t }}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <input type="text" style="min-width: 300px" id="emailInput" class="text hidden" size="5" name="emailRecipients" value="{{ craft.export.settings.emailRecipients }}">
+                        </div>
+                    </div>
+
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" style="border-bottom: none">
+                    <input type="submit" class="btn submit" value="{{ 'Next'|t }}"></td>
+            </tr>
+>>>>>>> 7543ef1... Able to select options on whether or not you want to export and email the result later or download the responsr
             </tbody>
         </table>
 

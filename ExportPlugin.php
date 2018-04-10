@@ -15,6 +15,15 @@ namespace Craft;
  */
 class ExportPlugin extends BasePlugin
 {
+
+
+    protected function defineSettings()
+    {
+        return [
+            'emailRecipients' => AttributeType::String
+        ];
+    }
+
     /**
      * Get plugin name.
      *
@@ -77,6 +86,19 @@ class ExportPlugin extends BasePlugin
         );
     }
 
+
+    /**
+     * Returns the rendered settings template for the plugin
+     *
+     * @return \Twig_Template
+     */
+    public function getSettingsHtml()
+    {
+        return craft()->templates->render('export/settings/settings', array(
+            'settings' => $this->getSettings()
+        ));
+    }
+    
     /**
      * Run on plugin initialisation.
      */
